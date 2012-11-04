@@ -1,0 +1,29 @@
+{% extends "layouts/_base.twig" %}
+
+{% set crumbs = [
+  [url_to_route('content'), 'Content']
+] %}
+
+{% block content %}
+<form action="{{ url_to_route(action) }}" method="post">
+  <input type="hidden" name="id" value="{{ page.id }}" />
+  <input type="hidden" name="revision_id" value="{{ revision.id }}" />
+  <input type="hidden" name="layout" value="{{ revision.layout }}" />
+  
+  {% block formbody %}{% endblock %}
+
+  <div class="fixed-form-actions">
+    <div class="form-actions">
+      <a {{ route() == 'content_edit_layout' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_layout', page.id) }}"><i class="icon-columns"></i> <span class="title">Layout</span></a>
+      <a {{ route() == 'content_edit_content' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_content', page.id) }}"><i class="icon-file"></i> <span class="title">Content</span></a>
+      <a {{ route() == 'content_edit_settings' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_settings', page.id) }}"><i class="icon-cog"></i> <span class="title">Settings</span></a>
+      <a {{ route() == 'content_edit_translations' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_settings', page.id) }}"><i class="icon-globe"></i> <span class="title">Translations</span></a>
+      <a {{ route() == 'content_edit_revisions' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_revisions', page.id) }}"><i class="icon-random"></i> <span class="title">Revisions</span></a>
+      <div class="pull-right">
+        <button name="published" value="0" class="btn {{ revision.published == 1 ? 'btn-success': '' }}">Save Draft</button>
+        <button name="published" value="1" class="btn {{ revision.published == 0 ? 'btn-success': '' }}"><i class="icon-ok"></i> {{ revision.published ? 'Published' : 'Publish' }}</button>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

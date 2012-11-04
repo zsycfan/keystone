@@ -1,0 +1,18 @@
+.field-relationship .selected + input {
+	display: none;
+}
+
+.field-relationship .selected {
+	padding: 10px;
+}
+
+input[type="text"].relationship-search {
+	height: auto;
+	width: 100%;
+	margin: 0;
+	padding: 10px;
+	background: none;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+}

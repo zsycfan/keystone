@@ -1,0 +1,26 @@
+{% extends "layouts/_base.twig" %}
+
+{% block content %}
+  <div class="page-header">
+    <a class="btn btn-success pull-right" href="{{ url_to_route('content_new') }}"><i class="icon-plus"></i> Add Content</a>
+    <h1>Content</h1>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th width="5%">#</th>
+        <th width="20%">Title <a href="#"><i class="icon-sort"></i></a></th>
+        <th>Excerpt</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for page in pages %}
+      <tr>
+        <td><a href="{{ url_to_route('content_edit_content', page.id) }}">{{ page.id }}</a></td>
+        <td><a href="{{ url_to_route('content_edit_content', page.id) }}"><span class="singleline">{{ page.latest_revision().title }}</span></a></td>
+        <td><a href="{{ url_to_route('content_edit_content', page.id) }}"><span class="singleline">{{ page.latest_revision().excerpt }}</span></a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

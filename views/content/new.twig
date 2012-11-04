@@ -1,0 +1,36 @@
+{% extends "layouts/_base.twig" %}
+
+{% set action = 'content_save_new' %}
+{% set crumbs = [[url_to_route('content'), 'Content']] %}
+
+{% block content %}
+<form action="{{ url_to_route(action) }}" method="post">
+  <div class="page-header">
+    <h1>Page Layout</h1>
+  </div>
+  <ul class="cards">
+    {% for layout in layouts %}
+    <li>
+      <input type="radio" id="layout-{{layout}}" name="layout" value="{{layout}}" />
+      <label for="layout-{{layout}}" class="card">
+        <div class="img"><img src="http://placehold.it/150x200" /></div>
+        {{ ucfirst(layout) }}
+      </label>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <div class="fixed-form-actions">
+    <div class="form-actions">
+      <a class="disabled active" href="#"><i class="icon-columns"></i> <span class="title">Layout</span></a>
+      <a class="disabled" href="#"><i class="icon-file"></i> <span class="title">Content</span></a>
+      <a class="disabled" href="#"><i class="icon-cog"></i> <span class="title">Settings</span></a>
+      <a class="disabled" href="#"><i class="icon-globe"></i> <span class="title">Translations</span></a>
+      <a class="disabled" href="#"><i class="icon-random"></i> <span class="title">Revisions</span></a>
+      <div class="pull-right">
+        <button class="btn btn-success"> Save and Enter Content</button>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

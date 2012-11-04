@@ -1,0 +1,31 @@
+{% extends "layouts/_html.twig" %}
+
+{% block base %}
+<div class="header">
+  <ul class="utility">
+    <li><a href="#">Mark Huot</a></li>
+  </ul>
+  <div class="title row-fluid">
+    <div class="span12">
+      <h1>Wallaby <small>USHMM</small></h1>
+    </div>
+  </div>
+</div>
+<div class="page with-save">
+  <ul class="crumbs">
+    <li><a href="{{ url_to_route('dashboard') }}">Home</a></li>
+    {% for crumb in crumbs %}
+      <li><a href="{{ crumb[0] }}">{{ crumb[1] }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="container-fluid">
+    {% if sess('message') %}
+      <div class="alert alert-{{ sess('message_type') }}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        {{ sess('message') }}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </div>
+</div>
+{% endblock %}

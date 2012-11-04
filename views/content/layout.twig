@@ -1,0 +1,20 @@
+{% extends "content/_layout.twig" %}
+
+{% set action = 'content_save_layout' %}
+
+{% block formbody %}
+  <div class="page-header">
+    <h1>Page Layout</h1>
+  </div>
+  <ul class="cards">
+    {% for layout in layouts %}
+    <li>
+      <input type="radio" id="layout-{{layout}}" name="layout" value="{{layout}}" {{ revision.layout == layout ? 'checked="true"' : '' }} />
+      <label for="layout-{{layout}}" class="card">
+        <div class="img"><img src="http://placehold.it/150x200" /></div>
+        {{ ucfirst(layout) }}
+      </label>
+    </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

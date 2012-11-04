@@ -1,0 +1,34 @@
+{% extends "content/_layout.twig" %}
+
+{% set action = 'content_save_revisions' %}
+
+{% block formbody %}
+  <div class="page-header">
+    <h1>Revisions</h1>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Language</th>
+        <th>Date</th>
+        <th>Author</th>
+        <th>Published</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for rev in revisions %}
+        <tr {{ rev.published ? 'class="success"' : '' }}>
+          <td>{{ loop.index }}</td>
+          <td>{{ rev.language }}</td>
+          <td><a href="{{ url_to_route('content_edit_content', page.id) }}?revision={{ rev.id }}">{{ rev.created_at }}</a></td>
+          <td>Author</td>
+          <td>
+            {{ rev.published ? '<span class="badge badge-success">Published</span>' : '' }}
+            {{ rev.id == revision.id ? '<span class="badge badge-warning">Loaded</span>' : '' }}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

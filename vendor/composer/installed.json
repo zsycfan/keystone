@@ -1,0 +1,87 @@
+[
+    {
+        "name": "twig/twig",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "git://github.com/fabpot/Twig.git",
+            "reference": "61393dc9fb8982110048624aa573aec4aee0b465"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/fabpot/Twig/zipball/61393dc9fb8982110048624aa573aec4aee0b465",
+            "reference": "61393dc9fb8982110048624aa573aec4aee0b465",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.4"
+        },
+        "time": "2012-10-20 05:53:18",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.11-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Twig_": "lib/"
+            }
+        },
+        "license": [
+            "BSD-3"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Armin Ronacher",
+                "email": "armin.ronacher@active-4.com"
+            }
+        ],
+        "description": "Twig, the flexible, fast, and secure template language for PHP",
+        "homepage": "http://twig.sensiolabs.org",
+        "keywords": [
+            "templating"
+        ]
+    },
+    {
+        "name": "xamin/handlebars.php",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/XaminProject/handlebars.php",
+            "reference": "510ba18a3754f7f843eeae5cbf94d301c0105025"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/XaminProject/handlebars.php/zipball/510ba18a3754f7f843eeae5cbf94d301c0105025",
+            "reference": "510ba18a3754f7f843eeae5cbf94d301c0105025",
+            "shasum": ""
+        },
+        "time": "2012-10-25 15:14:32",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Handlebars": "src/"
+            }
+        },
+        "license": [
+            "GPLv3"
+        ],
+        "authors": [
+            {
+                "name": "fzerorubigd",
+                "email": "fzerorubigd@gmail.com"
+            }
+        ],
+        "description": "Handlebars processor for php",
+        "homepage": "https://github.com/XaminProject/handlebars.php"
+    }
+]

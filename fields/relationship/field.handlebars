@@ -1,0 +1,7 @@
+{{#if related}}
+<div class="selected">
+	<i class="icon-sitemap"></i> {{related.title}}
+	<input type="hidden" name="related" value="{{related.page_id}}" />
+</div>
+{{/if}}
+<input class="relationship-search" type="text" data-provide="typeahead" placeholder="Related..." />

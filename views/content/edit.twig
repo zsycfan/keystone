@@ -1,0 +1,62 @@
+{% extends "content/_layout.twig" %}
+
+{% set title = revision.title %}
+{% set action = 'content_save_content' %}
+
+{% block formbody %}
+  <div class="layout">
+    {{ layout|raw }}
+  </div>
+{% endblock %}
+
+{#
+	{{#inArray 'header' this.allow}}<li><a class="card" href="#" data-add-field data-type="header"><i class="icon-font"></i>Header</a></li>{{/inArray}}
+  {{#inArray 'plain' this.allow}}<li><a class="card" href="#" data-add-field data-type="plain">{{> field.plain.icon}}Plain Text</a></li>{{/inArray}}
+  {{#inArray 'list' this.allow}}<li><a class="card" href="#" data-add-field data-type="list"><i class="icon-list"></i>List</a></li>{{/inArray}}
+  {{#inArray 'asset' this.allow}}<li><a class="card" href="#" data-add-field data-type="asset">{{> field.asset.icon}}Asset</a></li>{{/inArray}}
+  {{#inArray 'relationship' this.allow}}<li><a class="card" href="#" data-add-field data-type="asset"><i class="icon-sitemap"></i>Relationship</a></li>{{/inArray}}
+  {{#inArray 'query' this.allow}}<li><a class="card" href="#" data-add-field data-type="query"><i class="icon-search"></i>Query</a></li>{{/inArray}}
+#}
+
+{% block javascript %}
+	{{ parent() }}
+	<script class="handlebars-template" data-name="field_chooser" type="text/x-handlebars-template">
+	  <div class="modal hide fade field-chooser" data-name="field_chooser">
+	    <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	      <h3>Choose a Field</h3>
+	      <p>Fields describe the type of data you can store in a region.</p>
+	    </div>
+	    <div class="modal-body">
+	      <ul class="cards">
+	      	{% for field in fields %}
+	      		{{ '{{' }}#inArray '{{ field }}' this.allow {{ '}}' }}<li><a class="card" href="#" data-add-field data-type="{{ field }}">{{ '{{' }}> field.{{ field }}.icon{{ '}}' }}{{ field }}</a></li>{{ '{{' }}/inArray{{ '}}' }}
+	      	{% endfor %}
+	      </ul>
+	    </div>
+	  </div>
+	</script>
+	{% raw %}
+	<script class="handlebars-template" data-name="field" type="text/x-handlebars-template">
+	  <div class="field field-{{ field.type }} clearfix" data-type="{{ field.type }}">
+	    <input type="hidden" name="type" value="{{ field.type }}" />
+	    <div class="ui-helper">
+	    	{{{ fieldIcon field.type }}}
+	    </div>
+	    <div class="actions">
+	      <div class="dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i></a>
+	        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	          <li><a class="move" href="#"><i class="icon-globe"></i> <span>Translate</span></a></li>
+	          <li><a class="delete" href="#" rel="tooltip" title="Remove this field" data-placement="left"><i class="icon-remove"></i> <span>Delete&hellip;</span></a></li>
+	        </ul>
+	      </div>
+	    </div>
+	    <div class="field-content">
+	      {{{ content }}}
+	    </div>
+	  </div>
+	</script>
+	{% endraw %}
+	{{ field_templates|raw }}
+{% endblock %}

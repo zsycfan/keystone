@@ -1,0 +1,81 @@
+.field-asset .asset-file {
+	padding: 10px;
+	margin-bottom: -10px;
+	float: left;
+}
+
+.field-asset .qq-upload-button {
+	background: none;
+	color: rgba(0,0,0,0.25);
+	border: 1px dashed #999;
+	position: relative;
+	padding: 0;
+	cursor: pointer;
+	width: auto;
+	display: inline-block;
+	margin-bottom: 10px;
+}
+
+.field-asset .qq-upload-button i {
+	position: absolute;
+	top: 50%;
+	margin-top: -.5em;
+	text-align: center;
+	width: 100%;
+	line-height: 1em;
+	font-size: 60px;
+}
+
+.field-asset .qq-upload-button input {
+	position: static !important;
+	background: red;
+	width: 200px !important;
+	height: 138px !important;
+	cursor: default;
+}
+
+.field-asset .file-list {
+	display: inline;
+	margin: 0;
+}
+
+.field-asset .file-list li {
+	max-width: 200px;
+	margin: 0 10px 10px 0;
+	display: inline-block;
+	line-height: inherit;
+	font-size: inherit;
+}
+
+.field-asset .file-list img {
+	max-width: 100%;
+}
+
+.field-asset input[type="file"] {
+	height: auto;
+}
+
+.field-asset [contenteditable] {
+	margin-left: 220px;
+	padding: 10px;
+}
+
+.field-asset [name="caption"] {
+	min-height: 100px;
+}
+
+.field-asset .file-list:hover .remove {
+	display: block;
+}
+
+.field-asset .remove {
+	background: rgba(0,0,0,0.3);
+	color: #fff;
+	padding: 2px 8px;
+	border-radius: 30px;
+	text-shadow: 0 1px 0 #000;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	display: none;
+}

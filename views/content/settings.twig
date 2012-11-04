@@ -1,0 +1,17 @@
+{% extends "content/_layout.twig" %}
+
+{% set action = 'content_save_settings' %}
+
+{% block formbody %}
+  <div class="page-header">
+    <h1>Settings</h1>
+  </div>
+  <p>
+    <label>Slug</label>
+    <input name="slug" type="text" placeholder="This will be the URL..." value="{{ revision.slug }}">
+  </p>
+  <p>
+    <label>Publish Date</label>
+    <input name="published_at" type="text" placeholder="Today?" value="{{ revision.published_at }}" />
+  </p>
+{% endblock %}
