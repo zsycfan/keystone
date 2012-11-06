@@ -1,0 +1,22 @@
+body {
+	// background: url(http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/use_your_illusion.png) repeat center center;
+	// background: url(http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/wild_oliva.png) repeat center center;
+	// background: url(http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/cartographer.png) repeat center center;
+	// background: url(http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/dark_geometric.png) repeat center center;
+	// background: url(http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/dark_wood.png) repeat center center;
+	background: url(http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/crissXcross.png) repeat center center;
+}
+.page {
+	background: #fff;
+	margin: 150px 10px 0;
+	position: relative;
+	z-index: 1;
+	box-shadow: 0 5px 10px rgba(0,0,0,0.4);
+	border-radius: 3px 3px 0 0;
+}
+.page.with-save {
+	padding-bottom: 90px;
+}
+.row, .row-fluid {
+	margin-bottom: 20px;
+}

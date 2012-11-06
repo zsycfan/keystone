@@ -1,23 +1,138 @@
 [
     {
+        "name": "symfony/process",
+        "version": "v2.1.3",
+        "version_normalized": "2.1.3.0",
+        "target-dir": "Symfony/Component/Process",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/Process",
+            "reference": "v2.1.3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/symfony/Process/zipball/v2.1.3",
+            "reference": "v2.1.3",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "time": "2012-10-20 00:10:30",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.1-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Symfony\\Component\\Process": ""
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "http://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Process Component",
+        "homepage": "http://symfony.com"
+    },
+    {
+        "name": "kriswallsmith/assetic",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "http://github.com/kriswallsmith/assetic.git",
+            "reference": "685b7381241fb13c47c994fe5d2e8c4964021f40"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/kriswallsmith/assetic/zipball/685b7381241fb13c47c994fe5d2e8c4964021f40",
+            "reference": "685b7381241fb13c47c994fe5d2e8c4964021f40",
+            "shasum": ""
+        },
+        "require": {
+            "symfony/process": ">=2.1.0,<2.3-dev",
+            "php": ">=5.3.1"
+        },
+        "require-dev": {
+            "twig/twig": ">=1.6.0,<2.0",
+            "leafo/lessphp": "*",
+            "leafo/scssphp": "*",
+            "ptachoire/cssembed": "*",
+            "leafo/scssphp-compass": "*"
+        },
+        "suggest": {
+            "twig/twig": "Assetic provides the integration with the Twig templating engine",
+            "leafo/lessphp": "Assetic provides the integration with the lessphp LESS compiler",
+            "leafo/scssphp": "Assetic provides the integration with the scssphp SCSS compiler",
+            "ptachoire/cssembed": "Assetic provides the integration with phpcssembed to embed data uris",
+            "leafo/scssphp-compass": "Assetic provides the integration with the SCSS compass plugin"
+        },
+        "time": "2012-10-30 08:14:39",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.1-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Assetic": "src/"
+            },
+            "files": [
+                "src/functions.php"
+            ]
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Kris Wallsmith",
+                "email": "kris.wallsmith@gmail.com",
+                "homepage": "http://kriswallsmith.net/"
+            }
+        ],
+        "description": "Asset Management for PHP",
+        "homepage": "https://github.com/kriswallsmith/assetic",
+        "keywords": [
+            "assets",
+            "compression",
+            "minification"
+        ]
+    },
+    {
         "name": "twig/twig",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "git://github.com/fabpot/Twig.git",
-            "reference": "61393dc9fb8982110048624aa573aec4aee0b465"
+            "reference": "abec35b833abfce5eb0ac7ce2bf2bf3462a5bebf"
         },
         "dist": {
             "type": "zip",
-            "url": "https://github.com/fabpot/Twig/zipball/61393dc9fb8982110048624aa573aec4aee0b465",
-            "reference": "61393dc9fb8982110048624aa573aec4aee0b465",
+            "url": "https://github.com/fabpot/Twig/archive/abec35b833abfce5eb0ac7ce2bf2bf3462a5bebf.zip",
+            "reference": "abec35b833abfce5eb0ac7ce2bf2bf3462a5bebf",
             "shasum": ""
         },
         "require": {
             "php": ">=5.2.4"
         },
-        "time": "2012-10-20 05:53:18",
+        "time": "2012-11-05 07:52:04",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -48,40 +163,5 @@
         "keywords": [
             "templating"
         ]
-    },
-    {
-        "name": "xamin/handlebars.php",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/XaminProject/handlebars.php",
-            "reference": "510ba18a3754f7f843eeae5cbf94d301c0105025"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://github.com/XaminProject/handlebars.php/zipball/510ba18a3754f7f843eeae5cbf94d301c0105025",
-            "reference": "510ba18a3754f7f843eeae5cbf94d301c0105025",
-            "shasum": ""
-        },
-        "time": "2012-10-25 15:14:32",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "Handlebars": "src/"
-            }
-        },
-        "license": [
-            "GPLv3"
-        ],
-        "authors": [
-            {
-                "name": "fzerorubigd",
-                "email": "fzerorubigd@gmail.com"
-            }
-        ],
-        "description": "Handlebars processor for php",
-        "homepage": "https://github.com/XaminProject/handlebars.php"
     }
 ]

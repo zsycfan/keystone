@@ -1,0 +1,25 @@
+.crumbs {
+	border-bottom: 1px solid #ccc;
+	padding: 10px 20px;
+	margin: 0 0 30px 0;
+	color: #999;
+}
+.crumbs li {
+	list-style: none;
+	display: inline;
+}
+.crumbs a {
+	display: inline-block;
+	padding: 5px 20px;
+	color: inherit;
+}
+.crumbs li:before {
+	font-family: FontAwesome;
+	content: " \f054 ";
+}
+.crumbs li:first-child a {
+	padding-left: 0;
+}
+.crumbs li:first-child:before {
+	content: "";
+}

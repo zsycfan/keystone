@@ -1,0 +1,35 @@
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+.utility {
+	border-bottom: 1px solid #000;
+	background: rgba(0,0,0,0.25);
+	margin: 0;
+	text-align: right;
+	padding: 5px 10px;
+	color: #444;
+}
+.utility a {
+	color: inherit;
+}
+.title {
+	padding: 40px 20px;
+	font-family: bree-serif, serif;
+}
+.title h1 {
+	color: #ddd;
+}
+.title small {
+	font-family: marvel, sans-serif;
+}
+.title input[type="search"] {
+	background: rgba(0,0,0,0.5);
+	border: none;
+	border-radius: 100px;
+	margin-top: 12px;
+	padding: 4px 15px;
+	width: 50%;
+}

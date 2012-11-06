@@ -1,6 +1,8 @@
 <?php
 
-class Articulate extends Eloquent
+namespace Keystone;
+
+class Articulate extends \Eloquent
 {
 
   public static function find_or_create($id)

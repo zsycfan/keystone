@@ -1,0 +1,186 @@
+.actions {
+	opacity: 0;
+
+	a:hover {
+		text-decoration: none;
+	}
+}
+
+.region {
+	border-radius: 4px;
+	position: relative;
+	border: 1px dashed transparent;
+
+	& > .actions {
+		border-radius: 4px;
+	}
+
+	& > .actions a {
+		display: block;
+		text-align: center;
+		padding: 10px 20px;
+		color: rgba(0,0,0,0.5);
+		border-radius: 0 0 4px 4px;
+		border-top: 1px solid #fff;
+		font-weight: bold;
+	}
+
+	&[data-count="0"]:not(.ui-sortable-droptarget) > .actions {
+		opacity: 1;
+	}
+
+	&[data-count="0"]:not(.ui-sortable-droptarget) > .actions a {
+		opacity: 1;
+		border: 3px dashed #ccc;
+		padding: 40px 20px;
+		font-size: 18px;
+		border-radius: 4px;
+	}
+
+	.ui-drag-active &.restricted, .ui-drag-active &.filled {
+		opacity: 0.25;
+	}
+
+	.ui-drag-active &:not([data-count="0"]), .ui-drag-active &.ui-sortable-droptarget {
+		border-color: #999;
+	}
+}
+
+// The padding and margin makes the box appear taller to the jquery sortable
+// without actually giving it any extra visual height. this makes for a larger
+// hit area, yay.
+.fields {
+	padding-bottom: 30px;
+	margin-bottom: -30px;
+}
+
+.field {
+	position: relative;
+	padding-right: 40px;
+	margin-bottom: 5px;
+	border-radius: 4px;
+
+	&:first-child {
+		border-top: none;
+	}
+
+	.ui-helper {
+		display: none;
+	}
+
+	& > .actions {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 40px;
+		height: 100%;
+		background: -webkit-linear-gradient(left, rgba(0,0,0,0.1), rgba(0,0,0,0));
+		background: rgba(0,0,0,0.05);
+		text-align: center;
+		border-radius: 0 4px 4px 0;
+	}
+
+	& > .actions .dropdown {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	& > .actions .dropdown-toggle {
+		font-size: 14px;
+		font-weight: normal;
+		text-shadow: 0 1px 0 #fff;
+		position: absolute;
+		top: 50%;
+		width: 100%;
+		height: 20px;
+		margin-top: -10px;
+	}
+
+	& > .actions .dropdown-menu {
+		text-align: left;
+	}
+
+	& > .actions i {
+		color: #999;
+	}
+}
+
+.region > .actions span {
+	display: none;
+}
+
+body:not(.ui-drag-active) .region:hover,
+.ui-sortable-droptarget {
+	& .field, 
+	& > .actions {
+		background: #ffffef;
+		box-shadow: 0 2px 2px rgba(0,0,0,0.05);
+	}
+
+	& > .actions {
+		opacity: 1;
+	}
+	& > .actions:first-child a {
+		background: rgba(0,0,0,0.1);
+	}
+}
+
+body:not(.ui-drag-active) .region:hover > .actions,
+.field:hover > .actions {
+	opacity: 1;
+}
+
+.ui-placeholder {
+	height: 5px !important;
+	margin-top: -5px;
+	position: relative;
+	z-index: 1000;
+}
+
+@-webkit-keyframes uiplaceholderpulse
+{
+	from { height: 10px; top: -5px; }
+	to { height: 20px; top: -10px; }
+}
+
+.ui-placeholder:after {
+	content: "";
+	position: absolute;
+	top: -5px;
+	left: 0;
+	width: 100%;
+	height: 10px;
+	border-radius: 20px;
+	box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+	background: #999 !important;
+	-webkit-animation: uiplaceholderpulse 1s linear 0s infinite alternate;
+}
+
+.ui-helper {
+	border-radius: 4px;
+	color: #000;
+	text-shadow: 0 1px 0 #fff;
+	font-size: 14px;
+	width: 40px !important;
+	height: auto !important;
+	padding: 5px 10px;
+	text-align: center;
+	box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+	background: #f3f3e4;
+}
+
+.ui-drag-source {
+	display: block !important;
+	background: #f3f3e4 !important;
+}
+
+.ui-drag-source .field-content {
+	opacity: 0.25;
+}
+
+.ui-drag-source + .ui-placeholder {
+	display: none;
+}

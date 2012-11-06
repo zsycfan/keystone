@@ -1,6 +1,6 @@
 <?php
 
-class Assets_Controller extends Base_Controller
+class Keystone_Assets_Controller extends Base_Controller
 {
 
   public function get_view($id)

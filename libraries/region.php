@@ -1,5 +1,7 @@
 <?php
 
+namespace Keystone;
+
 class Region {
 
 	public $name;
@@ -23,7 +25,7 @@ class Region {
 
 	public function __toString()
 	{
-		return (string)\Laravel\View::make('region.edit')
+		return (string)\Laravel\View::make('keystone::region.edit')
 			->with('region', $this)
 			->with('data', $this->data)
 		;

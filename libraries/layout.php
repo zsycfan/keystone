@@ -1,5 +1,9 @@
 <?php
 
+namespace Keystone;
+
+require \Bundle::path('keystone').'libraries'.DS.'layout'.DS.'helper'.EXT;
+
 class Layout {
 
 	public static $active;
@@ -58,7 +62,7 @@ class Layout {
 		// The contents of each view file is cached in an array for the
 		// request since partial views may be rendered inside of for
 		// loops which could incur performance penalties.
-		$__contents = File::get(realpath(path('layouts').$this->name.'/'.$this->name.'.php'));
+		$__contents = \File::get(realpath(path('layouts').$this->name.'/'.$this->name.'.php'));
 
 		ob_start() and extract($__data, EXTR_SKIP);
 
@@ -85,8 +89,4 @@ class Layout {
 		return $content;
 	}
 
-}
-
-function region($params) {
-	return new Region($params, Layout::active()->get_region_data($params['name']));
 }

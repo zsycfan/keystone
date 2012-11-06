@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Twig_' => $vendorDir . '/twig/twig/lib/',
-    'Handlebars' => $vendorDir . '/xamin/handlebars.php/src/',
+    'Symfony\\Component\\Process' => $vendorDir . '/symfony/process/',
+    'Assetic' => $vendorDir . '/kriswallsmith/assetic/src/',
 );

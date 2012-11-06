@@ -1,5 +1,7 @@
 <?php
 
+namespace Keystone;
+
 class Field
 {
 
@@ -22,7 +24,7 @@ class Field
     foreach ($field_templates as $field) {
       if (substr($field, 0, 1) == '.') continue;
       if (!file_exists($path = path('fields').$field.'/field.js')) continue;
-      $javascript[] = File::get($path);
+      $javascript[] = \File::get($path);
     }
 
     return implode('', $javascript);
@@ -35,7 +37,7 @@ class Field
     foreach ($field_templates as $field) {
       if (substr($field, 0, 1) == '.') continue;
       if (file_exists($path = path('fields').$field.'/field.handlebars')) {
-        $template = File::get($path);
+        $template = \File::get($path);
         $templates[] = <<<EOT
           <script class="handlebars-template" data-name="field.{$field}.field" type="text/x-handlebars-template">
           {$template}
@@ -43,7 +45,7 @@ class Field
 EOT;
       }
       if (file_exists($path = path('fields').$field.'/icon.handlebars')) {
-        $template = File::get($path);
+        $template = \File::get($path);
         $templates[] = <<<EOT
           <script class="handlebars-partial" data-name="field.{$field}.icon" type="text/x-handlebars-template">
           {$template}
@@ -69,7 +71,7 @@ EOT;
     foreach ($field_templates as $field) {
       if (substr($field, 0, 1) == '.') continue;
       if (!file_exists($path = path('fields').$field.'/field.css')) continue;
-      $css[] = File::get($path);
+      $css[] = \File::get($path);
     }
 
     return implode('', $css);

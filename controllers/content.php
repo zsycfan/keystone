@@ -1,12 +1,12 @@
 <?php
 
-class Content_Controller extends Base_Controller {
+class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_index()
   {
-    return View::make('content.list')
-      ->with('layouts', Layout::all())
-      ->with('pages', Page::all())
+    return Keystone\View::make('keystone::content.list')
+      ->with('layouts', Keystone\Layout::all())
+      ->with('pages', Keystone\Page::all())
     ;
   }
 
@@ -15,8 +15,8 @@ class Content_Controller extends Base_Controller {
     $page = new Page();
     $revision = new PageRevision();
     $page->revisions()->insert($revision);
-    return View::make('content.new')
-      ->with('layouts', Layout::all())
+    return Keystone\View::make('keystone::content.new')
+      ->with('layouts', Keystone\Layout::all())
       ->with('page', $page)
       ->with('revision', $revision)
     ;
@@ -29,7 +29,7 @@ class Content_Controller extends Base_Controller {
       'published' => false,
     );
 
-    $page = Page::create(array());
+    $page = Keystone\Page::create(array());
     $revision = new PageRevision($data);
     $page->revisions()->insert($revision);
 
@@ -41,10 +41,10 @@ class Content_Controller extends Base_Controller {
 
   public function get_layout($id)
   {
-    $page = Page::find($id);
+    $page = Keystone\Page::find($id);
     $revision = $page->revision_or_latest(Input::get('revision'));
-    return View::make('content.layout')
-      ->with('layouts', Layout::all())
+    return Keystone\View::make('keystone::content.layout')
+      ->with('layouts', Keystone\Layout::all())
       ->with('page', $page)
       ->with('revision', $revision)
     ;
@@ -57,7 +57,7 @@ class Content_Controller extends Base_Controller {
       'published' => Input::get('published'),
     );
 
-    $page = Page::find(Input::get('id'));
+    $page = Keystone\Page::find(Input::get('id'));
     $revision = $page->latest_revision()->fill($data);
     
     if ($revision->dirty()) {
@@ -73,7 +73,7 @@ class Content_Controller extends Base_Controller {
 
   public function get_content($id)
   {
-    $page = Page::find($id);
+    $page = Keystone\Page::find($id);
     $revision = $page->revision_or_latest(Input::get('revision'));
     $latest_revision = $page->latest_revision();
 
@@ -82,13 +82,13 @@ class Content_Controller extends Base_Controller {
       Session::flash('message_type', 'warning');
     }
 
-    return View::make('content.edit')
+    return Keystone\View::make('keystone::content.edit')
       ->with('page', $page)
       ->with('revision', $revision)
       ->with('latest_revision', $latest_revision)
-      ->with('layout', Layout::make($revision->layout, $revision->regions))
-      ->with('fields', Field::all())
-      ->with('field_templates', Field::handlebars_templates())
+      ->with('layout', Keystone\Layout::make($revision->layout, $revision->regions))
+      ->with('fields', Keystone\Field::all())
+      ->with('field_templates', Keystone\Field::handlebars_templates())
     ;
   }
 
@@ -100,7 +100,7 @@ class Content_Controller extends Base_Controller {
       'published' => Input::get('published'),
     );
 
-    $page = Page::find(Input::get('id'));
+    $page = Keystone\Page::find(Input::get('id'));
     $revision = $page->latest_revision()->fill($data);
     
     if ($revision->dirty()) {
@@ -116,10 +116,10 @@ class Content_Controller extends Base_Controller {
 
   public function get_settings($id)
   {
-    $page = Page::find($id);
+    $page = Keystone\Page::find($id);
     $revision = $page->revision_or_latest(Input::get('revision'));
 
-    return View::make('content.settings')
+    return Keystone\View::make('keystone::content.settings')
       ->with('page', $page)
       ->with('revision', $revision)
     ;
@@ -133,7 +133,7 @@ class Content_Controller extends Base_Controller {
       'published' => Input::get('published'),
     );
 
-    $page = Page::find(Input::get('id'));
+    $page = Keystone\Page::find(Input::get('id'));
     $revision = $page->latest_revision()->fill($data);
     
     if ($revision->dirty()) {
@@ -149,10 +149,10 @@ class Content_Controller extends Base_Controller {
 
   public function get_revisions($id)
   {
-    $page = Page::find($id);
+    $page = Keystone\Page::find($id);
     $revisions = $page->revisions()->get();
 
-    return View::make('content.revisions')
+    return Keystone\View::make('keystone::content.revisions')
       ->with('page', $page)
       ->with('revision', $page->revision_or_latest(Input::get('revision')))
       ->with('revisions', $revisions)
@@ -165,7 +165,7 @@ class Content_Controller extends Base_Controller {
       'published' => Input::get('published'),
     );
 
-    $page = Page::find(Input::get('id'));
+    $page = Keystone\Page::find(Input::get('id'));
     $revision = $page->latest_revision()->fill($data);
     
     if ($revision->dirty()) {

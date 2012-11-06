@@ -1,0 +1,43 @@
+.cards {
+	margin-left: 0;
+	text-align: center;
+}
+.cards li {
+	display: inline;
+}
+.card {
+	display: inline-block;
+	border: 1px solid #eee;
+	padding: 10px;
+	margin: 10px 30px;
+	text-align: center;
+	box-shadow: 0 0 2px rgba(0,0,0,0.1);
+	border-radius: 4px;
+
+	input:checked + & {
+		background: #ffffef;
+		box-shadow: 0 0 8px rgba(0,0,0,0.3);
+	}
+
+	.img {
+		border-radius: 4px;
+		overflow: hidden;
+		margin-bottom: 14px;
+	}
+}
+.card img {
+	display: block;
+}
+.card i {
+	display: block !important;
+	font-size: 72px;
+	line-height: 1;
+}
+.card:hover {
+	text-decoration: none;
+	background: #eee;
+}
+.cards input[type="radio"] {
+	position: absolute;
+	left: -9999px;
+}
