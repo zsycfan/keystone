@@ -2,7 +2,7 @@ $(document).on('field:init', '.field-relationship', function(e) {
   $('.field-relationship').find('input').typeahead({
     source: function(query, process) {
       var that = this;
-      return $.get('/api/pages/'+query, function(data) {
+      return $.get('/keystone/api/pages/'+query, function(data) {
         that.data = data
         return that.process(data)
       })

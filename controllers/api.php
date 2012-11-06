@@ -1,12 +1,12 @@
 <?php
 
-class Keystone_Api_Controller extends Base_Controller
+class Keystone_Api_Controller extends Keystone_Base_Controller
 {
 
   public function get_pages($query)
   {
     $queries = preg_split('/\s+/', $query);
-    $q = PageRevision::group_by('page_id');
+    $q = Keystone\PageRevision::group_by('page_id');
 
     foreach ($queries as $query) {
       $q->where('title', 'like', "%{$query}%");
