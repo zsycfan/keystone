@@ -1,5 +1,7 @@
 <?php
 
+namespace Keystone;
+
 class WallabyJson
 {
 

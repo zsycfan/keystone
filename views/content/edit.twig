@@ -9,15 +9,6 @@
   </div>
 {% endblock %}
 
-{#
-	{{#inArray 'header' this.allow}}<li><a class="card" href="#" data-add-field data-type="header"><i class="icon-font"></i>Header</a></li>{{/inArray}}
-  {{#inArray 'plain' this.allow}}<li><a class="card" href="#" data-add-field data-type="plain">{{> field.plain.icon}}Plain Text</a></li>{{/inArray}}
-  {{#inArray 'list' this.allow}}<li><a class="card" href="#" data-add-field data-type="list"><i class="icon-list"></i>List</a></li>{{/inArray}}
-  {{#inArray 'asset' this.allow}}<li><a class="card" href="#" data-add-field data-type="asset">{{> field.asset.icon}}Asset</a></li>{{/inArray}}
-  {{#inArray 'relationship' this.allow}}<li><a class="card" href="#" data-add-field data-type="asset"><i class="icon-sitemap"></i>Relationship</a></li>{{/inArray}}
-  {{#inArray 'query' this.allow}}<li><a class="card" href="#" data-add-field data-type="query"><i class="icon-search"></i>Query</a></li>{{/inArray}}
-#}
-
 {% block javascript %}
 	{{ parent() }}
 	<script class="handlebars-template" data-name="field_chooser" type="text/x-handlebars-template">
@@ -44,13 +35,7 @@
 	    	{{{ fieldIcon field.type }}}
 	    </div>
 	    <div class="actions">
-	      <div class="dropdown">
-	        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i></a>
-	        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-	          <li><a class="move" href="#"><i class="icon-globe"></i> <span>Translate</span></a></li>
-	          <li><a class="delete" href="#" rel="tooltip" title="Remove this field" data-placement="left"><i class="icon-remove"></i> <span>Delete&hellip;</span></a></li>
-	        </ul>
-	      </div>
+	    	<i class="icon-move"></i>
 	    </div>
 	    <div class="field-content">
 	      {{{ content }}}
