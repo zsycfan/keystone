@@ -12,8 +12,8 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_new()
   {
-    $page = new Page();
-    $revision = new PageRevision();
+    $page = new Keystone\Page();
+    $revision = new Keystone\PageRevision();
     $page->revisions()->insert($revision);
     return Keystone\View::make('keystone::content.new')
       ->with('layouts', Keystone\Layout::all())
@@ -30,7 +30,7 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
     );
 
     $page = Keystone\Page::create(array());
-    $revision = new PageRevision($data);
+    $revision = new Keystone\PageRevision($data);
     $page->revisions()->insert($revision);
 
     return Redirect::to_route('content_edit_content', $page->id)
