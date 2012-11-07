@@ -68,6 +68,14 @@ class PageRevision extends Articulate
     $this->attributes['regions'] = json_encode($regions);
   }
 
+  public static function slugify($str)
+  {
+    $clean = preg_replace('/[^a-z0-9_-\s]/i', '', $str);
+    $trimmed = trim($clean);
+    $spaced = preg_replace('/\s+/', '-', $trimmed);
+    return strtolower($spaced);
+  }
+
   public function event_saving()
   {
     if ($this->regions) {
@@ -78,6 +86,7 @@ class PageRevision extends Articulate
 
       if ($title_key) {
         $this->attributes['title'] = WallabyJson::content($this->regions[$title_key]);
+        $this->attributes['slug'] = $this->attributes['slug']?:static::slugify($this->attributes['title']);
       }
 
       $excerpt_key = false;
