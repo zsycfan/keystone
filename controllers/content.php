@@ -12,13 +12,8 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_new()
   {
-    $page = new Keystone\Page();
-    $revision = new Keystone\PageRevision();
-    $page->revisions()->insert($revision);
     return Keystone\View::make('keystone::content.new')
       ->with('layouts', Keystone\Layout::all())
-      ->with('page', $page)
-      ->with('revision', $revision)
     ;
   }
 
