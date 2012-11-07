@@ -1,5 +1,7 @@
 <?php
 
+namespace Keystone;
+
 class Asset extends Articulate
 {
 
@@ -22,15 +24,15 @@ class Asset extends Articulate
 		}
 
 		if (!isset($asset['filesize'])) {
-			$asset['filesize'] = File::size($path);
+			$asset['filesize'] = \File::size($path);
 		}
 
 		if (!isset($asset['type'])) {
-			$asset['type'] = File::type($path);
+			$asset['type'] = \File::type($path);
 		}
 
 		if (!isset($asset['mime'])) {
-			$asset['mime'] = File::mime($path);
+			$asset['mime'] = \File::mime($path);
 		}
 
 		return parent::create($asset);

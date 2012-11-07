@@ -1,11 +1,11 @@
 <?php
 
-class Keystone_Assets_Controller extends Base_Controller
+class Keystone_Assets_Controller extends Keystone_Base_Controller
 {
 
   public function get_view($id)
   {
-    $asset = Asset::find($id);
+    $asset = Keystone\Asset::find($id);
     return Response::make(file_get_contents($asset->path.$asset->name), 200, array(
       'Content-Type'              => $asset->mime,
       'Content-Transfer-Encoding' => $asset->type,
@@ -24,13 +24,13 @@ class Keystone_Assets_Controller extends Base_Controller
     // max file size in bytes
     $sizeLimit = 100 * 1024 * 1024;
 
-    $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+    $uploader = new Keystone\qqFileUploader($allowedExtensions, $sizeLimit);
 
     // Call handleUpload() with the name of the folder, relative to PHP's getcwd()
-    $result = $uploader->handleUpload('public/uploads/');
+    $result = $uploader->handleUpload(path('public').'uploads/', true);
 
     if (@$result['success'] === true) {
-      $result['asset'] = Asset::create(array(
+      $result['asset'] = Keystone\Asset::create(array(
         'path' => 'public/uploads/',
         'name' => $uploader->getUploadName(),
       ))->to_array();
