@@ -123,6 +123,7 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   public function post_settings()
   {
     $data = array(
+      'path' => Input::get('path')?:null,
       'slug' => Input::get('slug')?:null,
       'published_at' => Input::get('published_at')?:null,
       'published' => Input::get('published'),

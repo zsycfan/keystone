@@ -17,6 +17,7 @@ class Keystone_Create_Page_Tables {
       $table->increments('id');
       $table->integer('page_id');
       $table->string('language', 32)->default('en-us');
+      $table->string('path', 1024);
       $table->string('slug', 255);
       $table->string('layout', 255);
       $table->string('title', 255);

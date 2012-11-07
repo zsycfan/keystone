@@ -7,8 +7,12 @@
     <h1>Settings</h1>
   </div>
   <p>
+    <label>Path</label>
+    <input name="path" type="text" placeholder="The path to the page" value="{{ revision.path }}">
+  </p>
+  <p>
     <label>Slug</label>
-    <input name="slug" type="text" placeholder="This will be the URL..." value="{{ revision.slug }}">
+    <input name="slug" type="text" placeholder="This will be the URL" value="{{ revision.slug }}">
   </p>
   <p>
     <label>Publish Date</label>
