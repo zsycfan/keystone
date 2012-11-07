@@ -1,0 +1,1 @@
+Keystone manages content, not pages.
