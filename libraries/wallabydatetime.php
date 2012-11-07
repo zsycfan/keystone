@@ -2,7 +2,7 @@
 
 namespace Keystone;
 
-class WallabyDateTime extends DateTime
+class WallabyDateTime extends \DateTime
 {
 
 	public function __toString()

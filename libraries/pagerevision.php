@@ -13,7 +13,7 @@ class PageRevision extends Articulate
       return null;
     }
     
-    $date = new \WallabyDateTime($this->attributes['published_at'], new \DateTimeZone('UTC'));
+    $date = new WallabyDateTime($this->attributes['published_at'], new \DateTimeZone('UTC'));
     return $date->setTimeZone(new \DateTimeZone('America/New_York'));
   }
 
