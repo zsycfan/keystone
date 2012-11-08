@@ -7,8 +7,6 @@
 {% block content %}
 <form action="{{ url_to_route(action) }}" method="post">
   <input type="hidden" name="id" value="{{ page.id }}" />
-  <input type="hidden" name="revision_id" value="{{ revision.id }}" />
-  <input type="hidden" name="layout" value="{{ revision.layout }}" />
   
   {% block formbody %}{% endblock %}
 
@@ -20,8 +18,8 @@
       <a {{ route() == 'content_edit_translations' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_settings', page.id) }}"><i class="icon-globe"></i> <span class="title">Translations</span></a>
       <a {{ route() == 'content_edit_revisions' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_revisions', page.id) }}"><i class="icon-random"></i> <span class="title">Revisions</span></a>
       <div class="pull-right">
-        <button name="published" value="0" class="btn {{ revision.published == 1 ? 'btn-success': '' }}">Save Draft</button>
-        <button name="published" value="1" class="btn {{ revision.published == 0 ? 'btn-success': '' }}"><i class="icon-ok"></i> {{ revision.published ? 'Published' : 'Publish' }}</button>
+        <button name="published" value="0" class="btn {{ page.published() == true ? 'btn-success': '' }}">Save Draft</button>
+        <button name="published" value="1" class="btn {{ page.published() == false ? 'btn-success': '' }}"><i class="icon-ok"></i> {{ page.published() ? 'Published' : 'Publish' }}</button>
       </div>
     </div>
   </div>

@@ -9,7 +9,7 @@
   <ul class="cards">
     {% for layout in layouts %}
     <li>
-      <input type="radio" id="layout-{{layout}}" name="layout" value="{{layout}}" {{ revision.layout == layout ? 'checked="true"' : '' }} />
+      <input type="radio" id="layout-{{layout}}" name="layout" value="{{layout}}" {{ page.layout == layout ? 'checked="true"' : '' }} />
       <label for="layout-{{layout}}" class="card">
         <div class="img"><img src="http://placehold.it/150x200" /></div>
         {{ ucfirst(layout) }}

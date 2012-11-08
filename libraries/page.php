@@ -5,6 +5,11 @@ namespace Keystone;
 class Page extends Articulate
 {
 
+  public function published()
+  {
+    return true;
+  }
+
   public function revisions()
   {
     return $this->has_many('Keystone\PageRevision');

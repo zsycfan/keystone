@@ -19,47 +19,29 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function post_new()
   {
-    $data = array(
-      'layout' => Input::get('layout'),
-      'published' => false,
-    );
-
-    $page = Keystone\Page::create(array());
-    $revision = new Keystone\PageRevision($data);
-    $page->revisions()->insert($revision);
-
+    $page = new Keystone\Entity\Page();
+    $page->layout = Input::get('layout');
+    \Keystone\Repository\Page::create($page);
     return Redirect::to_route('content_edit_content', $page->id)
       ->with('message', 'Saved!')
       ->with('message_type', 'success')
-    ; 
+    ;
   }
 
   public function get_layout($id)
   {
-    $page = Keystone\Page::find($id);
-    $revision = $page->revision_or_latest(Input::get('revision'));
+    $page = Keystone\Repository\Page::find($id);
     return Keystone\View::make('keystone::content.layout')
       ->with('layouts', Keystone\Layout::all())
       ->with('page', $page)
-      ->with('revision', $revision)
     ;
   }
 
   public function post_layout()
   {
-    $data = array(
-      'layout' => Input::get('layout'),
-      'published' => Input::get('published'),
-    );
-
-    $page = Keystone\Page::find(Input::get('id'));
-    $revision = $page->latest_revision()->fill($data);
-    
-    if ($revision->dirty()) {
-      $page->touch();
-      $page->revisions()->insert($revision->duplicate());
-    }
-
+    $page = Keystone\Repository\Page::find(Input::get('id'));
+    $page->layout = Input::get('layout');
+    Keystone\Repository\Page::save($page);
     return Redirect::to_route('content_edit_layout', $page->id)
       ->with('message', 'Saved!')
       ->with('message_type', 'success')
@@ -68,20 +50,8 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_content($id)
   {
-    $page = Keystone\Page::find($id);
-    $revision = $page->revision_or_latest(Input::get('revision'));
-    $latest_revision = $page->latest_revision();
-
-    if ($revision->id != $latest_revision->id) {
-      Session::flash('message', 'Not the latest.');
-      Session::flash('message_type', 'warning');
-    }
-
     return Keystone\View::make('keystone::content.edit')
-      ->with('page', $page)
-      ->with('revision', $revision)
-      ->with('latest_revision', $latest_revision)
-      ->with('layout', Keystone\Layout::make($revision->layout, $revision->regions))
+      ->with('page', Keystone\Repository\Page::find($id))
       ->with('fields', Keystone\Field::all())
       ->with('field_templates', Keystone\Field::handlebars_templates())
     ;
@@ -89,20 +59,9 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function post_content()
   {
-    $data = array(
-      'layout' => Input::get('layout'),
-      'regions' => Input::get('regions'),
-      'published' => Input::get('published'),
-    );
-
-    $page = Keystone\Page::find(Input::get('id'));
-    $revision = $page->latest_revision()->fill($data);
-    
-    if ($revision->dirty()) {
-      $page->touch();
-      $page->revisions()->insert($revision->duplicate());
-    }
-
+    $page = Keystone\Repository\Page::find(Input::get('id'));
+    $page->regions = Input::get('regions');
+    Keystone\Repository\Page::save($page);
     return Redirect::to_route('content_edit_content', $page->id)
       ->with('message', 'Saved!')
       ->with('message_type', 'success')
@@ -111,32 +70,18 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_settings($id)
   {
-    $page = Keystone\Page::find($id);
-    $revision = $page->revision_or_latest(Input::get('revision'));
-
+    $page = Keystone\Repository\Page::find($id);
     return Keystone\View::make('keystone::content.settings')
       ->with('page', $page)
-      ->with('revision', $revision)
     ;
   }
 
   public function post_settings()
   {
-    $data = array(
-      'path' => Input::get('path'),
-      'slug' => Input::get('slug'),
-      'published_at' => Input::get('published_at'),
-      'published' => Input::get('published'),
-    );
-
-    $page = Keystone\Page::find(Input::get('id'));
-    $revision = $page->latest_revision()->fill($data);
-    
-    if ($revision->dirty()) {
-      $page->touch();
-      $page->revisions()->insert($revision->duplicate());
-    }
-
+    $page = Keystone\Repository\Page::find(Input::get('id'));
+    $page->uri = Input::get('uri');
+    $page->published_at = Input::get('published_at');
+    Keystone\Repository\Page::save($page);
     return Redirect::to_route('content_edit_settings', $page->id)
       ->with('message', 'Saved!')
       ->with('message_type', 'success')
@@ -145,13 +90,10 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_revisions($id)
   {
-    $page = Keystone\Page::find($id);
-    $revisions = $page->revisions()->get();
-
+    $page = Keystone\Repository\Page::find($id);
     return Keystone\View::make('keystone::content.revisions')
       ->with('page', $page)
-      ->with('revision', $page->revision_or_latest(Input::get('revision')))
-      ->with('revisions', $revisions)
+      ->with('revisions', Keystone\Repository\Page::revisions($id))
     ;
   }
 
