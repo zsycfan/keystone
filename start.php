@@ -2,6 +2,17 @@
 
 /*
 |--------------------------------------------------------------------------
+| Set Mimes
+|--------------------------------------------------------------------------
+|
+| The default mimes list is missing a few, so we'll augment it here unitl
+| our pull request is merged into the core
+|
+*/
+Config::set('application::mimes', Config::get('keystone::mimes'));
+
+/*
+|--------------------------------------------------------------------------
 | Auto-Loader Mappings
 |--------------------------------------------------------------------------
 |

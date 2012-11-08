@@ -1,13 +1,13 @@
-$ ->
+# Determine which regions can accept a drag on mouse down
+$(document).on 'mousedown', '.fields .actions', (event)->
+  field = $(this).closest '.field'
+  $('.region').each ->
+    allow = $(this).data('allow')
+    if (allow && $.inArray(field.data('type'), allow) == -1)
+      $(this).addClass 'restricted'
+  $('.fields').sortable 'refresh'
 
-  # Determine which regions can accept a drag on mouse down
-  $(document).on 'mousedown', '.fields .actions', (event)->
-    field = $(this).closest '.field'
-    $('.region').each ->
-      allow = $(this).data('allow')
-      if (allow && $.inArray(field.data('type'), allow) == -1)
-        $(this).addClass 'restricted'
-    $('.fields').sortable 'refresh'
+$ ->
 
   # Enable sortable for fields
   window.sortable = $(".fields").sortable

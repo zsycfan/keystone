@@ -16,17 +16,16 @@ Handlebars.registerHelper 'fieldIcon', (field, block)->
   context = $.extend({}, this, block.hash)
   new Handlebars.SafeString partial(context)
 
-$ ->
-  # Store the handlebar templates in the window object so they're accessiable
-  # outside this function.
-  window.templates = window.partials = []
+# Store the handlebar templates in the window object so they're accessiable
+# outside this function.
+window.templates = window.partials = []
 
-  # Loop through any handlebar templates in the source and compile them into 
-  # the window object.
-  $('.handlebars-template').each ->
-    window.templates[$(this).data('name')] = Handlebars.compile $(this).html()
+# Loop through any handlebar templates in the source and compile them into 
+# the window object.
+$('.handlebars-template').each ->
+  window.templates[$(this).data('name')] = Handlebars.compile $(this).html()
 
-  # Loop through any handlebar partials in the source and compile them into 
-  # the window object.
-  $('.handlebars-partial').each ->
-    window.partials[$(this).data('name')] = Handlebars.registerPartial $(this).data('name'), $(this).html()
+# Loop through any handlebar partials in the source and compile them into 
+# the window object.
+$('.handlebars-partial').each ->
+  window.partials[$(this).data('name')] = Handlebars.registerPartial $(this).data('name'), $(this).html()

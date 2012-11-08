@@ -1,11 +1,13 @@
 <html>
 <head>
   <title>{{ title|default('Keystone') }}</title>
-  <link rel="stylesheet" href="/keystone/fontawesome/css/font-awesome.css" type="text/css" />
-  <link rel="stylesheet" href="/keystone/css/screen.css" type="text/css" />
-  <link rel="stylesheet" href="{{ url_to('keystone/fields/css') }}" type="text/css" />
-  <script src="http://use.edgefonts.net/bree-serif.js"></script>
-  <script src="http://use.edgefonts.net/marvel.js"></script>
+  {% block stylesheets %}
+    <link rel="stylesheet" href="/keystone/fontawesome/css/font-awesome.css" type="text/css" />
+    <link rel="stylesheet" href="/keystone/css/screen.css" type="text/css" />
+    <link rel="stylesheet" href="{{ url_to('keystone/fields/css') }}" type="text/css" />
+    <script src="http://use.edgefonts.net/bree-serif.js"></script>
+    <script src="http://use.edgefonts.net/marvel.js"></script>
+  {% endblock %}
 </head>
 <body>
 	{% block base %}{% endblock %}
@@ -13,7 +15,7 @@
   	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.min.js"></script>
     <script src="{{ url_to('keystone/fields/js') }}"></script>
-    <script src="/keystone/js/functions.min.js"></script>
+    <script src="/keystone/js/functions.js"></script>
   {% endblock %}
 </body>
 </html>
