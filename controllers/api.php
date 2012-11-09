@@ -5,14 +5,13 @@ class Keystone_Api_Controller extends Keystone_Base_Controller
 
   public function get_pages($query)
   {
-    $queries = preg_split('/\s+/', $query);
-    $q = Keystone\PageRevision::group_by('page_id');
-
-    foreach ($queries as $query) {
-      $q->where('title', 'like', "%{$query}%");
+    $pages = Keystone\Repository\Page::find_by_title($query);
+    foreach ($pages as &$page) {
+      $page = $page->to_array();
     }
-
-    return Response::eloquent($q->get());
+    return Response::make(json_encode($pages), 200, array(
+      'Content-type' => 'application/json'
+    ));
   }
 
 }

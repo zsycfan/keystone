@@ -15,10 +15,7 @@ $(document).on('field:init', '.field-relationship', function(e) {
     },
     highlighter: function (item) {
       var queries = this.query.split(/\s+/)
-      queries = $.grep(queries, function(q, i) {
-        return q
-      })
-      title = item.title
+      var title = item.title
       for (var i=0; len=queries.length,i<len; i++) {
         var query = queries[i].replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
         title = title.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
@@ -29,7 +26,7 @@ $(document).on('field:init', '.field-relationship', function(e) {
     },
     updater: function(item) {
       var item = this.data[this.$menu.find('.active').index()];
-      this.$element.before('<div class="selected"><i class="icon-sitemap"></i> '+item.title+'<input type="hidden" name="related" value="'+item.page_id+'" /></div>')
+      this.$element.before('<div class="selected"><i class="icon-sitemap"></i> '+item.title+'<input type="hidden" name="related" value="'+item.id+'" /></div>')
       return item.title
     }
   });
