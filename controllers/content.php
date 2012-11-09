@@ -32,7 +32,7 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
       ->with('fields', Keystone\Field::all())
       ->with('field_css', Keystone\Field::css())
       ->with('field_javascript', Keystone\Field::javascript())
-      ->with('field_templates', Keystone\Field::handlebars_templates())
+      ->with('field_templates', Keystone\Field::templates())
     ;
   }
 

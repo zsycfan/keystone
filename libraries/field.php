@@ -30,7 +30,7 @@ class Field
     return implode('', $javascript);
   }
 
-  public static function handlebars_templates()
+  public static function templates()
   {
     $templates = array();
     $field_templates = scandir(path('fields'));
