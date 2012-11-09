@@ -42,7 +42,7 @@ class Entity
   {
     foreach ($data as $key => $value) {
       if ($raw == false) {
-        if (empty($this->accessible) || !in_array($key, $this->accessible)) {
+        if (!empty($this->accessible) && !in_array($key, $this->accessible)) {
           throw new \Exception("You can&rsquo;t set [{$key}]");
         }
       }
