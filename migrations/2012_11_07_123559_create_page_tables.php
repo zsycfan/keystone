@@ -28,6 +28,7 @@ class Keystone_Create_Page_Tables {
       $table->increments('id');
       $table->integer('revision_id');
       $table->integer('order')->nullable();
+      $table->string('uri', 2048)->nullable();
       for ($i=1; $i<=20; $i++) {
         $table->string("segment{$i}", 255)->nullable();
       }

@@ -2,14 +2,9 @@
 
 namespace Keystone\Entity;
 
-class PageRevision
+class PageRevision extends \Keystone\Entity
 {
 
-  public function __construct($data)
-  {
-    foreach ($data as $key => $value) {
-      $this->$key = $value;
-    }
-  }
+  
 
 }

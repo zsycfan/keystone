@@ -7,7 +7,10 @@ class Keystone_Site_Controller extends Base_Controller
 
 	public function get_page($uri)
 	{
-    if (!$pages = Keystone\Keystone::make(array('uri' => $uri))->get_pages()) {
+    try {
+      $page = Keystone\Repository\Page::find_by_uri($uri, array('published' => true));
+    }
+    catch (Exception $e) {
       return Response::error('404');
     }
 	}

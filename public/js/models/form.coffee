@@ -1,7 +1,7 @@
 $(document).on 'submit', 'form:has([contenteditable])', ->
   for el in $(this).find('[name]')
     if $(el).closest('.region').size()
-      prefix = 'regions[' + $(el).closest('.region').data('name') + '][' + $(el).closest('.field').index() + ']'
+      prefix = 'page[regions][' + $(el).closest('.region').data('name') + '][' + $(el).closest('.field').index() + ']'
       name = $(el).attr('name').replace(/\]$/, '').replace(/\[/, '][')
       $(el).attr('name', prefix + '[' + name + ']')
   for el in $(this).find('[contenteditable]')

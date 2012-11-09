@@ -1,6 +1,6 @@
 {% extends "layouts/_base.twig" %}
 
-{% set action = 'content_save_new' %}
+{% set redirect = 'content_edit_layout' %}
 {% set crumbs = [[url_to_route('content'), 'Content']] %}
 
 {% block content %}
@@ -11,7 +11,7 @@
   <ul class="cards">
     {% for layout in layouts %}
     <li>
-      <input type="radio" id="layout-{{layout}}" name="layout" value="{{layout}}" />
+      <input type="radio" id="layout-{{layout}}" name="page[layout]" value="{{layout}}" />
       <label for="layout-{{layout}}" class="card">
         <div class="img"><img src="http://placehold.it/150x200" /></div>
         {{ ucfirst(layout) }}

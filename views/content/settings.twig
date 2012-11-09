@@ -1,6 +1,6 @@
 {% extends "content/_layout.twig" %}
 
-{% set action = 'content_save_settings' %}
+{% set redirect = 'content_edit_settings' %}
 
 {% block formbody %}
   <div class="page-header">
@@ -8,10 +8,10 @@
   </div>
   <p>
     <label>URI</label>
-    <input name="uri" type="text" placeholder="/path/to/resource" value="{{ page.uri }}" />
+    <input name="page[uri]" type="text" placeholder="/path/to/resource" value="{{ page.uri }}" />
   </p>
   <p>
     <label>Publish Date</label>
-    <input name="published_at" type="text" placeholder="Today?" value="{{ page.published_at }}" />
+    <input name="page[published_at]" type="text" placeholder="Today?" value="{{ page.published_at }}" />
   </p>
 {% endblock %}

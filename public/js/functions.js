@@ -5715,7 +5715,7 @@ Handlebars.template = Handlebars.VM.template;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       el = _ref[_i];
       if ($(el).closest('.region').size()) {
-        prefix = 'regions[' + $(el).closest('.region').data('name') + '][' + $(el).closest('.field').index() + ']';
+        prefix = 'page[regions][' + $(el).closest('.region').data('name') + '][' + $(el).closest('.field').index() + ']';
         name = $(el).attr('name').replace(/\]$/, '').replace(/\[/, '][');
         $(el).attr('name', prefix + '[' + name + ']');
       }
