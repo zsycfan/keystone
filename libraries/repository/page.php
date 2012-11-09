@@ -59,7 +59,7 @@ class Page
 
     $revisions = array();
     foreach ($revs as $rev) {
-      $revisions[] = new \Keystone\Entity\PageRevision($rev);
+      $revisions[] = static::create_entity($rev);
     }
 
     return $revisions;
@@ -67,10 +67,15 @@ class Page
 
   public static function create_entity($page)
   {
-    // Decode our regions
+    // Decode our regions or set it to an empty array
     $page->regions = json_decode($page->regions, true);
-    foreach ($page->regions as &$region) {
-      $region = new \Keystone\Region(array('fields' => $region));
+    if (is_array($page->regions)) {
+      foreach ($page->regions as &$region) {
+        $region = new \Keystone\Region(array('fields' => $region));
+      }
+    }
+    else {
+      $page->regions = array();
     }
 
     // Join our segment fields into an array
