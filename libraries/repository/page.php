@@ -44,6 +44,9 @@ class Page
     }
 
     DB::table('page_paths')->insert($path);
+
+    // @todo check if the page is published, and if
+    // so, update the page_publishes table.
   }
 
   public static function revisions($id)
@@ -66,6 +69,9 @@ class Page
   {
     // Decode our regions
     $page->regions = json_decode($page->regions, true);
+    foreach ($page->regions as &$region) {
+      $region = new \Keystone\Region(array('fields' => $region));
+    }
 
     // Join our segment fields into an array
     $uri = array();
