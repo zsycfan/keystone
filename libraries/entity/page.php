@@ -17,16 +17,18 @@ class Page extends \Keystone\Entity
 
   public function set_regions($regions=array())
   {
-    foreach ($regions as $region => &$fields) {
-      foreach ($fields as $index => &$field) {
-        $type = $field['type'];
-        if (file_exists($path = path('fields').$type.'/field.php')) {
-          require_once $path;
-          $class = ucfirst($type).'_Field';
-          if (class_exists($class)) {
-            $obj = new $class;
-            if (method_exists($obj, 'save')) {
-              $field = $obj->save($field);
+    if (is_array($regions) && !empty($regions)) {
+      foreach ($regions as $region => &$fields) {
+        foreach ($fields as $index => &$field) {
+          $type = $field['type'];
+          if (file_exists($path = path('fields').$type.'/field.php')) {
+            require_once $path;
+            $class = ucfirst($type).'_Field';
+            if (class_exists($class)) {
+              $obj = new $class;
+              if (method_exists($obj, 'save')) {
+                $field = $obj->save($field);
+              }
             }
           }
         }

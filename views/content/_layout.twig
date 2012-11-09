@@ -6,10 +6,13 @@
 
 {% block content %}
 <form action="{{ url_to_route('content_save', page.id) }}" method="post">
+  
   <input type="hidden" name="redirect" value="{{ redirect }}" />
+  <input type="hidden" name="page[language]" value="en-us" />
   
   {% block formbody %}{% endblock %}
 
+  {% block formactions %}
   <div class="fixed-form-actions">
     <div class="form-actions">
       <a {{ route() == 'content_edit_layout' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_layout', page.id) }}"><i class="icon-columns"></i> <span class="title">Layout</span></a>
@@ -23,5 +26,7 @@
       </div>
     </div>
   </div>
+  {% endblock %}
+
 </form>
 {% endblock %}

@@ -6,35 +6,20 @@ use \DB;
 class Page
 {
 
-  public static function create(\Keystone\Entity\Page &$page)
-  {
-    $page->id = \DB::table('pages')->insert_get_id(array(
-      'created_at' => date('Y-m-d G:i:s'),
-      'updated_at' => date('Y-m-d G:i:s'),
-    ));
-
-    $revision_id = \DB::table('page_revisions')->insert_get_id(array(
-      'page_id' => $page->id,
-      'language' => 'en-us',
-      'layout' => $page->layout,
-      'title' => null,
-      'excerpt' => null,
-      'regions' => null,
-      'created_at' => date('Y-m-d G:i:s'),
-      'updated_at' => date('Y-m-d G:i:s'),
-    ));
-
-    \DB::table('page_paths')->insert(array(
-      'revision_id' => $revision_id,
-    ));
-  }
-
   public static function save(\Keystone\Entity\Page $page)
   {
-    \DB::table('pages')
-      ->where('id', '=', $page->id)
-      ->update(array('updated_at' => date('Y-m-d G:i:s')))
-    ;
+    if ($page->id) {
+      \DB::table('pages')
+        ->where('id', '=', $page->id)
+        ->update(array('updated_at' => date('Y-m-d G:i:s')))
+      ;
+    }
+    else {
+      $page->id = \DB::table('pages')->insert_get_id(array(
+        'created_at' => date('Y-m-d G:i:s'),
+        'updated_at' => date('Y-m-d G:i:s'),
+      ));
+    }
 
     $revision_id = \DB::table('page_revisions')->insert_get_id(array(
       'page_id' => $page->get_raw('id'),
@@ -145,11 +130,13 @@ class Page
   public static function find_or_create($id, $params=array())
   {
     try {
-      return static::find($id, $params);
+      $page = static::find($id, $params);
     }
-    catch (Exception $e) {
-      return new \Keystone\Entity\Page();
+    catch (\Exception $e) {
+      $page = new \Keystone\Entity\Page();
     }
+
+    return $page;
   }
 
   public static function find_by_uri($uri, $params=array())
