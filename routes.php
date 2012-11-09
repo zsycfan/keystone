@@ -12,8 +12,8 @@ Route::any('(:bundle)/content/(:num)/content', array('as' => 'content_edit_conte
 Route::any('(:bundle)/content/(:num)/settings', array('as' => 'content_edit_settings', 'uses' => 'keystone::content@settings'));
 Route::any('(:bundle)/content/(:num)/revisions', array('as' => 'content_edit_revisions', 'uses' => 'keystone::content@revisions'));
 
+Route::any('(:bundle)/assets', array('as' => 'asset_upload', 'uses' => 'keystone::assets@upload'));
 Route::any('(:bundle)/assets/(:num)', array('as' => 'asset_view', 'uses' => 'keystone::assets@view'));
-Route::any('(:bundle)/assets/upload', array('as' => 'asset_upload', 'uses' => 'keystone::assets@upload'));
 
 Route::any('(:bundle)/api/pages/(:all)', array('as' => 'api_pages', 'uses' => 'keystone::api@pages'));
 

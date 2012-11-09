@@ -3,7 +3,7 @@ $(document).on('field:init', '.field-asset', function() {
     // pass the dom node (ex. $(selector)[0] for jQuery users)
     element: $(this).find('.uploader').get(0),
     // path to server-side upload script
-    action: '/keystone/assets/upload',
+    action: '/keystone/assets',
     // only allow a single image
     multiple: false,
     onUpload: function(id, fileName) {
