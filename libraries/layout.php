@@ -7,6 +7,8 @@ require \Bundle::path('keystone').'libraries'.DS.'layout'.DS.'helper'.EXT;
 class Layout {
 
 	public static $active;
+  private $name;
+  private $regions;
 
 	public static function all()
 	{
@@ -19,18 +21,10 @@ class Layout {
 		return $layouts;
 	}
 
-	public static function make($name, $regions=array())
-	{
-		return new static($name, $regions);
-	}
-
 	public static function active()
 	{
 		return static::$active;
 	}
-
-	private $name;
-	private $regions;
 
 	public function __construct($name, $regions=array())
 	{

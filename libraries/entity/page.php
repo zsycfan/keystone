@@ -24,6 +24,6 @@ class Page extends \Keystone\Entity
 
   public function layout_form()
   {
-    return \Keystone\Layout::make($this->layout, $this->regions);
+    return new \Keystone\Layout($this->layout, $this->regions);
   }
 }
