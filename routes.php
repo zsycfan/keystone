@@ -6,7 +6,7 @@ Route::any('(:bundle)/dashboard', array('as' => 'dashboard', 'uses' => 'keystone
 
 Route::any('(:bundle)/content', array('as' => 'content', 'uses' => 'keystone::content@index'));
 Route::any('(:bundle)/content/new', array('as' => 'content_new', 'uses' => 'keystone::content@new'));
-Route::any('(:bundle)/content/(:num)' array('as' => 'content_save', 'uses' => 'keystone::content@save'));
+Route::any('(:bundle)/content/(:num)', array('as' => 'content_save', 'uses' => 'keystone::content@save'));
 Route::any('(:bundle)/content/(:num)/layout', array('as' => 'content_edit_layout', 'uses' => 'keystone::content@layout'));
 Route::any('(:bundle)/content/(:num)/content', array('as' => 'content_edit_content', 'uses' => 'keystone::content@content'));
 Route::any('(:bundle)/content/(:num)/settings', array('as' => 'content_edit_settings', 'uses' => 'keystone::content@settings'));
