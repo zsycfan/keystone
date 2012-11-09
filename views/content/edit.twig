@@ -9,6 +9,13 @@
   </div>
 {% endblock %}
 
+{% block stylesheets %}
+	<style type="text/css">
+		{{ field_css|raw }}
+	</style>
+	{{ parent() }}
+{% endblock %}
+
 {% block javascript %}
 	<script class="handlebars-template" data-name="field_chooser" type="text/x-handlebars-template">
 	  <div class="modal hide fade field-chooser" data-name="field_chooser">
@@ -44,4 +51,7 @@
 	{% endraw %}
 	{{ field_templates|raw }}
 	{{ parent() }}
+	<script>
+		{{ field_javascript|raw }}
+	</script>
 {% endblock %}
