@@ -102,6 +102,27 @@ class Page
     return $entity;
   }
 
+  public static function all()
+  {
+    $page_objects = \DB::table('pages AS p')
+      ->select(array('*', 'p.id'))
+      ->left_join('page_revisions AS pr', 'pr.page_id', '=', 'p.id')
+      ->raw_where('`pr`.`id` = (SELECT MAX(`id`) FROM `page_revisions` AS `prc` WHERE `prc`.`page_id`=`p`.`id`)')
+      ->left_join('page_paths AS pp', 'pp.revision_id', '=', 'pr.id')
+      // ->order_by('pr.id', 'desc')
+      ->get()
+    ;
+
+    $pages = array();
+    foreach ($page_objects as $object) {
+      $page = new \Keystone\Entity\Page();
+      $page->fill($object, true);
+      $pages[] = $page;
+    }
+
+    return $pages;
+  }
+
   public static function find($id, $params=array())
   {
     $page = \DB::table('pages AS p')

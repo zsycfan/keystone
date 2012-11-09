@@ -6,7 +6,7 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   {
     return Keystone\View::make('keystone::content.list')
       ->with('layouts', Keystone\Layout::all())
-      ->with('pages', Keystone\Page::all())
+      ->with('pages', Keystone\Repository\Page::all())
     ;
   }
 
@@ -51,8 +51,9 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function post_save($id=false)
   {
-    $page = Keystone\Repository\Page::find_or_create($id);
-    $page->fill(Input::get('page'));
+    $page = Keystone\Repository\Page::find_or_create($id)
+      ->fill(Input::get('page'))
+    ;
     Keystone\Repository\Page::save($page);
     return Redirect::to_route(Input::get('redirect'), $page->id)
       ->with('message', 'Saved!')

@@ -17,8 +17,8 @@
       {% for page in pages %}
       <tr>
         <td><a href="{{ url_to_route('content_edit_content', page.id) }}">{{ page.id }}</a></td>
-        <td><a href="{{ url_to_route('content_edit_content', page.id) }}"><span class="singleline">{{ page.latest_revision().title }}</span></a></td>
-        <td><a href="{{ url_to_route('content_edit_content', page.id) }}"><span class="singleline">{{ page.latest_revision().excerpt }}</span></a></td>
+        <td><a href="{{ url_to_route('content_edit_content', page.id) }}"><span class="singleline">{{ page.title }}</span></a></td>
+        <td><a href="{{ url_to_route('content_edit_content', page.id) }}"><span class="singleline">{{ page.excerpt }}</span></a></td>
       </tr>
       {% endfor %}
     </tbody>

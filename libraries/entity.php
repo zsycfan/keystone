@@ -49,6 +49,8 @@ class Entity
       
       $this->attributes[$key] = $value;
     }
+
+    return $this;
   }
 
   public function get_raw($key)
