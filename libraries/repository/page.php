@@ -9,19 +9,19 @@ class Page
   public static function save(\Keystone\Entity\Page $page)
   {
     if ($page->id) {
-      \DB::table('pages')
+      DB::table('pages')
         ->where('id', '=', $page->id)
         ->update(array('updated_at' => date('Y-m-d G:i:s')))
       ;
     }
     else {
-      $page->id = \DB::table('pages')->insert_get_id(array(
+      $page->id = DB::table('pages')->insert_get_id(array(
         'created_at' => date('Y-m-d G:i:s'),
         'updated_at' => date('Y-m-d G:i:s'),
       ));
     }
 
-    $revision_id = \DB::table('page_revisions')->insert_get_id(array(
+    $revision_id = DB::table('page_revisions')->insert_get_id(array(
       'page_id' => $page->get_raw('id'),
       'language' => $page->get_raw('language'),
       'layout' => $page->get_raw('layout'),
@@ -43,12 +43,12 @@ class Page
       $path["segment{$index}"] = $seg;
     }
 
-    \DB::table('page_paths')->insert($path);
+    DB::table('page_paths')->insert($path);
   }
 
   public static function revisions($id)
   {
-    $revs = \DB::table('page_revisions')
+    $revs = DB::table('page_revisions')
       ->where('page_id', '=', $id)
       ->order_by('created_at', 'desc')
       ->get()
@@ -89,7 +89,7 @@ class Page
 
   public static function all()
   {
-    $page_objects = \DB::table('pages AS p')
+    $page_objects = DB::table('pages AS p')
       ->select(array('*', 'p.id'))
       ->left_join('page_revisions AS pr', 'pr.page_id', '=', 'p.id')
       ->raw_where('`pr`.`id` = (SELECT MAX(`id`) FROM `page_revisions` AS `prc` WHERE `prc`.`page_id`=`p`.`id`)')
@@ -110,7 +110,7 @@ class Page
 
   public static function find($id, $params=array())
   {
-    $page = \DB::table('pages AS p')
+    $page = DB::table('pages AS p')
       ->select(array('*', 'p.id'))
       ->where('p.id', '=', $id)
       ->join('page_revisions AS pr', 'pr.page_id', '=', 'p.id')
@@ -141,7 +141,7 @@ class Page
 
   public static function find_by_uri($uri, $params=array())
   {
-    $page = \DB::table('pages AS p')
+    $page = DB::table('pages AS p')
       ->select(array('*', 'p.id'))
       ->join('page_revisions AS pr', 'pr.page_id', '=', 'p.id')
       ->join('page_paths AS pp', 'pp.revision_id', '=', 'pr.id')
@@ -152,7 +152,7 @@ class Page
 
     if (@$params['published']) {
       $page->join('page_publishes AS pu', 'pu.page_id', '=', 'p.id');
-      $page->where('pu.revision_id', '=', \DB::raw('`pr`.`id`'));
+      $page->where('pu.revision_id', '=', DB::raw('`pr`.`id`'));
     }
 
     if (($page = $page->first()) == false) {
@@ -164,7 +164,7 @@ class Page
 
   public static function find_by_title($title, $params=array())
   {
-    $page_objects = \DB::table('pages AS p')
+    $page_objects = DB::table('pages AS p')
       ->select(array('*', 'p.id'))
       ->left_join('page_revisions AS pr', 'pr.page_id', '=', 'p.id')
       ->raw_where('`pr`.`id` = (SELECT MAX(`id`) FROM `page_revisions` AS `prc` WHERE `prc`.`page_id`=`p`.`id`)')
