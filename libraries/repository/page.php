@@ -109,7 +109,7 @@ class Page
       ->left_join('page_revisions AS pr', 'pr.page_id', '=', 'p.id')
       ->raw_where('`pr`.`id` = (SELECT MAX(`id`) FROM `page_revisions` AS `prc` WHERE `prc`.`page_id`=`p`.`id`)')
       ->left_join('page_paths AS pp', 'pp.revision_id', '=', 'pr.id')
-      // ->order_by('pr.id', 'desc')
+      ->order_by('p.updated_at', 'desc')
       ->get()
     ;
 
