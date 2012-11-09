@@ -7,6 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Twig_' => $vendorDir . '/twig/twig/lib/',
-    'Symfony\\Component\\Process' => $vendorDir . '/symfony/process/',
-    'Assetic' => $vendorDir . '/kriswallsmith/assetic/src/',
 );

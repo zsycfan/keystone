@@ -26,7 +26,6 @@ return array(
         'email' => array('function' => 'twig_fn_email', 'params' => array('is_safe' => array('html'))),
         'ucfirst' => array('function' => 'twig_fn_ucfirst', 'params' => array('is_safe' => array('html'))),
         'route' => array('function' => 'twig_fn_route', 'params' => array('is_safe' => array('html'))),
-        'assetic' => array('function' => 'twig_fn_assetic', 'params' => array('is_safe' => array('html'))),
     ),
 
     // Twig filters. These are used in the Twig templates.

@@ -1,6 +1,5 @@
 {
     "require": {
-        "twig/twig": "1.11.x-dev",
-        "kriswallsmith/assetic": "1.1.x-dev"
+        "twig/twig": "1.11.x-dev"
     }
 }

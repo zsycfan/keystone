@@ -292,11 +292,6 @@ function twig_fn_email($email)
 	return HTML::email($email);
 }
 
-function twig_fn_assetic($type)
-{
-	return Keystone\Assetic::get($type);
-}
-
 
 // -- FILTERS -- //
 
