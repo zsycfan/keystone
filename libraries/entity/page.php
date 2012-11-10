@@ -5,7 +5,7 @@ namespace Keystone\Entity;
 class Page extends \Keystone\Entity
 {
 
-  protected \Kaystone\Number $_id;
+  protected \Keystone\Number $_id;
   protected \Keystone\Language $_language;
   protected \Keystone\Layout $_layout;
   protected \Keystone\Regions $_regions;
