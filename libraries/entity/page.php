@@ -22,8 +22,8 @@ class Page extends \Keystone\Entity
     $this->attributes['excerpt'] = 'excerpt';
   }
 
-  public function layout_form()
+  public function get_layout()
   {
-    return new \Keystone\Layout($this->layout, $this->regions);
+    return new \Keystone\Layout($this->attributes['layout'], $this->attributes['regions']);
   }
 }
