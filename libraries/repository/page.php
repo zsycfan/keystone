@@ -22,12 +22,12 @@ class Page
     }
 
     $revision_id = DB::table('page_revisions')->insert_get_id(array(
-      'page_id' => $page->get_raw('id'),
-      'language' => $page->get_raw('language'),
-      'layout' => $page->get_raw('layout'),
-      'title' => $page->get_raw('title'),
-      'excerpt' => $page->get_raw('excerpt'),
-      'regions' => json_encode($page->get_raw('regions')),
+      'page_id' => $page->id,
+      'language' => $page->language,
+      'layout' => $page->layout,
+      'title' => $page->title,
+      'excerpt' => $page->excerpt,
+      'regions' => json_encode($page->region)),
       'created_at' => date('Y-m-d G:i:s'),
       'updated_at' => date('Y-m-d G:i:s'),
     ));
