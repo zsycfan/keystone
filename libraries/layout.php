@@ -47,6 +47,11 @@ class Layout {
 		return @$this->regions[$name];
 	}
 
+  public function name()
+  {
+    return $this->name;
+  }
+
 	public function form()
 	{
 		$this->set_active();
