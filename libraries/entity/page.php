@@ -5,15 +5,15 @@ namespace Keystone\Entity;
 class Page extends \Keystone\Entity
 {
 
-  protected \Keystone\Number $_id;
-  protected \Keystone\Language $_language;
-  protected \Keystone\Layout $_layout;
-  protected \Keystone\Regions $_regions;
-  protected \Keystone\Uri $_uri;
-  protected \Keystone\String $_title;
-  protected \Keystone\String $_excerpt;
-  protected \Keystone\String $_published;
-  protected \Keystone\DateTime $_published_at;
+  protected $_id;           // int
+  protected $_language;     // \Keystone\Language
+  protected $_layout;       // \Keystone\Layout
+  protected $_regions;      // \Keystone\Regions
+  protected $_uri;          // \Keystone\Uri
+  protected $_title;        // string
+  protected $_excerpt;      // string
+  protected $_published;    // bool
+  protected $_published_at; // \Keystone\DateTime
 
   protected $accessible = array(
     'language',
