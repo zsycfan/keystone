@@ -86,6 +86,9 @@ class Page
       }
     }
 
+    // Make our layout an object
+    $page->layout = new \Keystone\Layout($page->layout, $page->regions);
+
     // Return the page entity
     $entity = new \Keystone\Entity\Page();
     $entity->id = $page->id;
