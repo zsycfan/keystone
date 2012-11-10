@@ -74,9 +74,7 @@ class Page
         $region = new \Keystone\Region(array('fields' => $region));
       }
     }
-    else {
-      $page->regions = array();
-    }
+    $page->regions = new \Keystone\Regions($page->regions);
 
     // Join our segment fields into an array
     $uri = array();

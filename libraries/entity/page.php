@@ -26,10 +26,15 @@ class Page extends \Keystone\Entity
     'published_at'
   );
 
-  public function set_regions($regions=array())
+  public function set_regions(\Keystone\Regions $regions)
   {
     $this->attributes['regions'] = $regions;
     $this->attributes['title'] = 'title';
     $this->attributes['excerpt'] = 'excerpt';
+  }
+
+  public function set_layout(\Keystone\Layout $layout)
+  {
+    $this->attributes['layout'] = $layout;
   }
 }
