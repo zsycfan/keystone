@@ -27,7 +27,7 @@ class Page
       'layout' => $page->layout,
       'title' => $page->title,
       'excerpt' => $page->excerpt,
-      'regions' => json_encode($page->region)),
+      'regions' => json_encode($page->region),
       'created_at' => date('Y-m-d G:i:s'),
       'updated_at' => date('Y-m-d G:i:s'),
     ));
