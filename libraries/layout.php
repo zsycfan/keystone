@@ -44,7 +44,7 @@ class Layout {
 
 	public function get_region_data($name)
 	{
-		return @$this->regions->$name;
+    return @$this->regions->$name;
 	}
 
   public function name()

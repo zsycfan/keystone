@@ -24,10 +24,10 @@ class Page
     $revision_id = DB::table('page_revisions')->insert_get_id(array(
       'page_id' => $page->id,
       'language' => $page->language,
-      'layout' => $page->layout,
+      'layout' => $page->layout->name(),
       'title' => $page->title,
       'excerpt' => $page->excerpt,
-      'regions' => json_encode($page->region),
+      'regions' => $page->regions->json(),
       'created_at' => date('Y-m-d G:i:s'),
       'updated_at' => date('Y-m-d G:i:s'),
     ));
@@ -49,56 +49,6 @@ class Page
     // so, update the page_publishes table.
   }
 
-  public static function revisions($id)
-  {
-    $revs = DB::table('page_revisions')
-      ->where('page_id', '=', $id)
-      ->order_by('created_at', 'desc')
-      ->get()
-    ;
-
-    $revisions = array();
-    foreach ($revs as $rev) {
-      $revisions[] = static::create_entity($rev);
-    }
-
-    return $revisions;
-  }
-
-  public static function create_entity($page)
-  {
-    // Decode our regions or set it to an empty array
-    $page->regions = json_decode($page->regions, true);
-    if (is_array($page->regions)) {
-      foreach ($page->regions as &$region) {
-        $region = new \Keystone\Region(array('fields' => $region));
-      }
-    }
-    $page->regions = new \Keystone\Regions($page->regions);
-
-    // Join our segment fields into an array
-    $uri = array();
-    foreach ($page as $key => $value) {
-      if (preg_match('/^segment\d+$/', $key) && $value) {
-        $uri[] = $value;
-      }
-    }
-
-    // Make our layout an object
-    $page->layout = new \Keystone\Layout($page->layout, $page->regions);
-
-    // Return the page entity
-    $entity = new \Keystone\Entity\Page();
-    $entity->id = $page->id;
-    $entity->language = $page->language;
-    $entity->layout = $page->layout;
-    $entity->title = $page->title;
-    $entity->excerpt = $page->excerpt;
-    $entity->regions = $page->regions;
-    $entity->uri = implode('/', $uri);
-    return $entity;
-  }
-
   public static function all()
   {
     $page_objects = DB::table('pages AS p')
@@ -112,9 +62,9 @@ class Page
 
     $pages = array();
     foreach ($page_objects as $object) {
-      $page = new \Keystone\Entity\Page();
-      $page->fill($object, true);
-      $pages[] = $page;
+      $pages[] = \Keystone\Entity\Page::make()
+        ->fill_and_translate($object, true)
+      ;
     }
 
     return $pages;
@@ -136,7 +86,9 @@ class Page
       throw new \Exception('Entity not found.');
     }
 
-    return static::create_entity($page);
+    return \Keystone\Entity\Page::make()
+      ->fill_and_translate($page, true)
+    ;
   }
 
   public static function find_or_create($id, $params=array())
@@ -171,7 +123,9 @@ class Page
       throw new \Exception('Entity not found.');
     }
 
-    return static::create_entity($page);
+    return \Keystone\Entity\Page::make()
+      ->fill_and_translate($page, true)
+    ;
   }
 
   public static function find_by_title($title, $params=array())
@@ -190,13 +144,31 @@ class Page
     }
 
     $pages = array();
-    foreach ($page_objects->get() as $object) {
-      $page = new \Keystone\Entity\Page();
-      $page->fill($object, true);
-      $pages[] = $page;
+    foreach ($page_objects->get() as $page) {
+      $pages[] = \Keystone\Entity\Page::make()
+        ->fill_and_translate($page, true)
+      ;
     }
 
     return $pages;
+  }
+
+  public static function revisions($id)
+  {
+    $revs = DB::table('page_revisions')
+      ->where('page_id', '=', $id)
+      ->order_by('created_at', 'desc')
+      ->get()
+    ;
+
+    $revisions = array();
+    foreach ($revs as $rev) {
+      $revisions[] = \Keystone\Entity\Page::make()
+        ->fill_and_translate($rev, true)
+      ;
+    }
+
+    return $revisions;
   }
 
 }

@@ -38,6 +38,11 @@ class Entity
     return isset($this->attributes[$key]);
   }
 
+  public static function make($attributes=array())
+  {
+    return new static($attributes);
+  }
+
   public function fill($data, $raw=false)
   {
     foreach ($data as $key => $value) {

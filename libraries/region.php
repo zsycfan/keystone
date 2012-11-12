@@ -26,6 +26,16 @@ class Region implements \Iterator
     ;
   }
 
+  public function summary()
+  {
+    return 'summary';
+  }
+
+  public function to_array()
+  {
+    return $this->fields;
+  }
+
   public function rewind()
   {
     $this->position = 0;

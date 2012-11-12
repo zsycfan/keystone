@@ -54,7 +54,7 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   public function post_save($id=false)
   {
     $page = Keystone\Repository\Page::find_or_create($id)
-      ->fill(Input::get('page'))
+      ->fill_and_translate(Input::get('page'))
     ;
     Keystone\Repository\Page::save($page);
     return Redirect::to_route(Input::get('redirect'), $page->id)
