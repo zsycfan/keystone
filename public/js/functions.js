@@ -5644,7 +5644,7 @@ Handlebars.template = Handlebars.VM.template;
       handle: '.actions',
       forcePlaceholderSize: true,
       placeholder: 'ui-placeholder',
-      cursor: '-webkit-grabbing, -moz-grabbing, -o-grabbing, -ms-grabbing, move',
+      cursor: 'grabbing',
       cursorAt: {
         left: 30,
         top: 20
