@@ -8,7 +8,7 @@ class Layout {
 
 	public static $active;
   private $name;
-  private $regions;
+  private $page;
 
 	public static function all()
 	{
@@ -26,10 +26,10 @@ class Layout {
 		return static::$active;
 	}
 
-	public function __construct($name, $regions=array())
+	public function __construct($name, \Keystone\Entity\Page $page)
 	{
 		$this->name = $name;
-		$this->regions = $regions;
+		$this->page = $page;
 	}
 
 	public function set_active()
@@ -44,7 +44,7 @@ class Layout {
 
 	public function get_region_data($name)
 	{
-    return @$this->regions->$name;
+    return @$this->page->regions->$name;
 	}
 
   public function name()

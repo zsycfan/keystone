@@ -57,7 +57,7 @@ class Page extends \Keystone\Entity
 
     // Make our layout an object
     if (isset($attributes['layout']) && is_string($attributes['layout'])) {
-      $this->layout = new \Keystone\Layout($attributes['layout'], $this->regions);
+      $this->layout = new \Keystone\Layout($attributes['layout'], $this);
     }
 
     // Return the page entity
