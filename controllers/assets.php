@@ -30,8 +30,7 @@ class Keystone_Assets_Controller extends Keystone_Base_Controller
     $result = $uploader->handleUpload(path('public').'uploads/', true);
 
     if (@$result['success'] === true) {
-      $asset = new Keystone\Entity\Asset();
-      $asset->src = 'public/uploads/'.$uploader->getUploadName();
+      $asset = new Keystone\Entity\Asset('public/uploads/'.$uploader->getUploadName());
       \Keystone\Repository\Asset::save($asset);
       $result['asset'] = $asset->to_array();
     }
