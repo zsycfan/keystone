@@ -58,11 +58,6 @@ class Entity
     return $this;
   }
 
-  public function get_raw($key)
-  {
-    return @$this->attributes[$key];
-  }
-
   public function to_array()
   {
     return $this->attributes;
