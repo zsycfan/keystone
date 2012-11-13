@@ -54,7 +54,7 @@ class Regions
       }
     }
 
-    return false;
+    return new \Keystone\Region();
   }
 
   public function excerpt_region()
@@ -65,7 +65,7 @@ class Regions
       }
     }
 
-    return false;
+    return new \Keystone\Region();
   }
 
 }

@@ -11,7 +11,7 @@ class Region implements \Iterator
   private $position = 0;
   private $fields;
 
-  public function __construct($params)
+  public function __construct($params=array())
   {
     foreach ($params as $key => $value) {
       $this->$key = $value;
@@ -28,12 +28,38 @@ class Region implements \Iterator
 
   public function summary()
   {
-    return 'summary';
+    $summary = array();
+    foreach ($this->fields as $field) {
+      $type = $field['type'];
+      if (file_exists($path = path('fields').$type.'/field.php')) {
+        require_once $path;
+        $class = ucfirst($type).'_Field';
+        if (class_exists($class)) {
+          $obj = new $class;
+          if (method_exists($obj, 'summary')) {
+            $summary[] = $obj->summary($field);
+            continue;
+          }
+        }
+      }
+      $summary[] = @$field['content'];
+    }
+
+    if (!array_filter($summary)) {
+      $summary[] = 'Untitled';
+    }
+
+    return implode(' ', $summary);
   }
 
   public function to_array()
   {
     return $this->fields;
+  }
+
+  public function json()
+  {
+    return json_encode($this->to_array());
   }
 
   public function rewind()
@@ -55,6 +81,7 @@ class Region implements \Iterator
         }
       }
     }
+
     return $field;
   }
 

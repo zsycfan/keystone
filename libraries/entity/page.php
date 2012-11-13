@@ -26,6 +26,14 @@ class Page extends \Keystone\Entity
     'published_at'
   );
 
+  /**
+   * Fill and Translate raw database/post data into the appropriate entities
+   * and PHP classes.
+   * 
+   * @param  array $attributes
+   * @param  boolean $raw
+   * @return \Keystone\Entity
+   */
   public function fill_and_translate($attributes, $raw=false)
   {
     // Make sure we're always working with an array since the DB pass an object
@@ -33,8 +41,8 @@ class Page extends \Keystone\Entity
     $attributes = (array)$attributes;
 
     // Decode our regions
-    $this->regions = new \Keystone\Regions();
     if (isset($attributes['regions'])) {
+      $this->regions = new \Keystone\Regions();
       $regions = $attributes['regions'];
       if (is_string($regions)) {
         $regions = json_decode($attributes['regions'], true);
@@ -56,16 +64,16 @@ class Page extends \Keystone\Entity
     return $this;
   }
 
-  public function set_regions(\Keystone\Regions $regions)
-  {
-    $this->attributes['regions'] = $regions;
+  // public function set_regions(\Keystone\Regions $regions)
+  // {
+  //   $this->attributes['regions'] = $regions;
 
-    if ($title = $regions->title_region()) {
-      $this->attributes['title'] = $title->summary();
-    }
+  //   if ($title = $regions->title_region()) {
+  //     $this->attributes['title'] = $title->summary();
+  //   }
 
-    if ($excerpt = $regions->excerpt_region()) {
-      $this->attributes['excerpt'] = $excerpt->summary();
-    }
-  }
+  //   if ($excerpt = $regions->excerpt_region()) {
+  //     $this->attributes['excerpt'] = $excerpt->summary();
+  //   }
+  // }
 }
