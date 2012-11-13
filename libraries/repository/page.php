@@ -66,29 +66,14 @@ class Page
 
   public static function all()
   {
-    $page_objects = DB::table('pages AS p')
-      ->select(array('*', 'pr.id AS active_revision', 'pu.revision_id AS published_revision', 'p.id'))
-      ->left_join('page_revisions AS pr', 'pr.page_id', '=', 'p.id')
-      ->raw_where('`pr`.`id` = (SELECT MAX(`id`) FROM `page_revisions` AS `prc` WHERE `prc`.`page_id`=`p`.`id`)')
-      ->left_join('page_paths AS pp', 'pp.revision_id', '=', 'pr.id')
-      ->left_join('page_publishes AS pu', 'pu.page_id', '=', 'p.id')
+    $page_objects = static::query()
       ->order_by('p.updated_at', 'desc')
       ->get()
     ;
 
     $pages = array();
     foreach ($page_objects as $page) {
-      $entity = new \Keystone\Entity\Page();
-      $entity->id = $page->id;
-      $entity->language = $page->language;
-      $entity->regions = new \Keystone\Regions(json_decode($page->regions, true));
-      $entity->layout = new \Keystone\Layout($page->layout, $entity);
-      $entity->published = $page->active_revision == $page->published_revision;
-      $entity->published_at = $page->published_at;
-      $entity->uri = $page->uri;
-      $entity->title = $page->title;
-      $entity->excerpt = $page->excerpt;
-      $pages[] = $entity;
+      $pages[] = static::make_entity($page);;
     }
 
     return $pages;
