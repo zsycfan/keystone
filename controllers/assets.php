@@ -30,10 +30,10 @@ class Keystone_Assets_Controller extends Keystone_Base_Controller
     $result = $uploader->handleUpload(path('public').'uploads/', true);
 
     if (@$result['success'] === true) {
-      $result['asset'] = Keystone\Asset::create(array(
-        'path' => 'public/uploads/',
-        'name' => $uploader->getUploadName(),
-      ))->to_array();
+      $asset = new Keystone\Entity\Asset();
+      $asset->src = 'public/uploads/'.$uploader->getUploadName();
+      \Keystone\Repository\Asset::save($asset);
+      $result['asset'] = $asset->to_array();
     }
 
     // to pass data through iframe you will need to encode all html tags

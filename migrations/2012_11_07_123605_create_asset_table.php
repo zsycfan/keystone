@@ -15,11 +15,11 @@ class Keystone_Create_Asset_Table {
       $table->string('name', 512);
       $table->string('type', 255);
       $table->string('mime', 255);
-      $table->integer('width');
-      $table->integer('height');
+      $table->integer('width')->nullable();
+      $table->integer('height')->nullable();
       $table->integer('filesize');
-      $table->string('caption', 512);
-      $table->string('credit', 512);
+      $table->string('caption', 512)->nullable();
+      $table->string('credit', 512)->nullable();
       $table->timestamps();
     });
 	}
