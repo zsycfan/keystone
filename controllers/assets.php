@@ -5,7 +5,7 @@ class Keystone_Assets_Controller extends Keystone_Base_Controller
 
   public function get_show($id)
   {
-    $asset = Keystone\Asset::find($id);
+    $asset = \Keystone\Repository\Asset::find($id);
     return Response::make(file_get_contents($asset->path.$asset->name), 200, array(
       'Content-Type'              => $asset->mime,
       'Content-Transfer-Encoding' => $asset->type,
