@@ -26,55 +26,13 @@ class Page extends \Keystone\Entity
     'published_at'
   );
 
-  /**
-   * Fill and Translate raw database/post data into the appropriate entities
-   * and PHP classes.
-   * 
-   * @param  array $attributes
-   * @param  boolean $raw
-   * @return \Keystone\Entity
-   */
-  public function fill_and_translate($attributes, $raw=false)
+  public function get_title()
   {
-    // Make sure we're always working with an array since the DB pass an object
-    // but form post data will be an array
-    $attributes = (array)$attributes;
-
-    // Decode our regions
-    if (isset($attributes['regions'])) {
-      $regions_object = new \Keystone\Regions();
-      $regions = $attributes['regions'];
-      if (is_string($regions)) {
-        $regions = json_decode($attributes['regions'], true);
-      }
-      if (is_array($regions)) {
-        foreach ($regions as $name => &$region) {
-          $regions_object->add(new \Keystone\Region(array('name' => $name, 'fields' => $region)));
-        }
-      }
-      $this->regions = $regions_object;
-    }
-
-    // Make our layout an object
-    if (isset($attributes['layout']) && is_string($attributes['layout'])) {
-      $this->layout = new \Keystone\Layout($attributes['layout'], $this);
-    }
-
-    // Return the page entity
-    $this->fill(array_diff_key($attributes, array('regions'=>'', 'layout'=>'')), $raw);
-    return $this;
+    return $this->regions->title_region()->summary();
   }
 
-  public function set_regions(\Keystone\Regions $regions)
+  public function get_excerpt()
   {
-    $this->attributes['regions'] = $regions;
-
-    if ($title = $regions->title_region()) {
-      $this->attributes['title'] = $title->summary();
-    }
-
-    if ($excerpt = $regions->excerpt_region()) {
-      $this->attributes['excerpt'] = $excerpt->summary();
-    }
+    return $this->regions->excerpt_region()->summary();
   }
 }

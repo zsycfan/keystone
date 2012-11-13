@@ -53,10 +53,14 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function post_save($id=false)
   {
-    $page = Keystone\Repository\Page::find_or_create($id)
-      ->fill_and_translate(Input::get('page'))
-    ;
+    $page = Keystone\Repository\Page::find_or_create($id);
+    if (Input::get('page.regions')) $page->regions = new Keystone\Regions(Input::get('page.regions'));
+    if (Input::get('page.layout')) $page->layout = new Keystone\Layout(Input::get('page.layout'), $page);
+    if (Input::get('page.published')) $page->published = true;
+    if (Input::get('page.published_at')) $page->published_at = Input::get('page.published_at');
+    if (Input::get('page.uri')) $page->uri = Input::get('page.uri');
     Keystone\Repository\Page::save($page);
+
     return Redirect::to_route(Input::get('redirect'), $page->id)
       ->with('message', 'Saved!')
       ->with('message_type', 'success')

@@ -9,7 +9,11 @@ class Regions
 
   public function __construct($regions=array())
   {
-    $this->regions = $regions;
+    if ($regions && is_array($regions)) {
+      foreach ($regions as $name => &$region) {
+        $this->add(new \Keystone\Region(array('name' => $name, 'fields' => $region)));
+      }
+    }
   }
 
   public function __get($key)

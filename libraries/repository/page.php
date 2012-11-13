@@ -67,43 +67,31 @@ class Page
   public static function all()
   {
     $page_objects = DB::table('pages AS p')
-      ->select(array('*', 'p.id'))
+      ->select(array('*', 'pr.id AS active_revision', 'pu.revision_id AS published_revision', 'p.id'))
       ->left_join('page_revisions AS pr', 'pr.page_id', '=', 'p.id')
       ->raw_where('`pr`.`id` = (SELECT MAX(`id`) FROM `page_revisions` AS `prc` WHERE `prc`.`page_id`=`p`.`id`)')
       ->left_join('page_paths AS pp', 'pp.revision_id', '=', 'pr.id')
+      ->left_join('page_publishes AS pu', 'pu.page_id', '=', 'p.id')
       ->order_by('p.updated_at', 'desc')
       ->get()
     ;
 
     $pages = array();
-    foreach ($page_objects as $object) {
-      $pages[] = \Keystone\Entity\Page::make()
-        ->fill_and_translate($object, true)
-      ;
+    foreach ($page_objects as $page) {
+      $entity = new \Keystone\Entity\Page();
+      $entity->id = $page->id;
+      $entity->language = $page->language;
+      $entity->regions = new \Keystone\Regions(json_decode($page->regions, true));
+      $entity->layout = new \Keystone\Layout($page->layout, $entity);
+      $entity->published = $page->active_revision == $page->published_revision;
+      $entity->published_at = $page->published_at;
+      $entity->uri = $page->uri;
+      $entity->title = $page->title;
+      $entity->excerpt = $page->excerpt;
+      $pages[] = $entity;
     }
 
     return $pages;
-  }
-
-  public static function find($id, $params=array())
-  {
-    $page = DB::table('pages AS p')
-      ->select(array('*', 'p.id'))
-      ->where('p.id', '=', $id)
-      ->join('page_revisions AS pr', 'pr.page_id', '=', 'p.id')
-      ->join('page_paths AS pp', 'pp.revision_id', '=', 'pr.id')
-      ->order_by('pr.id', 'desc')
-      ->take(1)
-      ->first()
-    ;
-
-    if (!$page) {
-      throw new \Exception('Entity not found.');
-    }
-
-    return \Keystone\Entity\Page::make()
-      ->fill_and_translate($page, true)
-    ;
   }
 
   public static function find_or_create($id, $params=array())
@@ -118,51 +106,81 @@ class Page
     return $page;
   }
 
-  public static function find_by_uri($uri, $params=array())
+  public static function query($params=array())
   {
-    $page = DB::table('pages AS p')
-      ->select(array('*', 'p.id'))
+    $query = DB::table('pages AS p')
+      ->select(array('*', 'pr.id AS active_revision', 'pu.revision_id AS published_revision', 'p.id'))
       ->join('page_revisions AS pr', 'pr.page_id', '=', 'p.id')
       ->join('page_paths AS pp', 'pp.revision_id', '=', 'pr.id')
-      ->where('pp.uri', '=', $uri)
-      ->order_by('pr.id', 'desc')
-      ->take(1)
+      ->left_join('page_publishes AS pu', 'pu.page_id', '=', 'p.id')
     ;
 
     if (@$params['published']) {
-      $page->join('page_publishes AS pu', 'pu.page_id', '=', 'p.id');
-      $page->where('pu.revision_id', '=', DB::raw('`pr`.`id`'));
+      $query->where('pr.id', '=', DB::raw('`pu`.`revision_id`'));
     }
+    else if (is_numeric(@$params['rev'])) {
+      $query->where('pr.id', '=', $params['rev']);
+    }
+    else {
+      $query->raw_where('`pr`.`id` = (SELECT MAX(`id`) FROM `page_revisions` AS `prc` WHERE `prc`.`page_id`=`p`.`id`)');
+    }
+
+    return $query;
+  }
+
+  public static function make_entity($page)
+  {
+    $entity = new \Keystone\Entity\Page();
+    $entity->id = $page->id;
+    $entity->language = $page->language;
+    $entity->regions = new \Keystone\Regions(json_decode($page->regions, true));
+    $entity->layout = new \Keystone\Layout($page->layout, $entity);
+    $entity->published = $page->active_revision == $page->published_revision;
+    $entity->published_at = $page->published_at;
+    $entity->uri = $page->uri;
+    $entity->title = $page->title;
+    $entity->excerpt = $page->excerpt;
+    return $entity;
+  }
+
+  public static function find($id, $params=array())
+  {
+    $page = static::query($params)->where('p.id', '=', $id)->take(1);
 
     if (($page = $page->first()) == false) {
       throw new \Exception('Entity not found.');
     }
 
-    return \Keystone\Entity\Page::make()
-      ->fill_and_translate($page, true)
-    ;
+    return static::make_entity($page);
+  }
+
+  public static function find_by_uri($uri, $params=array())
+  {
+    $page = static::query($params)->where('pp.uri', '=', $uri)->take(1);
+
+    if (($page = $page->first()) == false) {
+      throw new \Exception('Entity not found.');
+    }
+
+    return static::make_entity($page);
   }
 
   public static function find_by_title($title, $params=array())
   {
-    $page_objects = DB::table('pages AS p')
-      ->select(array('*', 'p.id'))
-      ->left_join('page_revisions AS pr', 'pr.page_id', '=', 'p.id')
-      ->raw_where('`pr`.`id` = (SELECT MAX(`id`) FROM `page_revisions` AS `prc` WHERE `prc`.`page_id`=`p`.`id`)')
-      ->left_join('page_paths AS pp', 'pp.revision_id', '=', 'pr.id')
-      ->order_by('p.updated_at', 'desc')
-    ;
+    $query = static::query($params);
 
     $words = preg_split('/\s+/', $title);
     foreach ($words as $word) {
-      $page_objects->where('pr.title', 'like', "%{$word}%");
+      $query->where('pr.title', 'like', "%{$word}%");
+    }
+
+    if (($rows = $query->get()) == false) {
+      return array();
     }
 
     $pages = array();
-    foreach ($page_objects->get() as $page) {
-      $pages[] = \Keystone\Entity\Page::make()
-        ->fill_and_translate($page, true)
-      ;
+    foreach ($rows as $page) {
+      $pages[] = static::make_entity($page);
     }
 
     return $pages;
