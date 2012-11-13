@@ -42,7 +42,6 @@ class Page
       $index++;
       $path["segment{$index}"] = $seg;
     }
-
     DB::table('page_paths')->insert($path);
 
     if ($page->published) {
