@@ -15,17 +15,6 @@ class Page extends \Keystone\Entity
   // protected $_published;    // bool
   // protected $_published_at; // \Keystone\DateTime
 
-  protected $accessible = array(
-    'language',
-    'layout',
-    'regions',
-    'uri',
-    'title',
-    'excerpt',
-    'published',
-    'published_at'
-  );
-
   public function get_title()
   {
     return $this->regions->title_region()->summary();
