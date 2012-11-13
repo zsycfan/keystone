@@ -42,16 +42,17 @@ class Page extends \Keystone\Entity
 
     // Decode our regions
     if (isset($attributes['regions'])) {
-      $this->regions = new \Keystone\Regions();
+      $regions_object = new \Keystone\Regions();
       $regions = $attributes['regions'];
       if (is_string($regions)) {
         $regions = json_decode($attributes['regions'], true);
       }
       if (is_array($regions)) {
         foreach ($regions as $name => &$region) {
-          $this->regions->add(new \Keystone\Region(array('name' => $name, 'fields' => $region)));
+          $regions_object->add(new \Keystone\Region(array('name' => $name, 'fields' => $region)));
         }
       }
+      $this->regions = $regions_object;
     }
 
     // Make our layout an object
@@ -64,16 +65,16 @@ class Page extends \Keystone\Entity
     return $this;
   }
 
-  // public function set_regions(\Keystone\Regions $regions)
-  // {
-  //   $this->attributes['regions'] = $regions;
+  public function set_regions(\Keystone\Regions $regions)
+  {
+    $this->attributes['regions'] = $regions;
 
-  //   if ($title = $regions->title_region()) {
-  //     $this->attributes['title'] = $title->summary();
-  //   }
+    if ($title = $regions->title_region()) {
+      $this->attributes['title'] = $title->summary();
+    }
 
-  //   if ($excerpt = $regions->excerpt_region()) {
-  //     $this->attributes['excerpt'] = $excerpt->summary();
-  //   }
-  // }
+    if ($excerpt = $regions->excerpt_region()) {
+      $this->attributes['excerpt'] = $excerpt->summary();
+    }
+  }
 }
