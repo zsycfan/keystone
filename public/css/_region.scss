@@ -166,6 +166,6 @@ body:not(.ui-drag-active) .region:hover > .actions,
 	opacity: 0.25;
 }
 
-.ui-drag-source + .ui-placeholder {
-	display: none;
+.ui-placeholder.hidden {
+	display: none !important;
 }

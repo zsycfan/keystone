@@ -5644,6 +5644,7 @@ Handlebars.template = Handlebars.VM.template;
       handle: '.actions',
       forcePlaceholderSize: true,
       placeholder: 'ui-placeholder',
+      cursor: '-webkit-grabbing, -moz-grabbing, -o-grabbing, -ms-grabbing, move',
       cursorAt: {
         left: 30,
         top: 20
@@ -5655,11 +5656,18 @@ Handlebars.template = Handlebars.VM.template;
         $(ui.item).addClass('ui-drag-source');
         $(document.body).addClass('ui-drag-active');
         $('.field:hidden').closest('.ui-sortable').addClass('ui-sortable-original-parent');
-        return $('.ui-placeholder').closest('.region').addClass('ui-sortable-droptarget');
+        return $('.ui-placeholder').addClass('hidden').closest('.region').addClass('ui-sortable-droptarget');
       },
       change: function(event, ui) {
         $('.ui-sortable-droptarget').removeClass('ui-sortable-droptarget');
-        return $('.ui-placeholder').closest('.region').addClass('ui-sortable-droptarget');
+        $('.ui-placeholder').closest('.region').addClass('ui-sortable-droptarget');
+        if ($('.ui-placeholder').prev().hasClass('ui-drag-source')) {
+          return $('.ui-placeholder').addClass('hidden');
+        } else if ($('.ui-placeholder').next().hasClass('ui-drag-source')) {
+          return $('.ui-placeholder').addClass('hidden');
+        } else {
+          return $('.ui-placeholder').removeClass('hidden');
+        }
       },
       stop: function(event, ui) {
         var region, _i, _len, _ref, _results;

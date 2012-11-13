@@ -5587,8 +5587,8 @@ body:not(.ui-drag-active) .region:hover > .actions,
 .ui-drag-source .field-content {
   opacity: 0.25; }
 
-.ui-drag-source + .ui-placeholder {
-  display: none; }
+.ui-placeholder.hidden {
+  display: none !important; }
 
 *:focus {
   outline: 3px solid rgba(0, 0, 0, 0.2) !important; }

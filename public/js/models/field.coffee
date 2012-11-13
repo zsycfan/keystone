@@ -15,6 +15,7 @@ $ ->
     handle: '.actions'
     forcePlaceholderSize: true
     placeholder: 'ui-placeholder'
+    cursor: '-webkit-grabbing, -moz-grabbing, -o-grabbing, -ms-grabbing, move'
     cursorAt: {left: 30, top: 20}
     helper: (event, field)->
       field.find('.ui-helper').clone(true)
@@ -22,10 +23,16 @@ $ ->
       $(ui.item).addClass 'ui-drag-source'
       $(document.body).addClass 'ui-drag-active'
       $('.field:hidden').closest('.ui-sortable').addClass 'ui-sortable-original-parent'
-      $('.ui-placeholder').closest('.region').addClass 'ui-sortable-droptarget'
+      $('.ui-placeholder').addClass('hidden').closest('.region').addClass 'ui-sortable-droptarget'
     change: (event, ui)->
       $('.ui-sortable-droptarget').removeClass('ui-sortable-droptarget')
       $('.ui-placeholder').closest('.region').addClass 'ui-sortable-droptarget'
+      if ($('.ui-placeholder').prev().hasClass('ui-drag-source'))
+        $('.ui-placeholder').addClass('hidden') 
+      else if ($('.ui-placeholder').next().hasClass('ui-drag-source'))
+        $('.ui-placeholder').addClass('hidden') 
+      else
+        $('.ui-placeholder').removeClass('hidden') 
     stop: (event, ui)->
       $(ui.item).removeClass 'ui-drag-source'
       $('.ui-sortable-original-parent').removeClass 'ui-sortable-original-parent'
