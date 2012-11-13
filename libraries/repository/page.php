@@ -45,8 +45,24 @@ class Page
 
     DB::table('page_paths')->insert($path);
 
-    // @todo check if the page is published, and if
-    // so, update the page_publishes table.
+    if ($page->published) {
+      $row = DB::table('page_publishes')->where('page_id', '=', $page->id);
+      if ($row) {
+        DB::table('page_publishes')
+          ->where('page_id', '=', $page->id)
+          ->update(array(
+            'revision_id' => $revision_id,
+            'published_at' => date('Y-m-d G:i:s'),
+        ));
+      }
+      else {
+        DB::table('page_publishes')->insert_get_id(array(
+          'page_id' => $page->id,
+          'revision_id' => $revision_id,
+          'published_at' => date('Y-m-d G:i:s'),
+        ));
+      }
+    }
   }
 
   public static function all()
