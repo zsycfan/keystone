@@ -29,7 +29,6 @@ class Region implements \Iterator
   {
     return (string)\Laravel\View::make('keystone::region.edit')
       ->with('region', $this)
-      ->with('data', $this->fields)
     ;
   }
 
