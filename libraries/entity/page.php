@@ -18,6 +18,14 @@ class Page extends \Keystone\Entity
   // protected $_created_at;   // \DateTime
   // protected $_updated_at;   // \DateTime
 
+  public function __construct($data=array())
+  {
+    parent::__construct($data);
+    if (!$this->attributes['regions']]) {
+      $this->attributes['regions'] = new \Keystone\Regions();
+    }
+  }
+
   public function get_title()
   {
     return $this->regions->title_region()->summary();
