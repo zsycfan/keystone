@@ -6,6 +6,7 @@ class Page extends \Keystone\Entity
 {
 
   // protected $_id;           // int
+  // protected $_revision_id;  // int
   // protected $_language;     // \Keystone\Language
   // protected $_layout;       // \Keystone\Layout
   // protected $_regions;      // \Keystone\Regions

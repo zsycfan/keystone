@@ -19,9 +19,9 @@
     <tbody>
       {% for rev in revisions %}
         <tr {{ rev.published ? 'class="success"' : '' }}>
-          <td>{{ loop.index }}</td>
+          <td>{{ loop.revindex }}</td>
           <td>{{ rev.language }}</td>
-          <td><a href="{{ url_to_route('content_edit_content', page.id) }}?revision={{ rev.id }}">{{ rev.created_at }}</a></td>
+          <td><a href="{{ url_to_route('content_edit_content', page.id) }}?revision={{ rev.revision_id }}">{{ rev.created_at }}</a></td>
           <td>Author</td>
           <td>
             {{ rev.published ? '<span class="badge badge-success">Published</span>' : '' }}
