@@ -17,7 +17,7 @@
         ></div>
       <?php endforeach; ?>
     <?php elseif ($region->min > 0): ?>
-      <div class="field-placeholder" data-type="plain"></div>
+      <div class="field-placeholder" data-type="<?= current($region->allow) ?:'plain' ?>"></div>
     <?php endif; ?>
     <?= @$fields ?>
   </div>
