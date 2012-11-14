@@ -15,8 +15,8 @@ class Region implements \Iterator
   public function __construct($params=array())
   {
     foreach ($params as $key => $value) {
-      if (strpos($key, ':')) {
-        list($field_type, $option) = explode(':', $key);
+      if (substr($key, 0, 6) == 'config' && strpos($key, ':')) {
+        list($config, $field_type, $option) = explode(':', $key);
         $this->config[$field_type][$option] = $value;
       }
       else {
