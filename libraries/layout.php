@@ -13,7 +13,7 @@ class Layout {
 	public static function all()
 	{
 		$layouts = array();
-    $layout_dirs = \Config::get('application::keystone.layout_directories');
+    $layout_dirs = \Keystone\Config::get_paths('application::keystone.layout_directories');
     foreach ($layout_dirs as $dir) {
       $layout_files = scandir($dir);
       foreach ($layout_files as $layout) {
@@ -64,7 +64,19 @@ class Layout {
 		// The contents of each view file is cached in an array for the
 		// request since partial views may be rendered inside of for
 		// loops which could incur performance penalties.
-		$__contents = \File::get(realpath(path('layouts').$this->name.'/'.$this->name.'.php'));
+    $__path = false;
+    foreach (\Keystone\Config::get_paths('application::keystone.layout_directories') as $__dir) {
+      if (file_exists($__dir.$this->name.'/'.$this->name.EXT)) {
+        $__path = $__dir.$this->name.'/'.$this->name.EXT;
+        break;
+      }
+    }
+
+    if (!$__path) {
+      throw new \Exception("Could not find layout [{$this->name}].");
+    }
+
+		$__contents = \File::get(realpath($__path));
 
 		ob_start() and extract($__data, EXTR_SKIP);
 
