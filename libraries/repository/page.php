@@ -181,6 +181,7 @@ class Page
       ->join('pages AS p', 'p.id', '=', 'pr.page_id')
       ->join('page_paths AS pp', 'pp.revision_id', '=', 'pr.id')
       ->left_join('page_publishes AS pu', 'pu.page_id', '=', 'p.id')
+      ->where('p.id', '=', $id)
       ->order_by('pr.updated_at', 'desc')
       ->get()
     ;
