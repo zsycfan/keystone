@@ -21,7 +21,10 @@ class Page extends \Keystone\Entity
   public function __construct($data=array())
   {
     parent::__construct($data);
-    if (!$this->attributes['regions']]) {
+    if (!@$this->attributes['language']) {
+      $this->attributes['language'] = 'en-us';
+    }
+    if (!@$this->attributes['regions']) {
       $this->attributes['regions'] = new \Keystone\Regions();
     }
   }
