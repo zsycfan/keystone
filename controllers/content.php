@@ -21,14 +21,14 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   {
     return Keystone\View::make('keystone::content.layout')
       ->with('layouts', Keystone\Layout::all())
-      ->with('page', Keystone\Repository\Page::find($id))
+      ->with('page', Keystone\Repository\Page::find($id, array('revision' => Input::get('revision'))))
     ;
   }
 
   public function get_content($id)
   {
     return Keystone\View::make('keystone::content.edit')
-      ->with('page', Keystone\Repository\Page::find($id))
+      ->with('page', Keystone\Repository\Page::find($id, array('revision' => Input::get('revision'))))
       ->with('fields', Keystone\Field::all())
       ->with('field_css', Keystone\Field::css())
       ->with('field_javascript', Keystone\Field::javascript())
@@ -39,14 +39,14 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   public function get_settings($id)
   {
     return Keystone\View::make('keystone::content.settings')
-      ->with('page', Keystone\Repository\Page::find($id))
+      ->with('page', Keystone\Repository\Page::find($id, array('revision' => Input::get('revision'))))
     ;
   }
 
   public function get_revisions($id)
   {
     return Keystone\View::make('keystone::content.revisions')
-      ->with('page', Keystone\Repository\Page::find($id))
+      ->with('page', Keystone\Repository\Page::find($id, array('revision' => Input::get('revision'))))
       ->with('revisions', Keystone\Repository\Page::revisions($id))
     ;
   }

@@ -103,8 +103,8 @@ class Page
     if (@$params['published']) {
       $query->where('pr.id', '=', DB::raw('`pu`.`revision_id`'));
     }
-    else if (is_numeric(@$params['rev'])) {
-      $query->where('pr.id', '=', $params['rev']);
+    else if (is_numeric(@$params['revision'])) {
+      $query->where('pr.id', '=', $params['revision']);
     }
     else {
       $query->raw_where('`pr`.`id` = (SELECT MAX(`id`) FROM `page_revisions` AS `prc` WHERE `prc`.`page_id`=`p`.`id`)');
