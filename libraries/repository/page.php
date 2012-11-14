@@ -173,17 +173,17 @@ class Page
 
   public static function revisions($id)
   {
-    $revs = DB::table('page_revisions')
-      ->where('page_id', '=', $id)
-      ->order_by('created_at', 'desc')
+    $query = DB::table('page_revisions AS pr')
+      ->select(array('*', 'pr.id AS active_revision', 'pu.revision_id AS published_revision', 'p.id'))
+      ->join('pages AS p', 'p.id', '=', 'pr.page_id')
+      ->join('page_paths AS pp', 'pp.revision_id', '=', 'pr.id')
+      ->left_join('page_publishes AS pu', 'pu.page_id', '=', 'p.id')
       ->get()
     ;
 
     $revisions = array();
-    foreach ($revs as $rev) {
-      $revisions[] = \Keystone\Entity\Page::make()
-        ->fill_and_translate($rev, true)
-      ;
+    foreach ($query as $rev) {
+      $revisions[] = static::make_entity($rev);
     }
 
     return $revisions;
