@@ -1,10 +1,11 @@
 <div
   class="region"
   data-name="<?= $region->name ?>"
-  data-allow='<?= json_encode(@$region->allow) ?>'
+  data-allow='<?= htmlentities(json_encode(@$region->allow)) ?>'
   data-max="<?= $region->max ?>"
   data-min="<?= $region->min ?>"
   data-count="0"
+  data-options="<?= htmlentities(json_encode($region->options)) ?>"
 >
   <div class="fields">
     <?php if ($data): ?>
