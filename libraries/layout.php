@@ -13,11 +13,14 @@ class Layout {
 	public static function all()
 	{
 		$layouts = array();
-		$layout_files = scandir(path('layouts'));
-		foreach ($layout_files as $layout) {
-			if (substr($layout, 0, 1) == '.') continue;
-			$layouts[] = $layout;
-		}
+    $layout_dirs = \Config::get('application::keystone.layout_directories');
+    foreach ($layout_dirs as $dir) {
+      $layout_files = scandir($dir);
+      foreach ($layout_files as $layout) {
+        if (substr($layout, 0, 1) == '.') continue;
+        $layouts[] = $layout;
+      }
+    }
 		return $layouts;
 	}
 
