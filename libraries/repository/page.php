@@ -94,7 +94,7 @@ class Page
   public static function query($params=array())
   {
     $query = DB::table('pages AS p')
-      ->select(array('p.*', 'pp.*', 'pu.*', 'pr.*', 'pr.id AS active_revision', 'pu.revision_id AS published_revision', 'p.id'))
+      ->select(array('p.*', 'pp.*', 'pu.*', 'pr.*', 'pr.id AS active_revision', 'pu.revision_id AS published_revision', 'pr.id AS revision_id', 'p.id'))
       ->join('page_revisions AS pr', 'pr.page_id', '=', 'p.id')
       ->join('page_paths AS pp', 'pp.revision_id', '=', 'pr.id')
       ->left_join('page_publishes AS pu', 'pu.page_id', '=', 'p.id')

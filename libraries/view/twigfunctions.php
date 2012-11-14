@@ -308,6 +308,12 @@ function twig_flt_slugify($title, $separator = '-')
 	return Str::slug($title, $separator);
 }
 
+function twig_flt_with_query_string($url)
+{
+  $query = Request::foundation()->query->all();
+  return $url.($query?'?'.http_build_query($query, '', '&amp;'):'');
+}
+
 function twig_fn_ucfirst($string)
 {
 	return ucfirst($string);

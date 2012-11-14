@@ -10,16 +10,23 @@
   <input type="hidden" name="redirect" value="{{ redirect }}" />
   <input type="hidden" name="page[language]" value="en-us" />
   
+  {% if val('revision') %}
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    You&rsquo;re viewing an older version of this page.
+  </div>
+  {% endif %}
+
   {% block formbody %}{% endblock %}
 
   {% block formactions %}
   <div class="fixed-form-actions">
     <div class="form-actions">
-      <a {{ route() == 'content_edit_layout' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_layout', page.id) }}"><i class="icon-columns"></i> <span class="title">Layout</span></a>
-      <a {{ route() == 'content_edit_content' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_content', page.id) }}"><i class="icon-file"></i> <span class="title">Content</span></a>
-      <a {{ route() == 'content_edit_settings' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_settings', page.id) }}"><i class="icon-cog"></i> <span class="title">Settings</span></a>
-      <a {{ route() == 'content_edit_translations' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_settings', page.id) }}"><i class="icon-globe"></i> <span class="title">Translations</span></a>
-      <a {{ route() == 'content_edit_revisions' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_revisions', page.id) }}"><i class="icon-undo"></i> <span class="title">Revisions</span></a>
+      <a {{ route() == 'content_edit_layout' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_layout', page.id)|with_query_string }}"><i class="icon-columns"></i> <span class="title">Layout</span></a>
+      <a {{ route() == 'content_edit_content' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_content', page.id)|with_query_string }}"><i class="icon-file"></i> <span class="title">Content</span></a>
+      <a {{ route() == 'content_edit_settings' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_settings', page.id)|with_query_string }}"><i class="icon-cog"></i> <span class="title">Settings</span></a>
+      <a {{ route() == 'content_edit_translations' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_settings', page.id)|with_query_string }}"><i class="icon-globe"></i> <span class="title">Translations</span></a>
+      <a {{ route() == 'content_edit_revisions' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_revisions', page.id)|with_query_string }}"><i class="icon-undo"></i> <span class="title">Revisions</span></a>
       <div class="pull-right">
         <button name="page[published]" value="0" class="btn {{ page.published == true ? 'btn-success': '' }}">{{ page.published == true ? '<i class="icon-save"></i>' : '' }} Save Draft</button>
         <button name="page[published]" value="1" class="btn {{ page.published == false ? 'btn-success': '' }}">{{ page.published == true ? '' : '<i class="icon-ok"></i>' }} {{ page.published ? 'Published' : 'Publish' }}</button>

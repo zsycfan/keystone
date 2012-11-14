@@ -31,5 +31,6 @@ return array(
     // Twig filters. These are used in the Twig templates.
     'filters' => array(
         'slugify' => array('filter' => 'twig_flt_slugify', 'params' => array('is_safe' => array('html'))),
+        'with_query_string' => array('filter' => 'twig_flt_with_query_string', 'params' => array('is_safe' => array('html'))),
     ),
 );
