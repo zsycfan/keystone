@@ -1,1 +1,15 @@
-<div contenteditable name="content" placeholder="Content...">{{#if content}}{{{ content }}}{{else}}Content...{{/if}}</div>
+<div
+	contenteditable
+	name="content"
+	placeholder="{{#if config.placeholder}}{{{config.placeholder}}}{{else}}Content...{{/if}}"
+>
+	{{#if content}}
+		{{{ content }}}
+	{{else}}
+		{{#if config.placeholder}}
+			{{{config.placeholder}}}
+		{{else}}
+			Content...
+		{{/if}}
+	{{/if}}
+</div>

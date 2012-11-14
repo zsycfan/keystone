@@ -5700,9 +5700,17 @@ Handlebars.template = Handlebars.VM.template;
   });
 
   $(document).on('region:addField', '.region', function(e, field) {
-    var fields, icon, markup, region;
+    var config, fields, icon, markup, region;
     region = $(this);
     fields = region.find('.fields');
+    config = [];
+    if (region.data('config')) {
+      config = region.data('config')[field.type];
+    }
+    if (!field.data) {
+      field.data = {};
+    }
+    field.data.config = config;
     icon = false;
     if (window.templates['field.' + field.type + '.icon']) {
       icon = window.templates['field.' + field.type + '.icon'](field.data || {});
@@ -5750,8 +5758,9 @@ Handlebars.template = Handlebars.VM.template;
   });
 
   $(document).on('focus', '[contenteditable]', function() {
-    if ($(this).text() === $(this).attr('placeholder')) {
-      return $(this).empty();
+    if ($.trim($(this).text()) === $(this).attr('placeholder')) {
+      $(this).empty();
+      return $(this).focus();
     }
   });
 

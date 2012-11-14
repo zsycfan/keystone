@@ -56,7 +56,16 @@ $(document).on 'region:update', '.region', (e)->
 $(document).on 'region:addField', '.region', (e, field)->
   region = $(this)
   fields = region.find('.fields')
-  
+
+  config = []
+  if region.data('config')
+    config = region.data('config')[field.type]
+
+  if !field.data
+    field.data = {}
+
+  field.data.config = config
+
   icon = false
   if window.templates['field.'+field.type+'.icon']
     icon = window.templates['field.'+field.type+'.icon'] field.data || {}

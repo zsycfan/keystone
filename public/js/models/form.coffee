@@ -14,8 +14,9 @@ $(document).on 'submit', 'form:has([contenteditable])', ->
   true
 
 $(document).on 'focus', '[contenteditable]', ->
-  if $(this).text() == $(this).attr('placeholder')
+  if $.trim($(this).text()) == $(this).attr('placeholder')
     $(this).empty()
+    $(this).focus()
 
 $(document).on 'blur', '[contenteditable]', ->
   if $(this).text() == ''

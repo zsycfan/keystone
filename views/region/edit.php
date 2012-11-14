@@ -5,7 +5,7 @@
   data-max="<?= $region->max ?>"
   data-min="<?= $region->min ?>"
   data-count="0"
-  data-options="<?= htmlentities(json_encode($region->options)) ?>"
+  data-config="<?= htmlentities(json_encode($region->config)) ?>"
 >
   <div class="fields">
     <?php if ($data): ?>

@@ -10,14 +10,14 @@ class Region implements \Iterator
   public $min = null;
   private $position = 0;
   private $fields = array();
-  public $options = array();
+  public $config = array();
 
   public function __construct($params=array())
   {
     foreach ($params as $key => $value) {
       if (strpos($key, ':')) {
         list($field_type, $option) = explode(':', $key);
-        $this->options[$field_type][$option] = $value;
+        $this->config[$field_type][$option] = $value;
       }
       else {
         $this->$key = $value;
