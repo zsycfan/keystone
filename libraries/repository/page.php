@@ -94,7 +94,7 @@ class Page
   public static function query($params=array())
   {
     $query = DB::table('pages AS p')
-      ->select(array('*', 'pr.id AS active_revision', 'pu.revision_id AS published_revision', 'p.id'))
+      ->select(array('p.*', 'pp.*', 'pu.*', 'pr.*', 'pr.id AS active_revision', 'pu.revision_id AS published_revision', 'p.id'))
       ->join('page_revisions AS pr', 'pr.page_id', '=', 'p.id')
       ->join('page_paths AS pp', 'pp.revision_id', '=', 'pr.id')
       ->left_join('page_publishes AS pu', 'pu.page_id', '=', 'p.id')
@@ -125,6 +125,8 @@ class Page
     $entity->uri = $page->uri;
     $entity->title = $page->title;
     $entity->excerpt = $page->excerpt;
+    $entity->created_at = $page->created_at;
+    $entity->updated_at = $page->updated_at;
     return $entity;
   }
 
@@ -174,10 +176,11 @@ class Page
   public static function revisions($id)
   {
     $query = DB::table('page_revisions AS pr')
-      ->select(array('*', 'pr.id AS active_revision', 'pu.revision_id AS published_revision', 'p.id'))
+      ->select(array('p.*', 'pp.*', 'pu.*', 'pr.*', 'pr.id AS active_revision', 'pu.revision_id AS published_revision', 'p.id'))
       ->join('pages AS p', 'p.id', '=', 'pr.page_id')
       ->join('page_paths AS pp', 'pp.revision_id', '=', 'pr.id')
       ->left_join('page_publishes AS pu', 'pu.page_id', '=', 'p.id')
+      ->order_by('pr.updated_at', 'desc')
       ->get()
     ;
 

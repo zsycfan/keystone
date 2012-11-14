@@ -14,6 +14,8 @@ class Page extends \Keystone\Entity
   // protected $_excerpt;      // string
   // protected $_published;    // bool
   // protected $_published_at; // \Keystone\DateTime
+  // protected $_created_at;   // \DateTime
+  // protected $_updated_at;   // \DateTime
 
   public function get_title()
   {
