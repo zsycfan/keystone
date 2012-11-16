@@ -47,7 +47,7 @@ class Regions
 
   public function json()
   {
-    return $array=$this->to_array()?json_encode($array):null;
+    return ($array=$this->to_array())?json_encode($array):null;
   }
 
   public function title_region()
