@@ -12,3 +12,6 @@ before_install:
   - cd ./laravel
 
 script: "php artisan test keystone"
+
+notifications:
+  email: false
