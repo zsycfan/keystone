@@ -16,7 +16,7 @@
     </div>
     <div class="row-fluid">
       <div class="span4">
-        <?= region(array('name' => 'footer-left', 'allow' => array('asset'))) ?>
+        <?= region(array('name' => 'footer-left', 'allow' => array('asset', 'plain'))) ?>
       </div>
       <div class="span4">
         <?= region(array('name' => 'footer-center')) ?>
