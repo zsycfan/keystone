@@ -9,7 +9,7 @@ class Region implements \Iterator
   public $max = null;
   public $min = null;
   private $position = 0;
-  private $fields = array();
+  public $fields = array();
   public $config = array();
 
   public function __construct($params=array())
