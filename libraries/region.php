@@ -19,6 +19,9 @@ class Region implements \Iterator
         list($config, $field_type, $option) = explode(':', $key);
         $this->config[$field_type][$option] = $value;
       }
+      else if ($key == 'allow' && !is_array($value)) {
+        $this->$key = array($value);
+      }
       else {
         $this->$key = $value;
       }
