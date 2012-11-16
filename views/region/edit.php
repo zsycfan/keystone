@@ -8,8 +8,8 @@
   data-config="<?= htmlentities(json_encode($region->config)) ?>"
 >
   <div class="fields">
-    <?php if ($data): ?>
-      <?php foreach ($data as $index => $field): ?>
+    <?php if ($region->fields): ?>
+      <?php foreach ($region->fields as $index => $field): ?>
         <div
           class="field-placeholder"
           data-type="<?= $field['type'] ?>"
@@ -19,7 +19,6 @@
     <?php elseif ($region->min > 0): ?>
       <div class="field-placeholder" data-type="<?= current($region->allow) ?:'plain' ?>"></div>
     <?php endif; ?>
-    <?= @$fields ?>
   </div>
   <div class="actions">
     <a href="#" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
