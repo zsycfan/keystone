@@ -5601,6 +5601,7 @@ Handlebars.VM = {
 Handlebars.template = Handlebars.VM.template;
 ;
 (function() {
+  var htmlEntities;
 
   $(document).on('click', '[data-choose-field]', function(e) {
     var markup, modal, region;
@@ -5639,57 +5640,10 @@ Handlebars.template = Handlebars.VM.template;
   });
 
   $(function() {
-    window.sortable = $(".fields").sortable({
-      connectWith: '.region:not(.filled):not(.restricted) .fields',
-      handle: '.actions',
-      forcePlaceholderSize: true,
-      placeholder: 'ui-placeholder',
-      cursor: 'grabbing',
-      cursorAt: {
-        left: 30,
-        top: 20
-      },
-      helper: function(event, field) {
-        return field.find('.ui-helper').clone(true);
-      },
-      start: function(event, ui) {
-        $(ui.item).addClass('ui-drag-source');
-        $(document.body).addClass('ui-drag-active');
-        $('.field:hidden').closest('.ui-sortable').addClass('ui-sortable-original-parent');
-        return $('.ui-placeholder').addClass('hidden').closest('.region').addClass('ui-sortable-droptarget');
-      },
-      change: function(event, ui) {
-        $('.ui-sortable-droptarget').removeClass('ui-sortable-droptarget');
-        $('.ui-placeholder').closest('.region').addClass('ui-sortable-droptarget');
-        if ($('.ui-placeholder').prev().hasClass('ui-drag-source')) {
-          return $('.ui-placeholder').addClass('hidden');
-        } else if ($('.ui-placeholder').next().hasClass('ui-drag-source')) {
-          return $('.ui-placeholder').addClass('hidden');
-        } else {
-          return $('.ui-placeholder').removeClass('hidden');
-        }
-      },
-      stop: function(event, ui) {
-        var region, _i, _len, _ref, _results;
-        $(ui.item).removeClass('ui-drag-source');
-        $('.ui-sortable-original-parent').removeClass('ui-sortable-original-parent');
-        $('.restricted').removeClass('restricted');
-        $(document.body).removeClass('ui-drag-active');
-        $('.ui-sortable-droptarget').removeClass('ui-sortable-droptarget');
-        _ref = $('.region');
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          region = _ref[_i];
-          _results.push($(region).trigger('region:update'));
-        }
-        return _results;
-      }
-    });
     return $('.field-placeholder').each(function() {
       var region;
       region = $(this).closest('.region');
-      region.trigger('region:addField', $(this).data());
-      return $(this).remove();
+      return region.trigger('region:addField', [$(this).data(), $(this)]);
     });
   });
 
@@ -5699,16 +5653,17 @@ Handlebars.template = Handlebars.VM.template;
     }
   });
 
-  $(document).on('region:addField', '.region', function(e, field) {
+  $(document).on('region:addField', '.region, .field', function(e, field, placeholder) {
     var config, fields, icon, markup, region;
     region = $(this);
-    fields = region.find('.fields');
+    fields = region.find('.fields:first');
+    if (!field.data) {
+      field.data = {};
+    }
+    console.log(field.data);
     config = [];
     if (region.data('config')) {
       config = region.data('config')[field.type];
-    }
-    if (!field.data) {
-      field.data = {};
     }
     field.data.config = config;
     icon = false;
@@ -5720,25 +5675,45 @@ Handlebars.template = Handlebars.VM.template;
       icon: icon,
       content: window.templates['field.' + field.type + '.field'](field.data || {})
     });
-    field = $(markup).appendTo(fields);
+    field = $(markup);
+    if (placeholder) {
+      placeholder.replaceWith(field);
+    } else {
+      fields.append(field);
+    }
     field.trigger('field:init');
-    return region.trigger('region:update');
+    region.trigger('region:update');
+    field.find('.field-placeholder').each(function() {
+      field = $(this).closest('.field');
+      return field.trigger('region:addField', [$(this).data(), $(this)]);
+    });
+    return false;
+  });
+
+  htmlEntities = function(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  };
+
+  Handlebars.registerHelper('field', function(type, name, options) {
+    return '<div class="field-placeholder" data-type="' + type + '" data-name="' + name + '" data-data="' + htmlEntities(JSON.stringify(this[name])) + '"></div>';
   });
 
   $(document).on('submit', 'form:has([contenteditable])', function() {
-    var el, name, prefix, _i, _j, _len, _len1, _ref, _ref1;
-    _ref = $(this).find('[name]');
+    var el, name, nameSegments, parent, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+    _ref = $(this).find('.region *[name]');
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       el = _ref[_i];
-      if ($(el).closest('.region').size()) {
-        prefix = 'page[regions][' + $(el).closest('.region').data('name') + '][' + $(el).closest('.field').index() + ']';
-        name = $(el).attr('name').replace(/\]$/, '').replace(/\[/, '][');
-        $(el).attr('name', prefix + '[' + name + ']');
+      nameSegments = [];
+      _ref1 = $(el).parents('[data-name]');
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        parent = _ref1[_j];
+        nameSegments.push($(parent).data('name') || $(parent).index());
       }
+      $(el).attr('name', 'page[regions][' + nameSegments.reverse().join('][') + '][' + $(el).attr('name') + ']');
     }
-    _ref1 = $(this).find('[contenteditable]');
-    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-      el = _ref1[_j];
+    _ref2 = $(this).find('[contenteditable]');
+    for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+      el = _ref2[_k];
       if ($(el).text() === $(el).attr('placeholder')) {
         $(el).empty();
       }
@@ -5749,7 +5724,7 @@ Handlebars.template = Handlebars.VM.template;
         }).css({
           position: 'absolute',
           left: -9999,
-          width: '100px'
+          width: 0
         }));
       }
       $('textarea[name="' + name + '"]').html($(el).html());
