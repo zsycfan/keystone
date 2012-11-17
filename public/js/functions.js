@@ -5640,6 +5640,52 @@ Handlebars.template = Handlebars.VM.template;
   });
 
   $(function() {
+    window.sortable = $(".fields").sortable({
+      connectWith: '.region:not(.filled):not(.restricted) .fields',
+      handle: '.actions',
+      forcePlaceholderSize: true,
+      placeholder: 'ui-placeholder',
+      cursor: 'grabbing',
+      cursorAt: {
+        left: 30,
+        top: 20
+      },
+      helper: function(event, field) {
+        return field.find('.ui-helper').clone(true);
+      },
+      start: function(event, ui) {
+        $(ui.item).addClass('ui-drag-source');
+        $(document.body).addClass('ui-drag-active');
+        $('.field:hidden').closest('.ui-sortable').addClass('ui-sortable-original-parent');
+        return $('.ui-placeholder').addClass('hidden').closest('.region').addClass('ui-sortable-droptarget');
+      },
+      change: function(event, ui) {
+        $('.ui-sortable-droptarget').removeClass('ui-sortable-droptarget');
+        $('.ui-placeholder').closest('.region').addClass('ui-sortable-droptarget');
+        if ($('.ui-placeholder').prev().hasClass('ui-drag-source')) {
+          return $('.ui-placeholder').addClass('hidden');
+        } else if ($('.ui-placeholder').next().hasClass('ui-drag-source')) {
+          return $('.ui-placeholder').addClass('hidden');
+        } else {
+          return $('.ui-placeholder').removeClass('hidden');
+        }
+      },
+      stop: function(event, ui) {
+        var region, _i, _len, _ref, _results;
+        $(ui.item).removeClass('ui-drag-source');
+        $('.ui-sortable-original-parent').removeClass('ui-sortable-original-parent');
+        $('.restricted').removeClass('restricted');
+        $(document.body).removeClass('ui-drag-active');
+        $('.ui-sortable-droptarget').removeClass('ui-sortable-droptarget');
+        _ref = $('.region');
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          region = _ref[_i];
+          _results.push($(region).trigger('region:update'));
+        }
+        return _results;
+      }
+    });
     return $('.field-placeholder').each(function() {
       var region;
       region = $(this).closest('.region');
@@ -5660,7 +5706,6 @@ Handlebars.template = Handlebars.VM.template;
     if (!field.data) {
       field.data = {};
     }
-    console.log(field.data);
     config = [];
     if (region.data('config')) {
       config = region.data('config')[field.type];

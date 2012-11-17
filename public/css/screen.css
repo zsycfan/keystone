@@ -5600,7 +5600,7 @@ body:not(.ui-drag-active) .region:hover > .actions,
   z-index: 9999; }
 
 .form-actions {
-  margin: 20px 30px;
+  margin: 20px 20px;
   border: none;
   border-bottom: 1px solid #bbb;
   border-radius: 4px;
