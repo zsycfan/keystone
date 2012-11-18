@@ -41,7 +41,8 @@
 	    	{{{ fieldIcon field.type }}}
 	    </div>
 	    <div class="actions">
-	    	<i class="icon-move"></i>
+	    	{{#unless topLevel}}<i class="icon-move"></i>{{/unless}}
+	    	<i class="icon-cog"></i>
 	    </div>
 	    <div class="field-content">
 	      {{{ content }}}
