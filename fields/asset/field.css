@@ -35,20 +35,20 @@
 }
 
 .field-asset .file-list {
-	display: inline;
 	margin: 0;
 }
 
 .field-asset .file-list li {
-	max-width: 200px;
+	list-style: none;
 	margin: 0 10px 10px 0;
-	display: inline-block;
 	line-height: inherit;
 	font-size: inherit;
+	text-align: center;
 }
 
 .field-asset .file-list img {
-	max-width: 100%;
+	width: 100%;
+	max-width: 300px;
 }
 
 .field-asset input[type="file"] {

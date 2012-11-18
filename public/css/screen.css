@@ -5416,7 +5416,11 @@ body {
 .crumbs a {
   display: inline-block;
   padding: 5px 20px;
-  color: inherit; }
+  color: inherit;
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
 
 .crumbs li:before {
   font-family: FontAwesome;
