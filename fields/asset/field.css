@@ -10,7 +10,7 @@
 	position: relative;
 	padding: 0;
 	cursor: pointer;
-	width: auto;
+	width: 100%;
 	display: inline-block;
 	margin-bottom: 10px;
 }
@@ -59,11 +59,7 @@
 	padding: 10px;
 }
 
-.field-asset [name="caption"] {
-	min-height: 100px;
-}
-
-.field-asset .file-list:hover .remove {
+body.editing .field-asset .file-list .remove {
 	display: block;
 }
 
