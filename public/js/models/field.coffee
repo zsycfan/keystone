@@ -76,12 +76,17 @@ $(document).on 'region:addField', '.region, .field', (e, field, placeholder)->
 
   el = $(markup)
 
-  el.find('.more').click(->(false)).popover
+  window.popoverCount = 0;
+  popover = el.find('.more').click(->(false)).popover
     template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><div /></div></div></div>'
     title: field.type
     html: true
-    content: '<p>This field has no additional options.</p> <div class="tooltip-actions"><a class="btn btn-danger" href="#"><i class="icon-trash"></i></a></div>'
-    placement: "left"
+    content: '<p>This field has no additional options.</p> <div class="tooltip-actions"><a class="btn btn-danger" href="#" data-action="remove-field"><i class="icon-trash"></i></a></div>'
+    placement: (tip, caller)->
+      $(tip).attr('data-popover', 'popover'+window.popoverCount);
+      $(caller).closest('.field').attr('data-popover', 'popover'+window.popoverCount);
+      window.popoverCount++
+      "left"
 
   if (placeholder)
     placeholder.replaceWith el
@@ -95,6 +100,13 @@ $(document).on 'region:addField', '.region, .field', (e, field, placeholder)->
     field = $(this).closest('.field')
     field.trigger 'region:addField', [$(this).data(), $(this)]
 
+  false
+
+$(document).on 'click', '[data-action="remove-field"]', ->
+  popover = $(this).closest('.popover')
+  id = popover.data('popover')
+  $('.field[data-popover="'+id+'"]').remove()
+  popover.remove()
   false
 
 htmlEntities = (str)->

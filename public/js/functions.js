@@ -5700,7 +5700,7 @@ Handlebars.template = Handlebars.VM.template;
   });
 
   $(document).on('region:addField', '.region, .field', function(e, field, placeholder) {
-    var config, el, fields, icon, markup, region;
+    var config, el, fields, icon, markup, popover, region;
     region = $(this);
     fields = region.find('.fields:first');
     if (!field.data) {
@@ -5722,14 +5722,20 @@ Handlebars.template = Handlebars.VM.template;
       content: window.templates['field.' + field.type + '.field'](field.data || {})
     });
     el = $(markup);
-    el.find('.more').click(function() {
+    window.popoverCount = 0;
+    popover = el.find('.more').click(function() {
       return false;
     }).popover({
       template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><div /></div></div></div>',
       title: field.type,
       html: true,
-      content: '<p>This field has no additional options.</p> <div class="tooltip-actions"><a class="btn btn-danger" href="#"><i class="icon-trash"></i></a></div>',
-      placement: "left"
+      content: '<p>This field has no additional options.</p> <div class="tooltip-actions"><a class="btn btn-danger" href="#" data-action="remove-field"><i class="icon-trash"></i></a></div>',
+      placement: function(tip, caller) {
+        $(tip).attr('data-popover', 'popover' + window.popoverCount);
+        $(caller).closest('.field').attr('data-popover', 'popover' + window.popoverCount);
+        window.popoverCount++;
+        return "left";
+      }
     });
     if (placeholder) {
       placeholder.replaceWith(el);
@@ -5742,6 +5748,15 @@ Handlebars.template = Handlebars.VM.template;
       field = $(this).closest('.field');
       return field.trigger('region:addField', [$(this).data(), $(this)]);
     });
+    return false;
+  });
+
+  $(document).on('click', '[data-action="remove-field"]', function() {
+    var id, popover;
+    popover = $(this).closest('.popover');
+    id = popover.data('popover');
+    $('.field[data-popover="' + id + '"]').remove();
+    popover.remove();
     return false;
   });
 
