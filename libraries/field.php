@@ -7,24 +7,30 @@ class Field
 
   public static function all()
   {
-    $fields = array();
-    $field_dirs = scandir(path('fields'));
-    foreach ($field_dirs as $field) {
-      if (substr($field, 0, 1) == '.') continue;
-      $fields[] = $field;
+    $return = array();
+    $field_dirs = \Keystone\Config::get_paths('application::keystone.field_directories');
+    foreach ($field_dirs as $dir) {
+      $fields = scandir($dir);
+      foreach ($fields as $field) {
+        if (substr($field, 0, 1) == '.') continue;
+        $return[] = $field;
+      }
     }
 
-    return $fields;
+    return $return;
   }
 
   public static function javascript()
   {
     $javascript = array();
-    $field_templates = scandir(path('fields'));
-    foreach ($field_templates as $field) {
-      if (substr($field, 0, 1) == '.') continue;
-      if (!file_exists($path = path('fields').$field.'/field.js')) continue;
-      $javascript[] = \File::get($path);
+    $field_dirs = \Keystone\Config::get_paths('application::keystone.field_directories');
+    foreach ($field_dirs as $dir) {
+      $templates = scandir($dir);
+      foreach ($templates as $field) {
+        if (substr($field, 0, 1) == '.') continue;
+        if (!file_exists($path = path('fields').$field.'/field.js')) continue;
+        $javascript[] = \File::get($path);
+      }
     }
 
     return implode('', $javascript);
@@ -32,46 +38,52 @@ class Field
 
   public static function templates()
   {
-    $templates = array();
-    $field_templates = scandir(path('fields'));
-    foreach ($field_templates as $field) {
-      if (substr($field, 0, 1) == '.') continue;
-      if (file_exists($path = path('fields').$field.'/field.handlebars')) {
-        $template = \File::get($path);
-        $templates[] = <<<EOT
-          <script class="handlebars-template" data-name="field.{$field}.field" type="text/x-handlebars-template">
-          {$template}
-          </script>
+    $return = array();
+    $field_dirs = \Keystone\Config::get_paths('application::keystone.field_directories');
+    foreach ($field_dirs as $dir) {
+      $templates = scandir($dir);
+      foreach ($templates as $field) {
+        if (substr($field, 0, 1) == '.') continue;
+        if (file_exists($path = $dir.$field.'/field.handlebars')) {
+          $template = \File::get($path);
+          $return[] = <<<EOT
+            <script class="handlebars-template" data-name="field.{$field}.field" type="text/x-handlebars-template">
+            {$template}
+            </script>
 EOT;
-      }
-      if (file_exists($path = path('fields').$field.'/icon.handlebars')) {
-        $template = \File::get($path);
-        $templates[] = <<<EOT
-          <script class="handlebars-partial" data-name="field.{$field}.icon" type="text/x-handlebars-template">
-          {$template}
-          </script>
+        }
+        if (file_exists($path = $dir.$field.'/icon.handlebars')) {
+          $template = \File::get($path);
+          $return[] = <<<EOT
+            <script class="handlebars-partial" data-name="field.{$field}.icon" type="text/x-handlebars-template">
+            {$template}
+            </script>
 EOT;
-      }
-      else {
-        $templates[] = <<<EOT
-          <script class="handlebars-partial" data-name="field.{$field}.icon" type="text/x-handlebars-template">
-          <i class="icon-th-large"></i>
-          </script>
+        }
+        else {
+          $return[] = <<<EOT
+            <script class="handlebars-partial" data-name="field.{$field}.icon" type="text/x-handlebars-template">
+            <i class="icon-th-large"></i>
+            </script>
 EOT;
+        }
       }
     }
 
-    return implode('', $templates);
+    return implode('', $return);
   }
 
   public static function css()
   {
     $css = array();
-    $field_templates = scandir(path('fields'));
-    foreach ($field_templates as $field) {
-      if (substr($field, 0, 1) == '.') continue;
-      if (!file_exists($path = path('fields').$field.'/field.css')) continue;
-      $css[] = \File::get($path);
+    $field_dirs = \Keystone\Config::get_paths('application::keystone.field_directories');
+    foreach ($field_dirs as $dir) {
+    $templates = scandir($dir);
+      foreach ($templates as $field) {
+        if (substr($field, 0, 1) == '.') continue;
+        if (!file_exists($path = path('fields').$field.'/field.css')) continue;
+        $css[] = \File::get($path);
+      }
     }
 
     return implode('', $css);
