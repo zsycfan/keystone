@@ -71,6 +71,7 @@ $(document).on 'region:addField', '.region, .field', (e, field, placeholder)->
   markup = window.templates['field']
     field: field
     icon: icon
+    topLevel: region.hasClass 'region'
     content: window.templates['field.'+field.type+'.field'] field.data || {}
 
   field = $(markup)
