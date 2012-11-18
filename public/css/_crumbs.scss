@@ -1,8 +1,19 @@
+.sticky-wrapper {
+	margin: 0 0 30px 0;
+}
+
+.is-sticky {
+	box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
 .crumbs {
 	border-bottom: 1px solid #ccc;
 	padding: 10px 20px;
-	margin: 0 0 30px 0;
 	color: #999;
+	width: 100%;
+	box-sizing: border-box;
+	background: #fff;
+	z-index: 9999;
 }
 .crumbs ul {
 	margin: 0;
