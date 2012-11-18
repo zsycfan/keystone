@@ -18,6 +18,7 @@
 .field-asset .qq-upload-button i {
 	position: absolute;
 	top: 50%;
+	left: 0;
 	margin-top: -.5em;
 	text-align: center;
 	width: 100%;
