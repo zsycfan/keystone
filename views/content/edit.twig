@@ -35,14 +35,14 @@
 	</script>
 	{% raw %}
 	<script class="handlebars-template" data-name="field" type="text/x-handlebars-template">
-	  <div class="field field-{{ field.type }} clearfix" data-type="{{ field.type }}" data-name="{{ field.name }}">
+	  <div class="field field-{{ field.type }}" data-type="{{ field.type }}" data-name="{{ field.name }}">
 	    <input type="hidden" name="type" value="{{ field.type }}" />
 	    <div class="ui-helper">
 	    	{{{ fieldIcon field.type }}}
 	    </div>
 	    <div class="actions">
-	    	{{#unless topLevel}}<i class="icon-move"></i>{{/unless}}
-	    	<i class="icon-cog"></i>
+	    	{{#if topLevel}}<a href="#" class="move"><i class="icon-move"></i></a>{{/if}}
+	    	<a href="#" class="more"><i class="icon-cog"></i></a>
 	    </div>
 	    <div class="field-content">
 	      {{{ content }}}

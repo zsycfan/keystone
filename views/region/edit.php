@@ -20,7 +20,7 @@
       <div class="field-placeholder" data-type="<?= current($region->allow) ?:'plain' ?>"></div>
     <?php endif; ?>
   </div>
-  <div class="actions">
+  <div class="add-field">
     <a href="#" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
   </div>
 </div>

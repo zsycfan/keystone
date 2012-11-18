@@ -5651,7 +5651,7 @@ Handlebars.template = Handlebars.VM.template;
         top: 20
       },
       helper: function(event, field) {
-        return field.find('.ui-helper').clone(true);
+        return field.find('.ui-helper').clone(true).show();
       },
       start: function(event, ui) {
         $(ui.item).addClass('ui-drag-source');
@@ -5700,7 +5700,7 @@ Handlebars.template = Handlebars.VM.template;
   });
 
   $(document).on('region:addField', '.region, .field', function(e, field, placeholder) {
-    var config, fields, icon, markup, region;
+    var config, el, fields, icon, markup, region;
     region = $(this);
     fields = region.find('.fields:first');
     if (!field.data) {
@@ -5718,17 +5718,27 @@ Handlebars.template = Handlebars.VM.template;
     markup = window.templates['field']({
       field: field,
       icon: icon,
+      topLevel: region.hasClass('region'),
       content: window.templates['field.' + field.type + '.field'](field.data || {})
     });
-    field = $(markup);
+    el = $(markup);
+    el.find('.more').click(function() {
+      return false;
+    }).popover({
+      template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><div /></div></div></div>',
+      title: field.type,
+      html: true,
+      content: '<p>This field has no additional options.</p> <div class="tooltip-actions"><a class="btn btn-danger" href="#"><i class="icon-trash"></i></a></div>',
+      placement: "left"
+    });
     if (placeholder) {
-      placeholder.replaceWith(field);
+      placeholder.replaceWith(el);
     } else {
-      fields.append(field);
+      fields.append(el);
     }
-    field.trigger('field:init');
+    el.trigger('field:init');
     region.trigger('region:update');
-    field.find('.field-placeholder').each(function() {
+    el.find('.field-placeholder').each(function() {
       field = $(this).closest('.field');
       return field.trigger('region:addField', [$(this).data(), $(this)]);
     });
@@ -5830,10 +5840,10 @@ Handlebars.template = Handlebars.VM.template;
   $(document).on('region:update', '.region', function(e) {
     $(this).attr('data-count', $(this).find('.field:visible').size());
     if ($(this).data('max') && $(this).find('.field').size() >= $(this).data('max')) {
-      $(this).find('> .actions').hide();
+      $(this).find('> .add-field').hide();
       return $(this).addClass('filled');
     } else {
-      $(this).find('> .actions').show();
+      $(this).find('> .add-field').show();
       return $(this).removeClass('filled');
     }
   });

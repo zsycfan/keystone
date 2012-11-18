@@ -18,7 +18,7 @@ $ ->
     cursor: 'grabbing'
     cursorAt: {left: 30, top: 20}
     helper: (event, field)->
-      field.find('.ui-helper').clone(true)
+      field.find('.ui-helper').clone(true).show()
     start: (event, ui)->
       $(ui.item).addClass 'ui-drag-source'
       $(document.body).addClass 'ui-drag-active'
@@ -74,17 +74,24 @@ $(document).on 'region:addField', '.region, .field', (e, field, placeholder)->
     topLevel: region.hasClass 'region'
     content: window.templates['field.'+field.type+'.field'] field.data || {}
 
-  field = $(markup)
+  el = $(markup)
+
+  el.find('.more').click(->(false)).popover
+    template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><div /></div></div></div>'
+    title: field.type
+    html: true
+    content: '<p>This field has no additional options.</p> <div class="tooltip-actions"><a class="btn btn-danger" href="#"><i class="icon-trash"></i></a></div>'
+    placement: "left"
 
   if (placeholder)
-    placeholder.replaceWith field
+    placeholder.replaceWith el
   else
-    fields.append field
+    fields.append el
 
-  field.trigger 'field:init'
+  el.trigger 'field:init'
   region.trigger 'region:update'
 
-  field.find('.field-placeholder').each ->
+  el.find('.field-placeholder').each ->
     field = $(this).closest('.field')
     field.trigger 'region:addField', [$(this).data(), $(this)]
 
