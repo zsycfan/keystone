@@ -16,7 +16,11 @@
     <ul class="pull-left">
       <li><a href="{{ url_to_route('dashboard') }}">Home</a></li>
       {% for crumb in crumbs %}
-        <li><a href="{{ crumb[0] }}">{{ crumb[1] }}</a></li>
+        <li>
+          {% if crumb[0] %}<a href="{{ crumb[0] }}">{% else %}<span>{% endif %}
+            {{ crumb[1] }}
+          {% if crumb[0] %}</a>{% else %}</span>{% endif %}
+        </li>
       {% endfor %}
     </ul>
     <a class="btn pull-right" href="#" data-action="edit-layout">Edit</a>

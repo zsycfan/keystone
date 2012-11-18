@@ -22,7 +22,7 @@
 	list-style: none;
 	display: inline;
 }
-.crumbs a {
+.crumbs a, .crumbs span {
 	display: inline-block;
 	padding: 5px 20px;
 	color: inherit;
@@ -30,6 +30,9 @@
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+}
+.crumbs span {
+	color: #eee;
 }
 .crumbs li:before {
 	font-family: FontAwesome;

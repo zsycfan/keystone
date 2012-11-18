@@ -44,6 +44,7 @@
 	line-height: inherit;
 	font-size: inherit;
 	text-align: center;
+	position: relative;
 }
 
 .field-asset .file-list img {
@@ -60,7 +61,7 @@
 	padding: 10px;
 }
 
-body.editing .field-asset .file-list .remove {
+.file-list li:focus .remove {
 	display: block;
 }
 
