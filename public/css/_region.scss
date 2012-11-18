@@ -1,7 +1,5 @@
-$hidden: #eee;
-
 .region {
-	border: 2px dashed $hidden;
+	border: 2px dashed #eee;
 	border-radius: 5px;
 }
 
@@ -11,8 +9,15 @@ $hidden: #eee;
 
 .field {
 	position: relative;
-	padding: 0 80px 0 0;
-	border-bottom: 1px dashed $hidden;
+	border-bottom: 2px dashed transparent;
+
+	&:last-child {
+		border: none;
+	}
+
+	body.editing & {
+		border-color: #eee;
+	}
 }
 
 .field .field {
@@ -25,25 +30,41 @@ $hidden: #eee;
 	top: 10px;
 	right: 10px;
 	font-size: 18px;
-	color: $hidden;
+	color: #999;
+	background: #fff;
+	border-radius: 5px;
+	z-index: 9997px;
+	display: none;
+	
+	body.editing & {
+		display: block;
+	}
+}
+
+.field .field .actions {
+	left: 10px;
+	right: auto;	
 }
 
 .field .actions a {
 	display: inline-block;
 	margin-left: 10px;
 	color: inherit;
-}
-
-.field:hover .actions {
-	color: #999;
+	padding: 5px 10px;
+	margin-top: -10px;
 }
 
 .add-field {
 	padding: 10px;
+	border-top: 2px dashed transparent;
+
+	body.editing & {
+		border-color: #eee;
+	}
 }
 
 .add-field a {
-	color: $hidden;
+	color: #999;
 }
 
 .ui-helper {

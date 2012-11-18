@@ -12,12 +12,15 @@
   </div>
 </div>
 <div class="page with-save">
-  <ul class="crumbs">
-    <li><a href="{{ url_to_route('dashboard') }}">Home</a></li>
-    {% for crumb in crumbs %}
-      <li><a href="{{ crumb[0] }}">{{ crumb[1] }}</a></li>
-    {% endfor %}
-  </ul>
+  <div class="crumbs clearfix">
+    <ul class="pull-left">
+      <li><a href="{{ url_to_route('dashboard') }}">Home</a></li>
+      {% for crumb in crumbs %}
+        <li><a href="{{ crumb[0] }}">{{ crumb[1] }}</a></li>
+      {% endfor %}
+    </ul>
+    <a class="btn pull-right" href="#" data-action="edit-layout">Edit</a>
+  </div>
   <div class="container-fluid">
     {% if sess('message') %}
       <div class="alert alert-{{ sess('message_type') }}">

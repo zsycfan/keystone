@@ -5397,6 +5397,9 @@ body {
   margin: 0 0 30px 0;
   color: #999; }
 
+.crumbs ul {
+  margin: 0; }
+
 .crumbs li {
   list-style: none;
   display: inline; }
@@ -5456,7 +5459,7 @@ body {
   left: -9999px; }
 
 .region {
-  border: 2px dashed #eeeeee;
+  border: 2px dashed #eee;
   border-radius: 5px; }
 
 .fields {
@@ -5464,8 +5467,11 @@ body {
 
 .field {
   position: relative;
-  padding: 0 80px 0 0;
-  border-bottom: 1px dashed #eeeeee; }
+  border-bottom: 2px dashed transparent; }
+  .field:last-child {
+    border: none; }
+  body.editing .field {
+    border-color: #eee; }
 
 .field .field {
   border: none;
@@ -5476,21 +5482,33 @@ body {
   top: 10px;
   right: 10px;
   font-size: 18px;
-  color: #eeeeee; }
+  color: #999;
+  background: #fff;
+  border-radius: 5px;
+  z-index: 9997px;
+  display: none; }
+  body.editing .field .actions {
+    display: block; }
+
+.field .field .actions {
+  left: 10px;
+  right: auto; }
 
 .field .actions a {
   display: inline-block;
   margin-left: 10px;
-  color: inherit; }
-
-.field:hover .actions {
-  color: #999; }
+  color: inherit;
+  padding: 5px 10px;
+  margin-top: -10px; }
 
 .add-field {
-  padding: 10px; }
+  padding: 10px;
+  border-top: 2px dashed transparent; }
+  body.editing .add-field {
+    border-color: #eee; }
 
 .add-field a {
-  color: #eeeeee; }
+  color: #999; }
 
 .ui-helper {
   display: none;

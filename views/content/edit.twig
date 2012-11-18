@@ -40,10 +40,12 @@
 	    <div class="ui-helper">
 	    	{{{ fieldIcon field.type }}}
 	    </div>
-	    <div class="actions">
-	    	{{#if topLevel}}<a href="#" class="move"><i class="icon-move"></i></a>{{/if}}
-	    	<a href="#" class="more"><i class="icon-cog"></i></a>
-	    </div>
+	    {{#if topLevel}}
+		    <div class="actions">
+		    	<a href="#" class="move"><i class="icon-move"></i></a>
+		    	<a href="#" class="more"><i class="icon-cog"></i></a>
+		    </div>
+	    {{/if}}
 	    <div class="field-content">
 	      {{{ content }}}
 	    </div>
