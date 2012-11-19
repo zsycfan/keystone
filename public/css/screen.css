@@ -5340,7 +5340,7 @@ button.close {
     height: auto !important;
     overflow: visible !important; } }
 body {
-  background: url(http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/crissXcross.png) fixed center center; }
+  background: url(/keystone/img/crissXcross.png) fixed center center; }
 
 .page {
   background: #fff;
