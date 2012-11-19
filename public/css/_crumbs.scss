@@ -44,3 +44,8 @@
 .crumbs li:first-child:before {
 	content: "";
 }
+
+.crumbs .btn-group {
+	display: inline-block;
+	margin-left: 20px;
+}

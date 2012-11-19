@@ -5,8 +5,31 @@
   [null, page.title],
 ] %}
 
+{% block page_preamble %}
+  <form action="{{ url_to_route('content_save', page.id) }}" method="post">
+{% endblock %}
+
+{% block crumb_navigation %}
+<!--ul>
+  <li><a {{ route() == 'content_edit_layout' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_layout', page.id)|with_query_string }}"><i class="icon-columns"></i> <span class="title">Layout</span></a></li>
+  <li><a {{ route() == 'content_edit_content' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_content', page.id)|with_query_string }}"><i class="icon-file"></i> <span class="title">Content</span></a></li>
+  <li><a {{ route() == 'content_edit_settings' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_settings', page.id)|with_query_string }}"><i class="icon-cog"></i> <span class="title">Settings</span></a></li>
+  <li><a {{ route() == 'content_edit_translations' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_settings', page.id)|with_query_string }}"><i class="icon-globe"></i> <span class="title">Translations</span></a></li>
+  <li><a {{ route() == 'content_edit_revisions' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_revisions', page.id)|with_query_string }}"><i class="icon-undo"></i> <span class="title">Revisions</span></a></li>
+</ul-->
+{% endblock %}
+
+{% block crumb_actions %}
+  <div class="pull-right">
+    <button class="btn" href="#" data-action="edit-layout">Edit</button>
+    <div class="btn-group">
+      <button name="page[published]" value="0" class="btn {{ page.published == true ? 'btn-success': '' }}">{{ page.published == true ? '<i class="icon-save"></i>' : '' }} Save Draft</button>
+      <button name="page[published]" value="1" class="btn {{ page.published == false ? 'btn-success': '' }}">{{ page.published == true ? '' : '<i class="icon-ok"></i>' }} {{ page.published ? 'Published' : 'Publish' }}</button>
+    </div>
+  </div>
+{% endblock %}
+
 {% block content %}
-<form action="{{ url_to_route('content_save', page.id) }}" method="post">
   
   <input type="hidden" name="redirect" value="{{ redirect }}" />
   <input type="hidden" name="page[language]" value="en-us" />
@@ -19,22 +42,8 @@
   {% endif %}
 
   {% block formbody %}{% endblock %}
+{% endblock %}
 
-  {% block formactions %}
-  <div class="fixed-form-actions">
-    <div class="form-actions">
-      <a {{ route() == 'content_edit_layout' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_layout', page.id)|with_query_string }}"><i class="icon-columns"></i> <span class="title">Layout</span></a>
-      <a {{ route() == 'content_edit_content' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_content', page.id)|with_query_string }}"><i class="icon-file"></i> <span class="title">Content</span></a>
-      <a {{ route() == 'content_edit_settings' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_settings', page.id)|with_query_string }}"><i class="icon-cog"></i> <span class="title">Settings</span></a>
-      <a {{ route() == 'content_edit_translations' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_settings', page.id)|with_query_string }}"><i class="icon-globe"></i> <span class="title">Translations</span></a>
-      <a {{ route() == 'content_edit_revisions' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_revisions', page.id)|with_query_string }}"><i class="icon-undo"></i> <span class="title">Revisions</span></a>
-      <div class="pull-right">
-        <button name="page[published]" value="0" class="btn {{ page.published == true ? 'btn-success': '' }}">{{ page.published == true ? '<i class="icon-save"></i>' : '' }} Save Draft</button>
-        <button name="page[published]" value="1" class="btn {{ page.published == false ? 'btn-success': '' }}">{{ page.published == true ? '' : '<i class="icon-ok"></i>' }} {{ page.published ? 'Published' : 'Publish' }}</button>
-      </div>
-    </div>
-  </div>
-  {% endblock %}
-
+{% block page_postscript %}
 </form>
 {% endblock %}

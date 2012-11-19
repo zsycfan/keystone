@@ -11,6 +11,8 @@
     </div>
   </div>
 </div>
+
+{% block page_preamble %}{% endblock %}
 <div class="page with-save">
   <div class="crumbs clearfix" data-spy="affix" data-offset-top="150">
     <ul class="pull-left">
@@ -23,7 +25,8 @@
         </li>
       {% endfor %}
     </ul>
-    <a class="btn pull-right" href="#" data-action="edit-layout">Edit</a>
+    {% block crumb_navigation %}{% endblock %}
+    {% block crumb_actions %}{% endblock %}
   </div>
   <div class="container-fluid">
     {% if sess('message') %}
@@ -36,3 +39,4 @@
   </div>
 </div>
 {% endblock %}
+{% block page_postscript %}{% endblock %}

@@ -10,4 +10,5 @@ $(document).on 'region:update', '.region', (e)->
 $(document).on 'click', '[data-action="edit-layout"]', ->
   $(document.body).toggleClass 'editing'
   $(this).toggleClass 'active'
+  $(this).toggleClass 'btn-warning'
   false

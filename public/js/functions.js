@@ -30439,6 +30439,7 @@ qq.DisposeSupport = {
   $(document).on('click', '[data-action="edit-layout"]', function() {
     $(document.body).toggleClass('editing');
     $(this).toggleClass('active');
+    $(this).toggleClass('btn-warning');
     return false;
   });
 
