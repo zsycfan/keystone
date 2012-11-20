@@ -6,6 +6,10 @@
 	box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
+.is-sticky .crumbs {
+	background: whiteSmoke;
+}
+
 .crumbs {
 	border-bottom: 1px solid #ccc;
 	padding: 10px 20px;
@@ -14,15 +18,23 @@
 	box-sizing: border-box;
 	background: #fff;
 	z-index: 9999;
+	position: relative;
+	overflow: hidden;
+	-webkit-transition: all 1s;
 }
-.crumbs ul {
+
+.crumbs .btn {
+	box-shadow: 0 1px 0 #fff;
+}
+
+ul.ancenstry {
 	margin: 0;
 }
-.crumbs li {
+ul.ancenstry li {
 	list-style: none;
 	display: inline;
 }
-.crumbs a, .crumbs span {
+ul.ancenstry a, ul.ancenstry span {
 	display: inline-block;
 	padding: 5px 20px;
 	color: inherit;
@@ -31,21 +43,112 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
-.crumbs span {
-	color: #eee;
+ul.ancenstry span {
+	color: #ccc;
 }
-.crumbs li:before {
+ul.ancenstry li:before {
 	font-family: FontAwesome;
 	content: " \f054 ";
 }
-.crumbs li:first-child a {
+ul.ancenstry li:first-child a {
 	padding-left: 0;
 }
-.crumbs li:first-child:before {
+ul.ancenstry li:first-child:before {
 	content: "";
+}
+
+ul.ancenstry  {
+	margin-left: 70px;
+	max-width: 0;
+	height: 2em;
+	overflow: hidden;
+	white-space: nowrap;
+	-webkit-transition: all 0.5s;
+}
+
+ul.ancenstry:before {
+	content: "";
+	box-shadow: 2px -2px 5px rgba(0,0,0,0.1);
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 100px;
+	height: 100px;
+	margin-top: -50px;
+	margin-left: -50px;
+	bottom: 0;
+	-webkit-transform: rotateZ(45deg);
+	background: #fff;
+}
+
+ul.ancenstry:after {
+	font-family: FontAwesome;
+	content: " \f0c1 ";
+	position: absolute;
+	top: 50%;
+	left: 15px;
+	margin-top: -0.4em;
+	font-size: 24px;
+	color: #eee;
+	text-shadow: 1px 1px 0 #fff;
+}
+
+ul.ancenstry:hover {
+	max-width: 100%;
+}
+
+ul.ancestry:hover:before {
+	left: 100%;	
+}
+
+ul.ancenstry:hover + .crumb-navigation {
+	opacity: 0;
 }
 
 .crumbs .btn-group {
 	display: inline-block;
 	margin-left: 20px;
+}
+
+.crumb-navigation {
+	display: inline-block;
+	margin: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	max-width: 100%;
+	-webkit-transition: all 0.5s;
+}
+
+.crumb-navigation li {
+	list-style: none;
+	display: inline-block;
+}
+
+.crumb-navigation .title {
+	display: none;
+}
+
+.crumb-navigation a {
+	font-size: 24px;
+	color: #999;
+	padding: 7px 10px;
+	display: inline-block;
+	line-height: 1;
+	border-radius: 5px;
+	text-decoration: none;
+}
+
+.crumb-navigation a:not(.active):hover {
+	color: #000;
+}
+
+.crumb-navigation a i {
+	margin-bottom: -5px;
+}
+
+.crumb-navigation .active {
+	background: #999;
+	color: #fff;
+	text-shadow: 0 0 2px #000;
+	box-shadow: inset 0 5px 10px rgba(0,0,0,0.25);
 }
