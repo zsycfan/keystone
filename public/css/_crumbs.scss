@@ -129,7 +129,6 @@ ul.ancenstry:hover + .crumb-navigation {
 }
 
 .crumb-navigation a {
-	font-size: 24px;
 	color: #999;
 	padding: 7px 10px;
 	display: inline-block;
@@ -144,6 +143,7 @@ ul.ancenstry:hover + .crumb-navigation {
 
 .crumb-navigation a i {
 	margin-bottom: -5px;
+	font-size: 18px;
 }
 
 .crumb-navigation .active {

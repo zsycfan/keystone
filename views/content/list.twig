@@ -1,8 +1,24 @@
 {% extends "layouts/_base.twig" %}
 
+{% set crumbs = [
+  [null, "Content"],
+] %}
+
+{% block crumb_navigation %}
+<ul class="crumb-navigation">
+  <li><a class="active" href="{{ url_to_route('content_edit_layout', page.id)|with_query_string }}"><i class="icon-list"></i> <span class="title">List</span></a></li>
+  <li><a href="{{ url_to_route('content_edit_content', page.id)|with_query_string }}"><i class="icon-sitemap"></i> <span class="title">Sitemap</span></a></li>
+</ul>
+{% endblock %}
+
+{% block crumb_actions %}
+  <div class="pull-right">
+    <a class="btn btn-success pull-right" href="{{ url_to_route('content_new') }}"><i class="icon-plus"></i> Add Content</a>
+  </div>
+{% endblock %}
+
 {% block content %}
   <div class="page-header">
-    <a class="btn btn-success pull-right" href="{{ url_to_route('content_new') }}"><i class="icon-plus"></i> Add Content</a>
     <h1>Content</h1>
   </div>
   <table class="table table-striped">

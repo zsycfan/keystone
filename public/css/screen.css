@@ -5348,7 +5348,7 @@ body {
   position: relative;
   z-index: 1;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
-  min-height: 100%; }
+  min-height: 1000px; }
 
 .page.with-save {
   padding-bottom: 90px; }
@@ -5506,7 +5506,6 @@ ul.ancenstry:hover + .crumb-navigation {
   display: none; }
 
 .crumb-navigation a {
-  font-size: 24px;
   color: #999;
   padding: 7px 10px;
   display: inline-block;
@@ -5518,7 +5517,8 @@ ul.ancenstry:hover + .crumb-navigation {
   color: #000; }
 
 .crumb-navigation a i {
-  margin-bottom: -5px; }
+  margin-bottom: -5px;
+  font-size: 18px; }
 
 .crumb-navigation .active {
   background: #999;
