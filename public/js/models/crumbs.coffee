@@ -1,3 +1,2 @@
 $ ->
-  $(".crumbs").sticky
-    topSpacing: 0
+  $(".crumbs").sticky()

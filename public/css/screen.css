@@ -5402,7 +5402,6 @@ body {
 
 .crumbs {
   border-bottom: 1px solid #ccc;
-  padding: 10px 20px;
   color: #999;
   width: 100%;
   box-sizing: border-box;
@@ -5416,7 +5415,8 @@ body {
   box-shadow: 0 1px 0 #fff; }
 
 ul.ancenstry {
-  margin: 0; }
+  margin: 0;
+  padding: 10px 0; }
 
 ul.ancenstry li {
   list-style: none;
@@ -5445,46 +5445,41 @@ ul.ancenstry li:first-child:before {
   content: ""; }
 
 ul.ancenstry {
-  margin-left: 70px;
-  max-width: 0;
-  height: 2em;
+  padding-left: 60px;
+  max-width: 0px;
   overflow: hidden;
   white-space: nowrap;
-  -webkit-transition: all 0.5s; }
+  -webkit-transition: all 0.5s;
+  position: relative; }
 
 ul.ancenstry:before {
   content: "";
   box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.1);
   position: absolute;
   top: 50%;
-  left: 0;
-  width: 100px;
+  right: 5px;
+  width: 100%;
   height: 100px;
   margin-top: -50px;
   margin-left: -50px;
   bottom: 0;
-  -webkit-transform: rotateZ(45deg);
-  background: #fff; }
+  background: #fff;
+  z-index: -1; }
 
 ul.ancenstry:after {
   font-family: FontAwesome;
-  content: " \f0c1 ";
+  content: " \f015 ";
   position: absolute;
   top: 50%;
-  left: 15px;
+  left: 20px;
+  width: 40px;
+  text-align: left;
   margin-top: -0.4em;
-  font-size: 24px;
-  color: #eee;
+  font-size: 18px;
   text-shadow: 1px 1px 0 #fff; }
 
 ul.ancenstry:hover {
   max-width: 100%; }
-
-ul.ancestry:hover:before {
-  left: 100%; }
-
-ul.ancenstry:hover + .crumb-navigation {
-  opacity: 0; }
 
 .crumbs .btn-group {
   display: inline-block;
@@ -5496,7 +5491,8 @@ ul.ancenstry:hover + .crumb-navigation {
   white-space: nowrap;
   overflow: hidden;
   max-width: 100%;
-  -webkit-transition: all 0.5s; }
+  -webkit-transition: all 0.5s;
+  padding: 10px 0; }
 
 .crumb-navigation li {
   list-style: none;
@@ -5525,6 +5521,9 @@ ul.ancenstry:hover + .crumb-navigation {
   color: #fff;
   text-shadow: 0 0 2px #000;
   box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.25); }
+
+.crumb-actions {
+  padding: 10px 20px; }
 
 .cards {
   margin-left: 0;
