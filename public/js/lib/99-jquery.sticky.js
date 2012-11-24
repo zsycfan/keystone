@@ -29,7 +29,7 @@
             for (var i = 0; i < sticked.length; i++) {
                 var s = sticked[i],
                     elementTop = s.stickyWrapper.offset().top,
-                    etse = elementTop - s.topSpacing - extra;
+                    etse = elementTop - s.topSpacing;
                 if (scrollTop <= etse) {
                     if (s.currentTop !== null) {
                         s.stickyElement
