@@ -1,10 +1,12 @@
 <?php
 
-Route::get('(:bundle)', function() { return Redirect::to_route('content'); });
+Route::get('(:bundle)', function() { return Redirect::to_route('content_list'); });
 
 Route::get('(:bundle)/dashboard', array('as' => 'dashboard', 'uses' => 'keystone::dashboard@index'));
 
-Route::get('(:bundle)/content', array('as' => 'content', 'uses' => 'keystone::content@index'));
+Route::get('(:bundle)/content', array('as' => 'content', function() { return Redirect::to_route('content_list'); }));
+Route::get('(:bundle)/content/list', array('as' => 'content_list', 'uses' => 'keystone::content@list'));
+Route::get('(:bundle)/content/tree', array('as' => 'content_tree', 'uses' => 'keystone::content@tree'));
 Route::get('(:bundle)/content/new', array('as' => 'content_new', 'uses' => 'keystone::content@new'));
 Route::post('(:bundle)/content/(:num?)', array('as' => 'content_save', 'uses' => 'keystone::content@save'));
 Route::get('(:bundle)/content/(:num)/layout', array('as' => 'content_edit_layout', 'uses' => 'keystone::content@layout'));

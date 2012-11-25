@@ -8,12 +8,16 @@ class Page
 
   public static function save(\Keystone\Entity\Page $page)
   {
+    // If the page exists in the database we'll just touch it's updated
+    // timestamp to track the change
     if ($page->id) {
       DB::table('pages')
         ->where('id', '=', $page->id)
         ->update(array('updated_at' => date('Y-m-d G:i:s')))
       ;
     }
+
+    // If the page doesn't exist in the database we'll create it
     else {
       $page->id = DB::table('pages')->insert_get_id(array(
         'created_at' => date('Y-m-d G:i:s'),
@@ -21,6 +25,7 @@ class Page
       ));
     }
 
+    // Now add a revision containing all the data about the page
     $revision_id = DB::table('page_revisions')->insert_get_id(array(
       'page_id' => $page->id,
       'language' => $page->language,
@@ -32,18 +37,20 @@ class Page
       'updated_at' => date('Y-m-d G:i:s'),
     ));
 
+    // Add a row to the path table to track the URI of this revision
     $path = array(
       'revision_id' => $revision_id,
       'order' => null,
       'uri' => $page->uri
     );
-    $segments = preg_split('#/#', $page->uri);
+    $segments = array_filter(preg_split('#/#', $page->uri));
     foreach ($segments as $index => $seg) {
       $index++;
       $path["segment{$index}"] = $seg;
     }
     DB::table('page_paths')->insert($path);
 
+    // If we're publishing the page then update the table of published revisions
     if ($page->published) {
       $row = DB::table('page_publishes')->where('page_id', '=', $page->id);
       if ($row) {
@@ -73,7 +80,7 @@ class Page
 
     $pages = array();
     foreach ($page_objects as $page) {
-      $pages[] = static::make_entity($page);;
+      $pages[] = static::make_entity($page);
     }
 
     return $pages;
@@ -151,6 +158,40 @@ class Page
     }
 
     return static::make_entity($page);
+  }
+
+  public static function find_at_uri($uri, $params=array())
+  {
+    $segments = array_filter(preg_split('#/#', $uri));
+
+    $page_objects = static::query($params);
+
+    if (!count($segments)) {
+      $page_objects->where_not_null('pp.segment1');
+      $page_objects->where_null('pp.segment2');
+    }
+    else {
+      foreach ($segments as $index => $segment) {
+        $page_objects->where('pp.segment'.++$index, '=', $segment);
+      }
+      $page_objects->where_not_null('pp.segment'.++$index);
+      $page_objects->where_null('pp.segment'.++$index);
+    }
+
+    $page_objects = $page_objects->get();
+
+    // print_r(DB::last_query()); die;
+
+    if (count($page_objects) == 0) {
+      throw new \Exception("No pages found at [{$uri}].");
+    }
+
+    $pages = array();
+    foreach ($page_objects as $page) {
+      $pages[] = static::make_entity($page);
+    }
+
+    return $pages;
   }
 
   public static function find_by_title($title, $params=array())

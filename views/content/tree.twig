@@ -1,5 +1,12 @@
 {% extends "content/_layout_list.twig" %}
 
+{% block crumb_actions %}
+  <div class="crumb-actions pull-right">
+    <a class="btn" href="#">Edit</a>
+    <a class="btn btn-success" href="{{ url_to_route('content_new') }}"><i class="icon-plus"></i> Add Content</a>
+  </div>
+{% endblock %}
+
 {% block content %}
   <div class="page-header">
     <h1>Content</h1>
@@ -8,6 +15,7 @@
     <thead>
       <tr>
         <th width="5%">#</th>
+        <th width="20%">URI</th>
         <th width="20%">Title <a href="#"><i class="icon-sort"></i></a></th>
         <th>Excerpt</th>
       </tr>
@@ -16,6 +24,7 @@
       {% for page in pages %}
       <tr>
         <td><a href="{{ url_to_route('content_edit_content', page.id) }}">{{ page.id }}</a></td>
+        <td>{{ page.uri }}</td>
         <td><a href="{{ url_to_route('content_edit_content', page.id) }}"><span class="singleline">{{ page.title }}</span></a></td>
         <td><a href="{{ url_to_route('content_edit_content', page.id) }}"><span class="singleline">{{ page.excerpt }}</span></a></td>
       </tr>

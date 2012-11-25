@@ -2,11 +2,19 @@
 
 class Keystone_Content_Controller extends Keystone_Base_Controller {
 
-  public function get_index()
+  public function get_list()
   {
     return Keystone\View::make('keystone::content.list')
       ->with('layouts', Keystone\Layout::all())
       ->with('pages', Keystone\Repository\Page::all())
+    ;
+  }
+
+  public function get_tree()
+  {
+    return Keystone\View::make('keystone::content.tree')
+      ->with('layouts', Keystone\Layout::all())
+      ->with('pages', Keystone\Repository\Page::find_at_uri(Input::get('uri')))
     ;
   }
 

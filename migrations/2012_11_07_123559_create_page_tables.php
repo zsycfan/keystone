@@ -26,7 +26,7 @@ class Keystone_Create_Page_Tables {
     });
     Schema::create('page_paths', function($table) {
       $table->increments('id');
-      $table->integer('revision_id');
+      $table->integer('revision_id')->nullable();
       $table->integer('order')->nullable();
       $table->string('uri', 2048)->nullable();
       for ($i=1; $i<=20; $i++) {
