@@ -67,7 +67,7 @@ class Layout {
 		// request since partial views may be rendered inside of for
 		// loops which could incur performance penalties.
     $__path = false;
-    foreach (\Keystone\Config::get_paths('application::keystone.layout_directories') as $__dir) {
+    foreach (\Keystone\Config::get_paths('keystone::layout.directories') as $__dir) {
       if (file_exists($__dir.$this->name.'/'.$this->name.EXT)) {
         $__path = $__dir.$this->name.'/'.$this->name.EXT;
         break;
