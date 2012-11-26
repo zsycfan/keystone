@@ -56,6 +56,9 @@ ul.ancenstry li:first-child a {
 ul.ancenstry li:first-child:before {
 	content: "";
 }
+ul.ancenstry li:last-child a, ul.ancenstry li:last-child span {
+	padding-right: 40px;
+}
 
 ul.ancenstry  {
 	padding-left: 60px;
@@ -68,10 +71,10 @@ ul.ancenstry  {
 
 ul.ancenstry:before {
 	content: "";
-	box-shadow: 2px -2px 5px rgba(0,0,0,0.1);
 	position: absolute;
 	top: 50%;
-	right: 5px;
+	right: 0;
+	border-right: 1px solid #ccc;
 	width: 100%;
 	height: 100px;
 	margin-top: -50px;
@@ -91,15 +94,14 @@ ul.ancenstry:after {
 	text-align: left;
 	margin-top: -0.4em;
 	font-size: 18px;
-	text-shadow: 1px 1px 0 #fff;
 }
 
 ul.ancenstry:hover {
 	max-width: 100%;
 }
 
-ul.ancestry:hover:before {
-	
+.crumbs .btn {
+	margin-left: 20px;
 }
 
 .crumbs .btn-group {
@@ -114,7 +116,6 @@ ul.ancestry:hover:before {
 	overflow: hidden;
 	max-width: 100%;
 	-webkit-transition: all 0.5s;
-	padding: 10px 0;
 }
 
 .crumb-navigation li {
@@ -128,10 +129,9 @@ ul.ancestry:hover:before {
 
 .crumb-navigation a {
 	color: #999;
-	padding: 7px 10px;
+	padding: 16px 20px;
 	display: inline-block;
 	line-height: 1;
-	border-radius: 5px;
 	text-decoration: none;
 }
 
@@ -140,12 +140,11 @@ ul.ancestry:hover:before {
 }
 
 .crumb-navigation a i {
-	margin-bottom: -5px;
 	font-size: 18px;
 }
 
 .crumb-navigation .active {
-	background: #999;
+	background: #ccc;
 	color: #fff;
 	text-shadow: 0 0 2px #000;
 	box-shadow: inset 0 5px 10px rgba(0,0,0,0.25);
