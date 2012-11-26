@@ -11,24 +11,14 @@
   <div class="page-header">
     <h1>Content</h1>
   </div>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th width="5%">#</th>
-        <th width="20%">URI</th>
-        <th width="20%">Title <a href="#"><i class="icon-sort"></i></a></th>
-        <th>Excerpt</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for page in pages %}
-      <tr>
-        <td><a href="{{ url_to_route('content_edit_content', page.id) }}">{{ page.id }}</a></td>
-        <td><a href="{{ url_to_route('content_tree') }}?uri={{ page.uri }}">{{ page.uri }}</a></td>
-        <td><a href="{{ url_to_route('content_edit_content', page.id) }}"><span class="singleline">{{ page.title }}</span></a></td>
-        <td><a href="{{ url_to_route('content_edit_content', page.id) }}"><span class="singleline">{{ page.excerpt }}</span></a></td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  {% for page in pages %}
+  <div class="page-box">
+    <a class="move" href="#"><i class="icon-move"></i> <span>Move</span></a>
+    <a href="{{ url_to_route('content_edit_content', page.id) }}">
+      <p><strong><span class="singleline">{{ page.title }}</span></strong></p>
+      <p class="excerpt">{{ page.excerpt }}</p>
+      <p class="meta">Updated by <a href="#">Mark Huot</a> {{ page.created_since|date('%d days, %h hours') }} ago</p>
+    </a>
+  </div>
+  {% endfor %}
 {% endblock %}

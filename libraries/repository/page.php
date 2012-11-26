@@ -134,7 +134,9 @@ class Page
     $entity->title = $page->title;
     $entity->excerpt = $page->excerpt;
     $entity->created_at = $page->created_at;
+    $entity->created_since = date_create('now')->diff(new \DateTime($page->created_at));
     $entity->updated_at = $page->updated_at;
+    $entity->updated_since = date_create('now')->diff(new \DateTime($page->updated_at));
     return $entity;
   }
 

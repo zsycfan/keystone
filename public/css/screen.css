@@ -5730,6 +5730,28 @@ table {
   overflow: hidden;
   text-overflow: ellipsis; }
 
+.page-box a {
+  text-decoration: none;
+  color: inherit; }
+
+.page-box {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px; }
+
+.page-box strong {
+  font-weight: 200;
+  font-size: 18px; }
+
+.page-box .excerpt {
+  color: #999; }
+
+.page-box .meta {
+  color: #999;
+  font-size: 12px; }
+
+.page-box .move {
+  display: none; }
+
 /*
  * VERSION 2.1.2
  * Original version: 1.0 © 2010 Andrew Valums ( andrew(at)valums.com )
