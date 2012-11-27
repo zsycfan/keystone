@@ -71,6 +71,10 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
     ;
   }
 
+  /**
+   * @todo the page.uri check here is wrong. if a user tries to set the uri to
+   * and empty string ("") the condition will fail
+   */
   public function post_save($id=false)
   {
     $page = Keystone\Repository\Page::find_or_create($id);
@@ -78,12 +82,8 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
     if (Input::get('page.regions')) $page->regions = new Keystone\Regions(Input::get('page.regions'));
     if (Input::get('page.layout')) $page->layout = new Keystone\Layout(Input::get('page.layout'), $page);
     if (Input::get('page.published_at')) $page->published_at = Input::get('page.published_at');
-    
-    if (Input::get('page.parent')) {
-      $page->set_uri_by_parent(Input::get('page.parent'));
-    } else {
-      $page->uri = Input::get('page.uri');
-    }
+    if (Input::get('page.parent')) $page->set_uri_by_parent(Input::get('page.parent'));
+    if (Input::get('page.uri')) $page->uri = Input::get('page.uri');
     
     Keystone\Repository\Page::save($page);
 

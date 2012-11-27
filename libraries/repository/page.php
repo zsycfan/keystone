@@ -124,11 +124,12 @@ class Page
   {
     $entity = new \Keystone\Entity\Page();
     $entity->set_raw('id', $page->id);
+    $entity->set_raw('published_id', $page->published_revision);
     $entity->set_raw('revision_id', $page->revision_id);
     $entity->set_raw('language', $page->language);
     $entity->set_raw('regions', new \Keystone\Regions(json_decode($page->regions, true)));
     $entity->set_raw('layout', new \Keystone\Layout($page->layout, $entity));
-    $entity->set_raw('published', $page->active_revision == $page->published_revision);
+    $entity->set_raw('published', $page->published_revision == true);
     $entity->set_raw('published_at', $page->published_at);
     $entity->set_raw('uri', $page->uri);
     $entity->set_raw('title', $page->title);
