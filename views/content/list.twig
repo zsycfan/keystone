@@ -15,18 +15,9 @@
     <tbody>
       {% for page in pages %}
       <tr>
-        <td>
-          <a class="entry" href="{{ url_to_route('content_edit_content', page.id) }}">
-            <span class="singleline">
-              <strong>{{ page.title }}</strong> <span class="excerpt">{{ page.excerpt }}</span>
-            </span>
-          </a>
-        </td>
-        <td>
-          {{ page.published ? '<span class="label label-success">Live</span>' : '<span class="label label-warning">Draft</span>' }}
-        </td>
-        <td>
-          <span class="singleline meta">{{ page.updated_since|date }}</span></td>
+        {% include "content/_list_title.twig" %}
+        {% include "content/_list_status.twig" %}
+        {% include "content/_list_date.twig" %}
       </tr>
       {% endfor %}
     </tbody>

@@ -5614,22 +5614,6 @@ ul.ancenstry:hover {
 .add-field a {
   color: #999; }
 
-.ui-helper {
-  display: none;
-  border-radius: 4px;
-  color: #000;
-  text-shadow: 0 1px 0 #fff;
-  font-size: 14px;
-  width: 40px !important;
-  height: auto !important;
-  padding: 5px 10px;
-  text-align: center;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
-  background: #f3f3e4;
-  cursor: -webkit-grabbing;
-  line-height: 1.4;
-  z-index: 9999; }
-
 .ui-placeholder {
   height: 0 !important;
   position: relative;
@@ -5732,27 +5716,8 @@ table .entry {
     font-weight: normal;
     color: #333; }
 
-.page-box a {
-  text-decoration: none;
-  color: inherit; }
-
-.page-box {
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 10px; }
-
-.page-box strong {
-  font-weight: 200;
-  font-size: 18px; }
-
-.page-box .excerpt {
-  color: #999; }
-
-.page-box .meta {
-  color: #999;
-  font-size: 12px; }
-
-.page-box .move {
-  display: none; }
+tbody {
+  position: relative; }
 
 /*
  * VERSION 2.1.2
@@ -5883,3 +5848,37 @@ table .entry {
   border-radius: 6px;
   margin-bottom: 3px;
   display: none; }
+
+.keystone-ui-placeholder {
+  display: block;
+  position: relative;
+  height: 0 !important; }
+
+.keystone-ui-placeholder:after {
+  content: "";
+  position: absolute;
+  top: -2.5px;
+  left: 0;
+  display: block;
+  height: 5px;
+  background: #4A8FFF !important;
+  width: 100%; }
+
+.keystone-ui-source {
+  opacity: 0.3; }
+
+.keystone-ui-helper {
+  display: none;
+  border-radius: 4px;
+  color: #fff;
+  text-shadow: 0 1px 0 #000;
+  font-size: 14px;
+  width: 30px !important;
+  height: auto !important;
+  padding: 5px 15px;
+  text-align: right;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.8);
+  cursor: -webkit-grabbing;
+  line-height: 1.4;
+  z-index: 9999; }

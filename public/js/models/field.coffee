@@ -13,32 +13,25 @@ $ ->
   window.sortable = $(".fields").sortable
     connectWith: '.region:not(.filled):not(.restricted) .fields'
     handle: '.actions'
-    forcePlaceholderSize: true
-    placeholder: 'ui-placeholder'
-    cursor: 'grabbing'
-    cursorAt: {left: 30, top: 20}
+    placeholder: 'keystone-ui-placeholder'
+    cursor: '-webkit-grabbing'
+    cursorAt: {left: 15, top: 15}
     helper: (event, field)->
-      field.find('.ui-helper').clone(true).show()
+      field.find('.keystone-ui-helper').clone(true).show()
     start: (event, ui)->
-      $(ui.item).addClass 'ui-drag-source'
-      $(document.body).addClass 'ui-drag-active'
-      $('.field:hidden').closest('.ui-sortable').addClass 'ui-sortable-original-parent'
-      $('.ui-placeholder').addClass('hidden').closest('.region').addClass 'ui-sortable-droptarget'
+      ui.item.addClass('keystone-ui-source').show()
+      ui.placeholder.hide()
     change: (event, ui)->
-      $('.ui-sortable-droptarget').removeClass('ui-sortable-droptarget')
-      $('.ui-placeholder').closest('.region').addClass 'ui-sortable-droptarget'
-      if ($('.ui-placeholder').prev().hasClass('ui-drag-source'))
-        $('.ui-placeholder').addClass('hidden') 
-      else if ($('.ui-placeholder').next().hasClass('ui-drag-source'))
-        $('.ui-placeholder').addClass('hidden') 
+      ui.placeholder.show().css('width', ui.placeholder.parent().width())
+      if (ui.placeholder.prev().hasClass('keystone-ui-source'))
+        ui.placeholder.addClass('hidden') 
+      else if (ui.placeholder.next().hasClass('keystone-ui-source'))
+        ui.placeholder.addClass('hidden') 
       else
-        $('.ui-placeholder').removeClass('hidden') 
+        ui.placeholder.removeClass('hidden') 
     stop: (event, ui)->
-      $(ui.item).removeClass 'ui-drag-source'
-      $('.ui-sortable-original-parent').removeClass 'ui-sortable-original-parent'
+      $(ui.item).removeClass 'keystone-ui-source'
       $('.restricted').removeClass 'restricted'
-      $(document.body).removeClass 'ui-drag-active'
-      $('.ui-sortable-droptarget').removeClass 'ui-sortable-droptarget'
       for region in $('.region')
         $(region).trigger 'region:update'
 

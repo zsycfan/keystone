@@ -30214,40 +30214,33 @@ qq.DisposeSupport = {
     window.sortable = $(".fields").sortable({
       connectWith: '.region:not(.filled):not(.restricted) .fields',
       handle: '.actions',
-      forcePlaceholderSize: true,
-      placeholder: 'ui-placeholder',
-      cursor: 'grabbing',
+      placeholder: 'keystone-ui-placeholder',
+      cursor: '-webkit-grabbing',
       cursorAt: {
-        left: 30,
-        top: 20
+        left: 15,
+        top: 15
       },
       helper: function(event, field) {
-        return field.find('.ui-helper').clone(true).show();
+        return field.find('.keystone-ui-helper').clone(true).show();
       },
       start: function(event, ui) {
-        $(ui.item).addClass('ui-drag-source');
-        $(document.body).addClass('ui-drag-active');
-        $('.field:hidden').closest('.ui-sortable').addClass('ui-sortable-original-parent');
-        return $('.ui-placeholder').addClass('hidden').closest('.region').addClass('ui-sortable-droptarget');
+        ui.item.addClass('keystone-ui-source').show();
+        return ui.placeholder.hide();
       },
       change: function(event, ui) {
-        $('.ui-sortable-droptarget').removeClass('ui-sortable-droptarget');
-        $('.ui-placeholder').closest('.region').addClass('ui-sortable-droptarget');
-        if ($('.ui-placeholder').prev().hasClass('ui-drag-source')) {
-          return $('.ui-placeholder').addClass('hidden');
-        } else if ($('.ui-placeholder').next().hasClass('ui-drag-source')) {
-          return $('.ui-placeholder').addClass('hidden');
+        ui.placeholder.show().css('width', ui.placeholder.parent().width());
+        if (ui.placeholder.prev().hasClass('keystone-ui-source')) {
+          return ui.placeholder.addClass('hidden');
+        } else if (ui.placeholder.next().hasClass('keystone-ui-source')) {
+          return ui.placeholder.addClass('hidden');
         } else {
-          return $('.ui-placeholder').removeClass('hidden');
+          return ui.placeholder.removeClass('hidden');
         }
       },
       stop: function(event, ui) {
         var region, _i, _len, _ref, _results;
-        $(ui.item).removeClass('ui-drag-source');
-        $('.ui-sortable-original-parent').removeClass('ui-sortable-original-parent');
+        $(ui.item).removeClass('keystone-ui-source');
         $('.restricted').removeClass('restricted');
-        $(document.body).removeClass('ui-drag-active');
-        $('.ui-sortable-droptarget').removeClass('ui-sortable-droptarget');
         _ref = $('.region');
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -30439,6 +30432,41 @@ qq.DisposeSupport = {
     $(this).toggleClass('active');
     $(this).toggleClass('btn-warning');
     return false;
+  });
+
+  $(function() {
+    return window.sortable = $("tbody").sortable({
+      handle: '.move',
+      placeholder: 'keystone-ui-placeholder',
+      cursor: '-webkit-grabbing',
+      cursorAt: {
+        left: 15,
+        top: 15
+      },
+      helper: function(event, tr) {
+        var el;
+        el = $('<div class="keystone-ui-helper"><i class="icon-file" /></div>').show();
+        $(document.body).append(el);
+        return el;
+      },
+      start: function(event, ui) {
+        ui.item.addClass('keystone-ui-source').show();
+        return ui.placeholder.hide();
+      },
+      change: function(event, ui) {
+        ui.placeholder.show().css('width', ui.placeholder.parent().width());
+        if (ui.placeholder.prev().hasClass('keystone-ui-source')) {
+          return ui.placeholder.addClass('hidden');
+        } else if (ui.placeholder.next().hasClass('keystone-ui-source')) {
+          return ui.placeholder.addClass('hidden');
+        } else {
+          return ui.placeholder.removeClass('hidden');
+        }
+      },
+      stop: function(event, ui) {
+        return $(ui.item).removeClass('keystone-ui-source');
+      }
+    });
   });
 
 }).call(this);
