@@ -10,6 +10,15 @@ table {
 	text-overflow: ellipsis;
 }
 
+table .entry {
+	color: #ccc;
+
+	strong {
+		font-weight: normal;
+		color: #333;
+	}
+}
+
 .page-box a {
 	text-decoration: none;
 	color: inherit;

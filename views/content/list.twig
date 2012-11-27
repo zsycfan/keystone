@@ -14,11 +14,16 @@
     <tbody>
       {% for page in pages %}
       <tr>
-        <td><a href="{{ url_to_route('content_edit_content', page.id) }}">
-        <span class="singleline">
-        <span class="label label-warning">{{ page.published ? 'Published' : 'Draft' }}</span>
-        <strong>{{ page.title }}</strong> <span class="excerpt">{{ page.excerpt }}</span></span></a></td>
-        <td><span class="meta">{{ page.updated_since|date }}</span></td>
+        <td>
+          <a class="entry" href="{{ url_to_route('content_edit_content', page.id) }}">
+            <span class="singleline">
+              <span class="label label-warning">{{ page.published ? 'Published' : 'Draft' }}</span>
+              <strong>{{ page.title }}</strong> <span class="excerpt">{{ page.excerpt }}</span>
+            </span>
+          </a>
+        </td>
+        <td>
+          <span class="singleline meta">{{ page.updated_since|date }}</span></td>
       </tr>
       {% endfor %}
     </tbody>
