@@ -30204,6 +30204,12 @@ qq.DisposeSupport = {
     return false;
   });
 
+  $(document).on('keyup', function(event) {
+    if (event.ctrlKey && event.keyCode === 69) {
+      return $('[data-action="edit"]').trigger('click');
+    }
+  });
+
   $(document).on('mousedown', '.fields .actions', function(event) {
     var field;
     field = $(this).closest('.field');
@@ -30246,7 +30252,7 @@ qq.DisposeSupport = {
       },
       stop: function(event, ui) {
         var region, _i, _len, _ref, _results;
-        $(ui.item).removeClass('keystone-ui-source');
+        ui.item.removeClass('keystone-ui-source');
         $('.restricted').removeClass('restricted');
         _ref = $('.region');
         _results = [];
@@ -30464,7 +30470,14 @@ qq.DisposeSupport = {
         }
       },
       stop: function(event, ui) {
-        return $(ui.item).removeClass('keystone-ui-source');
+        ui.item.removeClass('keystone-ui-source');
+        return ui.item.parents('.ui-sortable').find('[data-sortable]').each(function(index) {
+          return $.post('/keystone/api/page/' + $(this).data('id'), {
+            order: index
+          }, function(data) {
+            return console.log(data);
+          });
+        });
       }
     });
   });

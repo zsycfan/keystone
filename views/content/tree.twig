@@ -22,7 +22,7 @@
     </thead>
     <tbody>
       {% for page in pages %}
-      <tr data-sortable>
+      <tr data-sortable data-id="{{ page.id }}">
         <td class="move"><i class="icon-move"></i></td>
         {% include "content/_list_title.twig" %}
         {% include "content/_list_status.twig" %}

@@ -22,4 +22,7 @@ $ ->
       else
         ui.placeholder.removeClass('hidden') 
     stop: (event, ui)->
-      $(ui.item).removeClass 'keystone-ui-source'
+      ui.item.removeClass 'keystone-ui-source'
+      ui.item.parents('.ui-sortable').find('[data-sortable]').each (index)->
+        $.post '/keystone/api/page/'+$(this).data('id'), {order: index}, (data)->
+          console.log data

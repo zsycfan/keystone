@@ -30,7 +30,7 @@ $ ->
       else
         ui.placeholder.removeClass('hidden') 
     stop: (event, ui)->
-      $(ui.item).removeClass 'keystone-ui-source'
+      ui.item.removeClass 'keystone-ui-source'
       $('.restricted').removeClass 'restricted'
       for region in $('.region')
         $(region).trigger 'region:update'

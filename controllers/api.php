@@ -14,4 +14,14 @@ class Keystone_Api_Controller extends Keystone_Base_Controller
     ));
   }
 
+  public function post_page($id)
+  {
+    $page = Keystone\Repository\Page::find($id);
+    $page->order = Input::get('order');
+    Keystone\Repository\Page::save($page);
+    return Response::make(json_encode($page->to_array()), 200, array(
+      'Content-type' => 'application/json'
+    ));
+  }
+
 }

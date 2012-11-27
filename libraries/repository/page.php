@@ -33,6 +33,7 @@ class Page
       'title' => $page->title,
       'excerpt' => $page->excerpt,
       'regions' => $page->regions->json(),
+      'order' => $page->order,
       'created_at' => date('Y-m-d G:i:s'),
       'updated_at' => date('Y-m-d G:i:s'),
     ));
@@ -40,7 +41,6 @@ class Page
     // Add a row to the path table to track the URI of this revision
     $path = array(
       'revision_id' => $revision_id,
-      'order' => null,
       'uri' => $page->uri
     );
     $segments = array_filter(preg_split('#/#', $page->uri));
@@ -166,7 +166,7 @@ class Page
   {
     $segments = array_filter(preg_split('#/#', $uri));
 
-    $page_objects = static::query($params);
+    $page_objects = static::query($params)->order_by('order', 'asc');
 
     if (!count($segments)) {
       $page_objects->where_not_null('pp.segment1');
