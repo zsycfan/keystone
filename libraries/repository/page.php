@@ -133,6 +133,7 @@ class Page
     $entity->uri = $page->uri;
     $entity->title = $page->title;
     $entity->excerpt = $page->excerpt;
+    $entity->order = $page->order;
     $entity->created_at = $page->created_at;
     $entity->created_since = date_create('now')->diff(new \DateTime($page->created_at));
     $entity->updated_at = $page->updated_at;

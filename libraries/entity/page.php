@@ -41,8 +41,19 @@ class Page extends \Keystone\Entity
     return $this->regions->excerpt_region()->summary();
   }
 
-  public function slug()
+  public function set_uri_by_parent($parent)
   {
-    return strtolower(preg_replace(array('/[^a-z0-9_-]/i', '/\s+/'), array('', '-'), trim($this->get_title())));
+    $slug = strtolower(preg_replace(array('/[^a-z0-9_-]/i', '/\s+/'), array('', '-'), trim($this->get_title())));
+    $uri = ltrim($parent.'/'.$slug, '/');
+
+    try {
+      $index = '';
+      while ($page = \Keystone\Repository\Page::find_by_uri($uri.$index)) {
+        $index++;
+      }
+    }
+    catch (\Exception $e) {
+      $this->attributes['uri'] = $uri.$index;
+    }
   }
 }
