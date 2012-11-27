@@ -9,7 +9,19 @@
 
 {% block content %}
   <div class="page-header">
-    <h1>Content</h1>
+    <h1>
+      Content 
+      {% if tree %}
+        <small>
+          <a href="{{ url_to_route('content_tree') }}">Home</a> /
+          {% for crumb in tree %}
+            {% autoescape false %}
+            {{ loop.index != loop.length ? '<a href="'~ url_to_route('content_tree') ~ '?uri=' ~ crumb.uri ~'">' : '' }}
+            {{ crumb.title }}{{ loop.index != loop.length ? '</a> /' : '&hellip;' }}
+            {% endautoescape %}
+          {% endfor %}
+        </small>
+      {% endif %}
   </div>
   <table class="table">
     <thead>
@@ -17,6 +29,7 @@
         <th>Title <a href="#"><i class="icon-sort"></i></a></th>
         <th width="10%">Status</th>
         <th width="10%">Date</th>
+        <th class="navigate" width="5%"></th>
         <th class="move" width="5%"></th>
         <th class="actions" width="5%"></th>
       </tr>
@@ -27,6 +40,7 @@
         {% include "content/_list_title.twig" %}
         {% include "content/_list_status.twig" %}
         {% include "content/_list_date.twig" %}
+        <td class="navigate"><a href="{{ url_to_route('content_tree') }}?uri={{ page.uri }}"><i class="icon-chevron-right"></i></a></td>
         <td class="move"><i class="icon-move"></i></td>
         <td class="actions"><i class="icon-cog"></i></td>
       </tr>

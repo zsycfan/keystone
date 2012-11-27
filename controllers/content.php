@@ -15,6 +15,7 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
     return Keystone\View::make('keystone::content.tree')
       ->with('layouts', Keystone\Layout::all())
       ->with('pages', Keystone\Repository\Page::find_at_uri(Input::get('uri')))
+      ->with('tree', Keystone\Repository\Page::find_breadcrumbs_for_uri(Input::get('uri')))
     ;
   }
 

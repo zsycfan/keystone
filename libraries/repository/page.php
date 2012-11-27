@@ -182,8 +182,6 @@ class Page
 
     $page_objects = $page_objects->get();
 
-    // print_r(DB::last_query()); die;
-
     if (count($page_objects) == 0) {
       throw new \Exception("No pages found at [{$uri}].");
     }
@@ -191,6 +189,17 @@ class Page
     $pages = array();
     foreach ($page_objects as $page) {
       $pages[] = static::make_entity($page);
+    }
+
+    return $pages;
+  }
+
+  public static function find_breadcrumbs_for_uri($uri, $params=array())
+  {
+    $pages = array();
+    $uri = array_filter(preg_split('#/#', $uri));
+    for ($index=1; $len=count($uri), $index<=$len; $index++) {
+      $pages[] = static::find_by_uri(implode('/', array_slice($uri, 0, $index)), $params);
     }
 
     return $pages;
