@@ -7,19 +7,18 @@
   <table class="table">
     <thead>
       <tr>
-        <th width="5%">#</th>
-        <th width="20%">Title <a href="#"><i class="icon-sort"></i></a></th>
-        <th>Excerpt</th>
+        <th>Title <a href="#"><i class="icon-sort"></i></a></th>
         <th width="10%">Status</th>
       </tr>
     </thead>
     <tbody>
       {% for page in pages %}
       <tr>
-        <td><a href="{{ url_to_route('content_edit_content', page.id) }}">{{ page.id }}</a></td>
-        <td><a href="{{ url_to_route('content_edit_content', page.id) }}"><span class="singleline">{{ page.title }}</span></a></td>
-        <td><a href="{{ url_to_route('content_edit_content', page.id) }}"><span class="singleline">{{ page.excerpt }}</span></a></td>
-        <td><span class="label label-warning">{{ page.published ? 'Published' : 'Draft' }}</span></td>
+        <td><a href="{{ url_to_route('content_edit_content', page.id) }}">
+        <span class="singleline">
+        <span class="label label-warning">{{ page.published ? 'Published' : 'Draft' }}</span>
+        <strong>{{ page.title }}</strong> <span class="excerpt">{{ page.excerpt }}</span></span></a></td>
+        <td><span class="meta">{{ page.updated_since|date }}</span></td>
       </tr>
       {% endfor %}
     </tbody>
