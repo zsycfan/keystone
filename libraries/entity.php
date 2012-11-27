@@ -43,6 +43,11 @@ class Entity
     return new static($attributes);
   }
 
+  public function set_raw($key, $value)
+  {
+    $this->attributes[$key] = $value;
+  }
+
   public function fill($data, $raw=false)
   {
     foreach ($data as $key => $value) {

@@ -45,7 +45,12 @@ class Page extends \Keystone\Entity
   {
     $slug = strtolower(preg_replace(array('/[^a-z0-9_-]/i', '/\s+/'), array('', '-'), trim($this->get_title())));
     $uri = ltrim($parent.'/'.$slug, '/');
+    $this->set_uri($uri);
+  }
 
+  public function set_uri($uri)
+  {
+    $uri = preg_replace('/\d+\s*$/', '', $uri);
     try {
       $index = '';
       while ($page = \Keystone\Repository\Page::find_by_uri($uri.$index)) {
