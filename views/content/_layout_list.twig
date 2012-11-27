@@ -7,7 +7,7 @@
 {% block crumb_navigation %}
 <ul class="crumb-navigation">
   <li><a {{ route() == 'content_list' ? 'class="active"' : '' }} href="{{ url_to_route('content_list') }}"><i class="icon-list"></i> <span class="title">List</span></a></li>
-  <li><a {{ route() == 'content_tree' ? 'class="active"' : '' }} href="{{ url_to_route('content_tree') }}"><i class="icon-sitemap"></i> <span class="title">Sitemap</span></a></li>
+  <li><a {{ route() == 'content_tree' ? 'class="active"' : '' }} href="{{ url_to_route('content_tree') }}?uri="><i class="icon-sitemap"></i> <span class="title">Sitemap</span></a></li>
 </ul>
 {% endblock %}
 

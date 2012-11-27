@@ -13,7 +13,7 @@
       Content 
       {% if tree %}
         <small>
-          <a href="{{ url_to_route('content_tree') }}">Home</a> /
+          <a href="{{ url_to_route('content_tree') }}?uri=">Home</a> /
           {% for crumb in tree %}
             {% if loop.index != loop.length %}
               <a href="{{ url_to_route('content_tree') ~ '?uri=' ~ crumb.uri }}">
