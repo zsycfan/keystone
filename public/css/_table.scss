@@ -23,7 +23,7 @@ tbody {
 	position: relative;
 }
 
-table .move {
+table .move, table .actions {
 	display: none;
 
 	body.editing & {

@@ -14,19 +14,21 @@
   <table class="table">
     <thead>
       <tr>
-        <th class="move" width="5%"></th>
         <th>Title <a href="#"><i class="icon-sort"></i></a></th>
         <th width="10%">Status</th>
         <th width="10%">Date</th>
+        <th class="move" width="5%"></th>
+        <th class="actions" width="5%"></th>
       </tr>
     </thead>
     <tbody>
       {% for page in pages %}
       <tr data-sortable data-id="{{ page.id }}">
-        <td class="move"><i class="icon-move"></i></td>
         {% include "content/_list_title.twig" %}
         {% include "content/_list_status.twig" %}
         {% include "content/_list_date.twig" %}
+        <td class="move"><i class="icon-move"></i></td>
+        <td class="actions"><i class="icon-cog"></i></td>
       </tr>
       {% endfor %}
     </tbody>
