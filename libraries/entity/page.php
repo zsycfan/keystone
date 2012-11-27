@@ -50,10 +50,10 @@ class Page extends \Keystone\Entity
 
   public function set_uri($uri)
   {
-    $uri = preg_replace('/\d+\s*$/', '', $uri);
     try {
       $index = '';
-      while ($page = \Keystone\Repository\Page::find_by_uri($uri.$index)) {
+      while (($page=\Keystone\Repository\Page::find_by_uri($uri.$index)) && $page->id != $this->id) {
+        $uri = preg_replace('/\d+\s*$/', '', $uri);
         $index++;
       }
     }
