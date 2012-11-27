@@ -52,7 +52,7 @@ class Page
 
     // If we're publishing the page then update the table of published revisions
     if ($page->published) {
-      $row = DB::table('page_publishes')->where('page_id', '=', $page->id);
+      $row = DB::table('page_publishes')->where('page_id', '=', $page->id)->first();
       if ($row) {
         DB::table('page_publishes')
           ->where('page_id', '=', $page->id)
