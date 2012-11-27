@@ -2,7 +2,7 @@
 
 {% block crumb_actions %}
   <div class="crumb-actions pull-right">
-    <a class="btn" href="#">Edit</a>
+    <a class="btn" data-action="edit" href="#">Edit</a>
     <a class="btn btn-success" href="{{ url_to_route('content_new') }}"><i class="icon-plus"></i> Add Content</a>
   </div>
 {% endblock %}
@@ -14,7 +14,7 @@
   <table class="table">
     <thead>
       <tr>
-        <th width="5%"></th>
+        <th class="move" width="5%"></th>
         <th>Title <a href="#"><i class="icon-sort"></i></a></th>
         <th width="10%">Status</th>
         <th width="10%">Date</th>

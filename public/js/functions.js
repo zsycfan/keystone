@@ -30197,6 +30197,13 @@ qq.DisposeSupport = {
     return $(".crumbs").sticky();
   });
 
+  $(document).on('click', '[data-action="edit"]', function() {
+    $(document.body).toggleClass('editing');
+    $(this).toggleClass('active');
+    $(this).toggleClass('btn-warning');
+    return false;
+  });
+
   $(document).on('mousedown', '.fields .actions', function(event) {
     var field;
     field = $(this).closest('.field');
@@ -30425,13 +30432,6 @@ qq.DisposeSupport = {
       $(this).find('> .add-field').show();
       return $(this).removeClass('filled');
     }
-  });
-
-  $(document).on('click', '[data-action="edit-layout"]', function() {
-    $(document.body).toggleClass('editing');
-    $(this).toggleClass('active');
-    $(this).toggleClass('btn-warning');
-    return false;
   });
 
   $(function() {

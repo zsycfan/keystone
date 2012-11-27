@@ -22,3 +22,11 @@ table .entry {
 tbody {
 	position: relative;
 }
+
+table .move {
+	display: none;
+
+	body.editing & {
+		display: table-cell;
+	}
+}
