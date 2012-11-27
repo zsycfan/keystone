@@ -58,7 +58,7 @@ class Region implements \Iterator
       $summary[] = 'Untitled';
     }
 
-    return implode(' ', $summary);
+    return trim(implode(' ', array_filter($summary)));
   }
 
   public function to_array()
