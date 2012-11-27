@@ -1,5 +1,7 @@
 $ ->
-  window.sortable = $("tbody").sortable
+
+  # Enable sortable table rows
+  window.sortable = $("tbody:has([data-sortable])").sortable
     handle: '.move'
     placeholder: 'keystone-ui-placeholder'
     cursor: '-webkit-grabbing'

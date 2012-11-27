@@ -30435,7 +30435,7 @@ qq.DisposeSupport = {
   });
 
   $(function() {
-    return window.sortable = $("tbody").sortable({
+    return window.sortable = $("tbody:has([data-sortable])").sortable({
       handle: '.move',
       placeholder: 'keystone-ui-placeholder',
       cursor: '-webkit-grabbing',
