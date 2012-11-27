@@ -2,8 +2,14 @@
 
 class Keystone_Content_Controller extends Keystone_Base_Controller {
 
+  public function get_index()
+  {
+    return Redirect::to_route('content_'.Session::get('last_viewed_style', 'list'));
+  }
+
   public function get_list()
   {
+    Session::put('last_viewed_style', 'list');
     return Keystone\View::make('keystone::content.list')
       ->with('layouts', Keystone\Layout::all())
       ->with('pages', Keystone\Repository\Page::all())
@@ -12,6 +18,11 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_tree()
   {
+    if (Input::query('uri') === null) {
+      return Redirect::to(URL::to_route('content_tree').'?uri='.Session::get('last_viewed_uri'));
+    }
+    Session::put('last_viewed_style', 'tree');
+    Session::put('last_viewed_uri', Input::get('uri'));
     return Keystone\View::make('keystone::content.tree')
       ->with('layouts', Keystone\Layout::all())
       ->with('pages', Keystone\Repository\Page::find_at_uri(Input::get('uri')))
