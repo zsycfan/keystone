@@ -6,7 +6,7 @@
 ] %}
 
 {% block page_preamble %}
-  <form action="{{ url_to_route('content_save', page.id) }}" method="post">
+  <form action="{{ url_to_route('content_save', page.id)|with_query_string }}" method="post">
 {% endblock %}
 
 {% block crumb_navigation %}

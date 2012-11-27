@@ -7,9 +7,10 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Title <a href="#"><i class="icon-sort"></i></a></th>
+        <th>Title</th>
         <th width="10%">Status</th>
-        <th width="10%">Date</th>
+        <th width="10%">Type</th>
+        <th width="10%">Date <a href="#"><i class="icon-sort-down"></i></a></th>
       </tr>
     </thead>
     <tbody>
@@ -17,6 +18,7 @@
       <tr>
         {% include "content/_list_title.twig" %}
         {% include "content/_list_status.twig" %}
+        {% include "content/_list_type.twig" %}
         {% include "content/_list_date.twig" %}
       </tr>
       {% endfor %}

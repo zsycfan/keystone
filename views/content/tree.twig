@@ -3,7 +3,7 @@
 {% block crumb_actions %}
   <div class="crumb-actions pull-right">
     <a class="btn" data-action="edit" href="#">Edit</a>
-    <a class="btn btn-success" href="{{ url_to_route('content_new') }}"><i class="icon-plus"></i> Add Content</a>
+    <a class="btn btn-success" href="{{ url_to_route('content_new') }}?page%5Bparent%5D={{ val('uri') }}"><i class="icon-plus"></i> Add Content Here</a>
   </div>
 {% endblock %}
 
@@ -15,10 +15,15 @@
         <small>
           <a href="{{ url_to_route('content_tree') }}">Home</a> /
           {% for crumb in tree %}
-            {% autoescape false %}
-            {{ loop.index != loop.length ? '<a href="'~ url_to_route('content_tree') ~ '?uri=' ~ crumb.uri ~'">' : '' }}
-            {{ crumb.title }}{{ loop.index != loop.length ? '</a> /' : '&hellip;' }}
-            {% endautoescape %}
+            {% if loop.index != loop.length %}
+              <a href="{{ url_to_route('content_tree') ~ '?uri=' ~ crumb.uri }}">
+            {% endif %}
+            {{ crumb.title }}
+            {% if loop.index != loop.length %}
+              </a> / 
+            {% else %}
+              &hellip;
+            {% endif %}
           {% endfor %}
         </small>
       {% endif %}
@@ -26,9 +31,10 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Title <a href="#"><i class="icon-sort"></i></a></th>
+        <th>Title</th>
         <th width="10%">Status</th>
-        <th width="10%">Date</th>
+        <th width="10%">Type</th>
+        <th width="10%">Date <a href="#"><i class="icon-sort-down"></i></a></th>
         <th class="navigate" width="5%"></th>
         <th class="move" width="5%"></th>
         <th class="actions" width="5%"></th>
@@ -39,6 +45,7 @@
       <tr data-sortable data-id="{{ page.id }}">
         {% include "content/_list_title.twig" %}
         {% include "content/_list_status.twig" %}
+        {% include "content/_list_type.twig" %}
         {% include "content/_list_date.twig" %}
         <td class="navigate"><a href="{{ url_to_route('content_tree') }}?uri={{ page.uri }}"><i class="icon-chevron-right"></i></a></td>
         <td class="move"><i class="icon-move"></i></td>

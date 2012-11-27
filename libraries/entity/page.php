@@ -40,4 +40,9 @@ class Page extends \Keystone\Entity
   {
     return $this->regions->excerpt_region()->summary();
   }
+
+  public function slug()
+  {
+    return strtolower(preg_replace(array('/[^a-z0-9_-]/i', '/\s+/'), array('', '-'), trim($this->get_title())));
+  }
 }
