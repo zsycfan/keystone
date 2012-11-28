@@ -6,7 +6,7 @@
   <div class="page-header">
     <h1>Revisions</h1>
   </div>
-  <table class="table table-striped">
+  <table class="table">
     <thead>
       <tr>
         <th></th>
@@ -18,13 +18,13 @@
     </thead>
     <tbody>
       {% for rev in revisions %}
-        <tr {{ rev.published ? 'class="success"' : (rev.revision_id == page.revision_id ? 'class="warning"' : '') }}>
+        <tr {{ rev.revision_id == page.published_id ? 'class="success"' : (rev.revision_id == page.revision_id ? 'class="warning"' : '') }}>
           <td>{{ loop.revindex }}</td>
           <td>{{ rev.language }}</td>
           <td><a href="{{ url_to_route('content_edit_content', page.id) }}?revision={{ rev.revision_id }}">{{ rev.created_at }}</a></td>
           <td>Author</td>
           <td>
-            {{ rev.published ? '<span class="badge badge-success">Published</span>' : '' }}
+            {{ rev.revision_id == page.published_id ? '<span class="badge badge-success">Published</span>' : '' }}
             {{ rev.revision_id == page.revision_id ? '<span class="badge badge-warning">Loaded</span>' : '' }}
           </td>
         </tr>
