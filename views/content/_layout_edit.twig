@@ -33,6 +33,7 @@
   
   <input type="hidden" name="redirect" value="{{ redirect }}" />
   <input type="hidden" name="page[language]" value="en-us" />
+  <input type="hidden" name="page[layout]" value="{{ page.layout.name }}" />
   
   {% if val('revision') %}
   <div class="alert alert-error">

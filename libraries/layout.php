@@ -55,12 +55,23 @@ class Layout {
 
 	public function region($name)
 	{
-    return array_get($this->regions, $name);
+    return array_get($this->regions, "content.{$name}");
 	}
 
   public function name()
   {
     return $this->name;
+  }
+
+  public function json()
+  {
+    $json = array();
+    foreach ($this->regions as $screen => $regions) {
+      foreach ($regions as $region_name => $region) {
+        $json[$screen][$region_name] = $region->to_array();
+      }
+    }
+    return json_encode($json);
   }
 
 	public function form($__screen)
