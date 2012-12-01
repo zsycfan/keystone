@@ -57,19 +57,16 @@ class Layout {
     return $this->name;
   }
 
-	public function form()
+	public function form($__screen)
 	{
 		$this->set_active();
 
 		$__data = array();
 
-		// The contents of each view file is cached in an array for the
-		// request since partial views may be rendered inside of for
-		// loops which could incur performance penalties.
-    $__path = false;
+		$__path = false;
     foreach (\Keystone\Config::get_paths('keystone::layout.directories') as $__dir) {
-      if (file_exists($__dir.$this->name.'/'.$this->name.EXT)) {
-        $__path = $__dir.$this->name.'/'.$this->name.EXT;
+      if (file_exists($__dir.$this->name.'/'.$__screen.EXT)) {
+        $__path = $__dir.$this->name.'/'.$__screen.EXT;
         break;
       }
     }
