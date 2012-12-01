@@ -89,7 +89,7 @@ class Layout {
     }
 
     if (!$__path) {
-      throw new \Exception("Could not find layout [{$this->name}].");
+      throw new \Exception("Could not find layout [{$this->name}/{$__screen}].");
     }
 
 		$__contents = \File::get(realpath($__path));
