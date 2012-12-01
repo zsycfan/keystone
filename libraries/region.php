@@ -12,6 +12,11 @@ class Region implements \Iterator
   public $fields = array();
   public $config = array();
 
+  public static function make()
+  {
+    return new static();
+  }
+
   public function __construct($params=array())
   {
     foreach ($params as $key => $value) {
@@ -26,6 +31,12 @@ class Region implements \Iterator
         $this->$key = $value;
       }
     }
+  }
+
+  public function with($key, $value)
+  {
+    $this->{$key} = $value;
+    return $this;
   }
 
   public function form()

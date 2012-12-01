@@ -1,7 +1,7 @@
 <?php
 
 function region($params) {
-  $params['fields'] = \Keystone\Layout::active()->get_region_data($params['name']);
+  $params['fields'] = \Keystone\Layout::active()->region($params['name']);
 	$region = new \Keystone\Region($params);
   return $region->form();
 }

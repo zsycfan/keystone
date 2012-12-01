@@ -8,7 +8,7 @@ class Layout {
 
 	public static $active;
   private $name;
-  private $page;
+  private $regions;
 
 	public static function all()
 	{
@@ -31,10 +31,16 @@ class Layout {
 		return static::$active;
 	}
 
-	public function __construct($name, \Keystone\Entity\Page $page)
+	public function __construct($name, $screens=array())
 	{
-		$this->name = $name;
-		$this->page = $page;
+    $this->name = $name;
+		foreach ($screens as $screen => $regions) {
+      foreach ($regions as $region => $fields) {
+        $this->regions[$screen][$region] = \Keystone\Region::make()
+          ->with('fields', $fields)
+        ;
+      }
+    }
 	}
 
 	public function set_active()
@@ -47,9 +53,9 @@ class Layout {
 		static::$active = null;
 	}
 
-	public function get_region_data($name)
+	public function region($name)
 	{
-    return @$this->page->regions->$name;
+    return array_get($this->regions, $name);
 	}
 
   public function name()
