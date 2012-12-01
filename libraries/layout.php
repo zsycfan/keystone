@@ -8,7 +8,7 @@ class Layout {
 
 	public static $active;
   private $name;
-  private $regions;
+  private $regions =array();
 
 	public static function all()
 	{
@@ -34,11 +34,13 @@ class Layout {
 	public function __construct($name, $screens=array())
 	{
     $this->name = $name;
-		foreach ($screens as $screen => $regions) {
-      foreach ($regions as $region => $fields) {
-        $this->regions[$screen][$region] = \Keystone\Region::make()
-          ->with('fields', $fields)
-        ;
+    if (is_array($screens)) {
+  		foreach ($screens as $screen => $regions) {
+        foreach ($regions as $region => $fields) {
+          $this->regions[$screen][$region] = \Keystone\Region::make()
+            ->with('fields', $fields)
+          ;
+        }
       }
     }
 	}
