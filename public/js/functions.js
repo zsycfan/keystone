@@ -30346,21 +30346,29 @@ qq.DisposeSupport = {
   });
 
   $(document).on('submit', 'form:has([contenteditable])', function() {
-    var el, name, nameSegments, parent, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
-    _ref = $(this).find('.region *[name]');
+    var el, layout, name, nameSegments, parent, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3;
+    _ref = $(this).find('.layout');
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      el = _ref[_i];
-      nameSegments = [];
-      _ref1 = $(el).parents('[data-name]');
+      layout = _ref[_i];
+      _ref1 = $(layout).find('.region *[name]');
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-        parent = _ref1[_j];
-        nameSegments.push($(parent).data('name') || $(parent).index());
+        el = _ref1[_j];
+        nameSegments = [];
+        _ref2 = $(el).parents('[data-name]');
+        for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+          parent = _ref2[_k];
+          if ($(parent).hasClass('layout')) {
+            break;
+          }
+          nameSegments.push($(parent).data('name') || $(parent).index());
+        }
+        $(el).attr('name', 'page[regions][' + $(layout).data('name') + '][' + nameSegments.reverse().join('][') + '][' + $(el).attr('name') + ']');
+        console.log(el);
       }
-      $(el).attr('name', 'page[regions][' + nameSegments.reverse().join('][') + '][' + $(el).attr('name') + ']');
     }
-    _ref2 = $(this).find('[contenteditable]');
-    for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-      el = _ref2[_k];
+    _ref3 = $(this).find('[contenteditable]');
+    for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+      el = _ref3[_l];
       if ($(el).text() === $(el).attr('placeholder')) {
         $(el).empty();
       }
@@ -30376,7 +30384,7 @@ qq.DisposeSupport = {
       }
       $('textarea[name="' + name + '"]').html($(el).html());
     }
-    return true;
+    return false;
   });
 
   $(document).on('focus', '[contenteditable]', function() {

@@ -1,11 +1,15 @@
 $(document).on 'submit', 'form:has([contenteditable])', ->
 
   # Give everything the proper nested name
-  for el in $(this).find('.region *[name]')
-    nameSegments = []
-    for parent in $(el).parents('[data-name]')
-      nameSegments.push $(parent).data('name') || $(parent).index()
-    $(el).attr 'name', 'page[regions]['+nameSegments.reverse().join('][')+']['+$(el).attr('name')+']'
+  for layout in $(this).find('.layout')
+    for el in $(layout).find('.region *[name]')
+      nameSegments = []
+      for parent in $(el).parents('[data-name]')
+        if $(parent).hasClass('layout')
+          break
+        nameSegments.push $(parent).data('name') || $(parent).index()
+      $(el).attr 'name', 'page[regions]['+$(layout).data('name')+']['+nameSegments.reverse().join('][')+']['+$(el).attr('name')+']'
+      console.log el
 
   # Turn content editables into actual textareas
   for el in $(this).find('[contenteditable]')
@@ -17,7 +21,7 @@ $(document).on 'submit', 'form:has([contenteditable])', ->
     $('textarea[name="'+name+'"]').html($(el).html())
 
   # Form submit!
-  true
+  false
 
 $(document).on 'focus', '[contenteditable]', ->
   if $.trim($(this).text()) == $(this).attr('placeholder')
