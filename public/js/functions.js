@@ -30363,7 +30363,6 @@ qq.DisposeSupport = {
           nameSegments.push($(parent).data('name') || $(parent).index());
         }
         $(el).attr('name', 'page[regions][' + $(layout).data('name') + '][' + nameSegments.reverse().join('][') + '][' + $(el).attr('name') + ']');
-        console.log(el);
       }
     }
     _ref3 = $(this).find('[contenteditable]');
@@ -30384,7 +30383,7 @@ qq.DisposeSupport = {
       }
       $('textarea[name="' + name + '"]').html($(el).html());
     }
-    return false;
+    return true;
   });
 
   $(document).on('focus', '[contenteditable]', function() {

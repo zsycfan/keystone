@@ -9,7 +9,6 @@ $(document).on 'submit', 'form:has([contenteditable])', ->
           break
         nameSegments.push $(parent).data('name') || $(parent).index()
       $(el).attr 'name', 'page[regions]['+$(layout).data('name')+']['+nameSegments.reverse().join('][')+']['+$(el).attr('name')+']'
-      console.log el
 
   # Turn content editables into actual textareas
   for el in $(this).find('[contenteditable]')
@@ -21,7 +20,7 @@ $(document).on 'submit', 'form:has([contenteditable])', ->
     $('textarea[name="'+name+'"]').html($(el).html())
 
   # Form submit!
-  false
+  true
 
 $(document).on 'focus', '[contenteditable]', ->
   if $.trim($(this).text()) == $(this).attr('placeholder')
