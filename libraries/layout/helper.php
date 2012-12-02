@@ -1,7 +1,9 @@
 <?php
 
 function region($params) {
-  $params['fields'] = \Keystone\Layout::active()->region($params['name']);
-	$region = new \Keystone\Region($params);
-  return $region->form();
+  list($layout, $screen) = \Keystone\Layout::active();
+	return \Keystone\Region::make($params)
+	  ->with('fields', $layout->region("{$screen}.{$params['name']}"))
+	  ->form()
+	;
 }

@@ -12,30 +12,30 @@ class Region implements \Iterator
   public $fields = array();
   public $config = array();
 
-  public static function make()
+  public static function make($params=array())
   {
-    return new static();
+    return new static($params);
   }
 
   public function __construct($params=array())
   {
     foreach ($params as $key => $value) {
-      if (substr($key, 0, 6) == 'config' && strpos($key, ':')) {
-        list($config, $field_type, $option) = explode(':', $key);
-        $this->config[$field_type][$option] = $value;
-      }
-      else if ($key == 'allow' && !is_array($value)) {
-        $this->$key = array($value);
-      }
-      else {
-        $this->$key = $value;
-      }
+      $this->with($key, $value);
     }
   }
 
   public function with($key, $value)
   {
-    $this->{$key} = $value;
+    if (substr($key, 0, 6) == 'config' && strpos($key, ':')) {
+      list($config, $field_type, $option) = explode(':', $key);
+      $this->config[$field_type][$option] = $value;
+    }
+    else if ($key == 'allow' && !is_array($value)) {
+      $this->$key = array($value);
+    }
+    else {
+      $this->$key = $value;
+    }
     return $this;
   }
 

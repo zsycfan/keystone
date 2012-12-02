@@ -6,9 +6,10 @@ require \Bundle::path('keystone').'libraries'.DS.'layout'.DS.'helper'.EXT;
 
 class Layout {
 
-	public static $active;
+	private static $active;
+	private static $screen;
   private $name;
-  private $regions =array();
+  private $regions = array();
 
 	public static function all()
 	{
@@ -28,7 +29,7 @@ class Layout {
 
 	public static function active()
 	{
-		return static::$active;
+		return array(static::$active, static::$screen);
 	}
 
 	public function __construct($name, $screens=array())
@@ -45,19 +46,21 @@ class Layout {
     }
 	}
 
-	public function set_active()
+	public function set_active($screen)
 	{
 		static::$active = $this;
+		static::$screen = $screen;
 	}
 
 	public function release_active()
 	{
 		static::$active = null;
+		static::$screen = null;
 	}
 
 	public function region($name)
 	{
-    return array_get($this->regions, "content.{$name}");
+    return array_get($this->regions, $name);
 	}
 
   public function name()
@@ -78,7 +81,7 @@ class Layout {
 
 	public function form($__screen)
 	{
-		$this->set_active();
+		$this->set_active($__screen);
 
 		$__data = array();
 
