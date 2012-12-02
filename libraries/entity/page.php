@@ -27,19 +27,16 @@ class Page extends \Keystone\Entity
     if (!@$this->attributes['language']) {
       $this->attributes['language'] = 'en-us';
     }
-    if (!@$this->attributes['regions']) {
-      $this->attributes['regions'] = new \Keystone\Regions();
-    }
   }
 
   public function get_title()
   {
-    return $this->regions->title_region()->summary();
+    return ''; // $this->regions->title_region()->summary();
   }
 
   public function get_excerpt()
   {
-    return $this->regions->excerpt_region()->summary();
+    return ''; // $this->regions->excerpt_region()->summary();
   }
 
   public function set_uri_by_parent($parent)
