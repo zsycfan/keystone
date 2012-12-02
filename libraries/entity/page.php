@@ -31,12 +31,18 @@ class Page extends \Keystone\Entity
 
   public function get_title()
   {
-    return ''; // $this->regions->title_region()->summary();
+    if ($region = $this->layout->region('content.title')) {
+      return $region->summary();
+    }
+    return null;
   }
 
   public function get_excerpt()
   {
-    return ''; // $this->regions->excerpt_region()->summary();
+    if ($region = $this->layout->region('content.body')) {
+      return $region->summary();
+    }
+    return null;
   }
 
   public function set_uri_by_parent($parent)
