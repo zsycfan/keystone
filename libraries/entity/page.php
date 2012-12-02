@@ -27,6 +27,9 @@ class Page extends \Keystone\Entity
     if (!@$this->attributes['language']) {
       $this->attributes['language'] = 'en-us';
     }
+    if (!@$this->attributes['layout']) {
+      $this->attributes['layout'] = new \Keystone\Layout('content');
+    }
   }
 
   public function get_title()

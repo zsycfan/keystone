@@ -62,10 +62,20 @@ class Layout {
 	{
     return array_get($this->regions, $name);
 	}
+	
+	public function set_region($name, $region)
+	{
+	  array_set($this->regions, $name, $region);
+	}
 
   public function name()
   {
     return $this->name;
+  }
+  
+  public function set_name($name)
+  {
+    $this->name = $name;
   }
 
   public function json()
