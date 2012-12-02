@@ -60,6 +60,10 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   {
     return Keystone\View::make('keystone::content.settings')
       ->with('page', Keystone\Repository\Page::find($id, array('revision' => Input::get('revision'))))
+      ->with('fields', Keystone\Field::all())
+      ->with('field_css', Keystone\Field::css())
+      ->with('field_javascript', Keystone\Field::javascript())
+      ->with('field_templates', Keystone\Field::templates())
     ;
   }
 
