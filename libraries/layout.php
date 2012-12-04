@@ -89,21 +89,31 @@ class Layout {
     return json_encode($json);
   }
 
+  public static function path($name)
+  {
+    $components = preg_split('/\./', $name);
+    if (count($components) < 1) {
+      $components = array_unshift($components, 'content');
+    }
+
+    foreach (\Keystone\Config::get_paths('keystone::layout.directories') as $dir) {
+      if (file_exists($path = $dir.$components[0].'/'.$components[1].EXT)) {
+        return $path;
+      }
+    }
+
+    return \Bundle::path('keystone').'layouts/content/'.$components[1].EXT;
+  }
+
 	public function form($__screen)
 	{
 		$this->set_active($__screen);
 
 		$__data = array();
 
-		$__path = false;
-    foreach (\Keystone\Config::get_paths('keystone::layout.directories') as $__dir) {
-      if (file_exists($__dir.$this->name.'/'.$__screen.EXT)) {
-        $__path = $__dir.$this->name.'/'.$__screen.EXT;
-        break;
-      }
-    }
+		$__path = static::path("{$this->name}.{$__screen}");
 
-    if (!$__path) {
+    if (!is_file($__path)) {
       throw new \Exception("Could not find layout [{$this->name}/{$__screen}].");
     }
 
