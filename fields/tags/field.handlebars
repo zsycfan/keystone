@@ -1,15 +1,7 @@
-<div
-	contenteditable
-	name="content"
-	placeholder="{{#if config.placeholder}}{{{config.placeholder}}}{{else}}Tags...{{/if}}"
->
-	{{#if content}}
-		{{{ content }}}
-	{{else}}
-		{{#if config.placeholder}}
-			{{{config.placeholder}}}
-		{{else}}
-			Tags...
-		{{/if}}
-	{{/if}}
+<div class="tags-field">
+	<span class="tags-field-input" data-typeahead data-typeahead-src="/keystone/api/tags/woo" contenteditable></span>
+	<p class="tags-field-tag">Test <a href="#"><i class="icon-remove"></i></a></p>
+	<span class="tags-field-input" data-typeahead data-typeahead-src="/keystone/api/tags/woo" contenteditable></span>
+	<p class="tags-field-tag">Another <a href="#"><i class="icon-remove"></i></a></p>
+	<span class="tags-field-input" data-typeahead data-typeahead-src="/keystone/api/tags/woo" contenteditable></span>
 </div>

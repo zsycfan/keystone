@@ -1,0 +1,39 @@
+.tags-field {
+	padding: 10px;
+}
+
+.tags-field-tag {
+	display: inline-block;
+	border: 1px solid #ccc;
+	background: #eee;
+	border-radius: 3px;
+	padding: 0 10px;
+	margin: 0;
+	position: relative;
+}
+
+.tags-field-tag a {
+	color: #999;
+	margin-left: 5px;
+}
+
+.tags-field-selected {
+	background: #4a8fff;
+	color: #fff;
+	border-color: #2E5ECD;
+}
+
+.tags-field-selected a {
+	color: #fff;
+}
+
+.tags-field [contenteditable] {
+	display: inline-block;
+	/*background: red;*/
+	padding: 0 10px;
+	margin: 0 -10px;
+}
+
+.tags-field [contenteditable]:focus {
+	outline: none !important;
+}
