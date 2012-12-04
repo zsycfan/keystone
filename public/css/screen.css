@@ -5520,10 +5520,8 @@ ul.ancenstry:hover {
   font-size: 18px; }
 
 .crumb-navigation .active {
-  background: #be5b30;
-  color: #fff;
-  text-shadow: 0 0 2px #000;
-  box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.25); }
+  background: #4A8FFF;
+  color: #fff; }
 
 .crumb-actions {
   padding: 10px 20px; }
@@ -5700,14 +5698,14 @@ ul.ancenstry:hover {
   margin-left: 10px; }
 
 .page-header h1 {
-  color: #be5b30;
-  font-weight: bold;
+  color: #333;
+  font-weight: 100;
   font-size: 24px;
   text-shadow: 1px 1px 0 #ccc;
   margin-bottom: 0; }
 
 .page-header {
-  border-bottom: 2px solid #be5b30;
+  border-bottom: 1px solid #999;
   padding-bottom: 0; }
 
 .page-header small {
