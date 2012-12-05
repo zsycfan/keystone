@@ -1,3 +1,5 @@
+/** CLICK EVENTS **/
+
 $(document).on('click', function(event) {
 	$('.tags-field-selected').trigger('blur');
 });
@@ -18,6 +20,8 @@ $(document).on('click', '.tags-field-tag', function(event) {
 	event.stopPropagation();
 });
 
+/** KEYPRESS EVENTS **/
+
 $(document).on('keydown', function(event) {
 	var src = $(event.srcElement);
 	if (event.keyCode == 8 && src.text() == '') {
@@ -25,40 +29,38 @@ $(document).on('keydown', function(event) {
 	}
 	else if (event.keyCode == 37) {
 		if (event.shiftKey) {
-			src.prevUntil('.tags-field-input').trigger('togglefocus');
+			src.prevAll('.tags-field-tag').eq(0).trigger('togglefocus', event.shiftKey);
 		}
-		src.prevAll('.tags-field-input').eq(0).trigger('focus', event.shiftKey);
+		else {
+			src.prevAll('.tags-field-input').eq(0).trigger('focus', event.shiftKey);
+		}
 	}
 	else if (event.keyCode == 39) {
 		if (event.shiftKey) {
-			src.nextUntil('.tags-field-input').trigger('togglefocus');
+			src.nextAll('.tags-field-tag:not(.tags-field-selected)').eq(0).trigger('togglefocus', event.shiftKey);
 		}
-		src.nextAll('.tags-field-input').eq(0).trigger('focus', event.shiftKey);
+		else {
+			src.nextAll('.tags-field-input').eq(0).trigger('focus', event.shiftKey);
+		}
 	}
 });
 
 $(document).on('keydown keyup', '.tags-field-phantom', function(event) {
-	if ($(this).text() != '' || event.keyCode == 8) {
+	var phantom = $(event.srcElement);
+	if (phantom.text() != '' || event.keyCode == 8) {
 		$('.tags-field-selected').remove();
-		$(this).prevAll('.tags-field-input:not(.tags-field-phantom)').eq(0).remove();
-		$(this).nextAll('.tags-field-input').eq(0).remove();
-		$(this).removeClass('tags-field-phantom');
-		$(this).css('position', 'static');
+		phantom.prevAll('.tags-field-input:not(.tags-field-phantom)').eq(0).remove();
+		phantom.nextAll('.tags-field-input').eq(0).remove();
+		phantom.removeClass('tags-field-phantom');
+		phantom.css('position', 'static');
+		event.stopPropagation();
 	}
-	event.stopPropagation();
 });
+
+/** FOCUS EVENTS **/
 
 $(document).on('focus', '.tags-field', function(event) {
 	$(this).addClass('focused');
-});
-
-$(document).on('blur', '.tags-field', function(event) {
-	var field = $(this);
-	setTimeout(function() {
-		if (!$('.tags-field-selected').size() && !field.find(':focus').size()) {
-			field.removeClass('focused');
-		}
-	}, 10);
 });
 
 $(document).on('focus', '.tags-field-input:not(.tags-field-phantom)', function(event, preserveSelection) {
@@ -78,13 +80,24 @@ $(document).on('focus', '.tags-field-tag', function(event, preserveSelection) {
 	$(this).addClass('tags-field-selected');
 });
 
-$(document).on('togglefocus', '.tags-field-tag', function(event) {
+$(document).on('togglefocus', '.tags-field-tag', function(event, preserveSelection) {
 	if ($(this).hasClass('tags-field-selected')) {
 		$(this).trigger('blur');
 	}
 	else {
-		$(this).trigger('focus');
+		$(this).trigger('focus', preserveSelection);
 	}
+});
+
+/** BLUR EVENTS **/
+
+$(document).on('blur', '.tags-field', function(event) {
+	var field = $(this);
+	setTimeout(function() {
+		if (!$('.tags-field-selected').size() && !field.find(':focus').size()) {
+			field.removeClass('focused');
+		}
+	}, 10);
 });
 
 $(document).on('blur', '.tags-field-tag', function(event) {
