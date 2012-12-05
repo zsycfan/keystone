@@ -4,12 +4,12 @@
 
 .tags-field-tag {
 	display: inline-block;
-	border: 1px solid #ccc;
-	background: #eee;
-	border-radius: 3px;
+	border: 1px solid #eee;
+	background: whiteSmoke;
 	padding: 0 10px;
 	margin: 0;
 	position: relative;
+	border-radius: 50px;
 }
 
 .tags-field-tag a {
