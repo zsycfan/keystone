@@ -30170,6 +30170,48 @@ qq.DisposeSupport = {
 (function() {
   var htmlEntities;
 
+  $(function() {
+    return window.sortable = $("tbody:has([data-sortable])").sortable({
+      handle: '.move',
+      placeholder: 'keystone-ui-placeholder',
+      cursor: '-webkit-grabbing',
+      cursorAt: {
+        left: 15,
+        top: 15
+      },
+      helper: function(event, tr) {
+        var el;
+        el = $('<div class="keystone-ui-helper"><i class="icon-file" /></div>').show();
+        $(document.body).append(el);
+        return el;
+      },
+      start: function(event, ui) {
+        ui.item.addClass('keystone-ui-source').show();
+        return ui.placeholder.hide();
+      },
+      change: function(event, ui) {
+        ui.placeholder.show().css('width', ui.placeholder.parent().width());
+        if (ui.placeholder.prev().hasClass('keystone-ui-source')) {
+          return ui.placeholder.addClass('hidden');
+        } else if (ui.placeholder.next().hasClass('keystone-ui-source')) {
+          return ui.placeholder.addClass('hidden');
+        } else {
+          return ui.placeholder.removeClass('hidden');
+        }
+      },
+      stop: function(event, ui) {
+        ui.item.removeClass('keystone-ui-source');
+        return ui.item.parents('.ui-sortable').find('[data-sortable]').each(function(index) {
+          return $.post('/keystone/api/page/' + $(this).data('id'), {
+            order: index
+          }, function(data) {
+            return console.log(data);
+          });
+        });
+      }
+    });
+  });
+
   $(document).on('click', '[data-choose-field]', function(e) {
     var markup, modal, region;
     region = $(this).closest('.region');
@@ -30193,21 +30235,37 @@ qq.DisposeSupport = {
     return false;
   });
 
-  $(function() {
-    return $(".crumbs").sticky();
-  });
-
-  $(document).on('click', '[data-action="edit"]', function() {
-    $(document.body).toggleClass('editing');
-    $(this).toggleClass('active');
-    $(this).toggleClass('btn-warning');
-    return false;
-  });
-
-  $(document).on('keyup', function(event) {
-    if (event.ctrlKey && event.keyCode === 69) {
-      return $('[data-action="edit"]').trigger('click');
+  Handlebars.registerHelper('inArray', function(needle, haystack, block) {
+    var value, _i, _len, _ref;
+    if (!this.allow) return block.fn(this);
+    _ref = this.allow;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      value = _ref[_i];
+      if (value === needle) return block.fn(this);
     }
+    return '';
+  });
+
+  Handlebars.registerHelper('fieldIcon', function(field, block) {
+    var context, partial, templateName;
+    templateName = 'field.' + field + '.icon';
+    partial = Handlebars.partials[templateName];
+    if (typeof partial === "string") {
+      partial = Handlebars.compile(partial);
+      Handlebars.partials[templateName] = partial;
+    }
+    context = $.extend({}, this, block.hash);
+    return new Handlebars.SafeString(partial(context));
+  });
+
+  window.templates = window.partials = [];
+
+  $('.handlebars-template').each(function() {
+    return window.templates[$(this).data('name')] = Handlebars.compile($(this).html());
+  });
+
+  $('.handlebars-partial').each(function() {
+    return window.partials[$(this).data('name')] = Handlebars.registerPartial($(this).data('name'), $(this).html());
   });
 
   $(document).on('mousedown', '.fields .actions', function(event) {
@@ -30271,22 +30329,16 @@ qq.DisposeSupport = {
   });
 
   $(document).on('region:update', '.region', function(e) {
-    if (window.sortable) {
-      return $('.fields').sortable('refresh');
-    }
+    if (window.sortable) return $('.fields').sortable('refresh');
   });
 
   $(document).on('region:addField', '.region, .field', function(e, field, placeholder) {
     var config, el, fields, icon, markup, popover, region;
     region = $(this);
     fields = region.find('.fields:first');
-    if (!field.data) {
-      field.data = {};
-    }
+    if (!field.data) field.data = {};
     config = [];
-    if (region.data('config')) {
-      config = region.data('config')[field.type];
-    }
+    if (region.data('config')) config = region.data('config')[field.type];
     field.data.config = config;
     icon = false;
     if (window.templates['field.' + field.type + '.icon']) {
@@ -30346,31 +30398,31 @@ qq.DisposeSupport = {
   });
 
   $(document).on('submit', 'form:has([contenteditable])', function() {
-    var el, layout, name, nameSegments, parent, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3;
+    var arr, el, layout, name, nameSegments, parent, _i, _j, _k, _l, _len, _len2, _len3, _len4, _ref, _ref2, _ref3, _ref4, _ref5;
     _ref = $(this).find('.layout');
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       layout = _ref[_i];
-      _ref1 = $(layout).find('.region *[name]');
-      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-        el = _ref1[_j];
+      _ref2 = $(layout).find('.region *[name]');
+      for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+        el = _ref2[_j];
         nameSegments = [];
-        _ref2 = $(el).parents('[data-name]');
-        for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-          parent = _ref2[_k];
-          if ($(parent).hasClass('layout')) {
-            break;
-          }
+        _ref3 = $(el).parents('[data-name]');
+        for (_k = 0, _len3 = _ref3.length; _k < _len3; _k++) {
+          parent = _ref3[_k];
+          if ($(parent).hasClass('layout')) break;
           nameSegments.push($(parent).data('name') || $(parent).index());
         }
-        $(el).attr('name', 'page[regions][' + $(layout).data('name') + '][' + nameSegments.reverse().join('][') + '][' + $(el).attr('name') + ']');
+        name = $(el).attr('name').replace(/\[\]$/, '');
+        arr = (_ref4 = $(el).attr('name').match(/\[\]$/)) != null ? _ref4 : {
+          '[]': ''
+        };
+        $(el).attr('name', 'page[regions][' + $(layout).data('name') + '][' + nameSegments.reverse().join('][') + '][' + name + ']' + arr);
       }
     }
-    _ref3 = $(this).find('[contenteditable]');
-    for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
-      el = _ref3[_l];
-      if ($(el).text() === $(el).attr('placeholder')) {
-        $(el).empty();
-      }
+    _ref5 = $(this).find('[contenteditable]');
+    for (_l = 0, _len4 = _ref5.length; _l < _len4; _l++) {
+      el = _ref5[_l];
+      if ($(el).text() === $(el).attr('placeholder')) $(el).empty();
       name = $(el).attr('name');
       if ($('textarea[name="' + name + '"]').size() === 0) {
         $(el).after($('<textarea />', {
@@ -30394,46 +30446,7 @@ qq.DisposeSupport = {
   });
 
   $(document).on('blur', '[contenteditable]', function() {
-    if ($(this).text() === '') {
-      return $(this).html($(this).attr('placeholder'));
-    }
-  });
-
-  Handlebars.registerHelper('inArray', function(needle, haystack, block) {
-    var value, _i, _len, _ref;
-    if (!this.allow) {
-      return block.fn(this);
-    }
-    _ref = this.allow;
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      value = _ref[_i];
-      if (value === needle) {
-        return block.fn(this);
-      }
-    }
-    return '';
-  });
-
-  Handlebars.registerHelper('fieldIcon', function(field, block) {
-    var context, partial, templateName;
-    templateName = 'field.' + field + '.icon';
-    partial = Handlebars.partials[templateName];
-    if (typeof partial === "string") {
-      partial = Handlebars.compile(partial);
-      Handlebars.partials[templateName] = partial;
-    }
-    context = $.extend({}, this, block.hash);
-    return new Handlebars.SafeString(partial(context));
-  });
-
-  window.templates = window.partials = [];
-
-  $('.handlebars-template').each(function() {
-    return window.templates[$(this).data('name')] = Handlebars.compile($(this).html());
-  });
-
-  $('.handlebars-partial').each(function() {
-    return window.partials[$(this).data('name')] = Handlebars.registerPartial($(this).data('name'), $(this).html());
+    if ($(this).text() === '') return $(this).html($(this).attr('placeholder'));
   });
 
   $(document).on('region:update', '.region', function(e) {
@@ -30448,45 +30461,20 @@ qq.DisposeSupport = {
   });
 
   $(function() {
-    return window.sortable = $("tbody:has([data-sortable])").sortable({
-      handle: '.move',
-      placeholder: 'keystone-ui-placeholder',
-      cursor: '-webkit-grabbing',
-      cursorAt: {
-        left: 15,
-        top: 15
-      },
-      helper: function(event, tr) {
-        var el;
-        el = $('<div class="keystone-ui-helper"><i class="icon-file" /></div>').show();
-        $(document.body).append(el);
-        return el;
-      },
-      start: function(event, ui) {
-        ui.item.addClass('keystone-ui-source').show();
-        return ui.placeholder.hide();
-      },
-      change: function(event, ui) {
-        ui.placeholder.show().css('width', ui.placeholder.parent().width());
-        if (ui.placeholder.prev().hasClass('keystone-ui-source')) {
-          return ui.placeholder.addClass('hidden');
-        } else if (ui.placeholder.next().hasClass('keystone-ui-source')) {
-          return ui.placeholder.addClass('hidden');
-        } else {
-          return ui.placeholder.removeClass('hidden');
-        }
-      },
-      stop: function(event, ui) {
-        ui.item.removeClass('keystone-ui-source');
-        return ui.item.parents('.ui-sortable').find('[data-sortable]').each(function(index) {
-          return $.post('/keystone/api/page/' + $(this).data('id'), {
-            order: index
-          }, function(data) {
-            return console.log(data);
-          });
-        });
-      }
-    });
+    return $(".crumbs").sticky();
+  });
+
+  $(document).on('click', '[data-action="edit"]', function() {
+    $(document.body).toggleClass('editing');
+    $(this).toggleClass('active');
+    $(this).toggleClass('btn-warning');
+    return false;
+  });
+
+  $(document).on('keyup', function(event) {
+    if (event.ctrlKey && event.keyCode === 69) {
+      return $('[data-action="edit"]').trigger('click');
+    }
   });
 
 }).call(this);
