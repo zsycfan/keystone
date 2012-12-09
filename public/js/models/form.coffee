@@ -8,7 +8,9 @@ $(document).on 'submit', 'form:has([contenteditable])', ->
         if $(parent).hasClass('layout')
           break
         nameSegments.push $(parent).data('name') || $(parent).index()
-      $(el).attr 'name', 'page[regions]['+$(layout).data('name')+']['+nameSegments.reverse().join('][')+']['+$(el).attr('name')+']'
+      name = $(el).attr('name').replace(/\[\]$/, '')
+      arr = $(el).attr('name').match(/\[\]$/) ? '[]' : ''
+      $(el).attr 'name', 'page[regions]['+$(layout).data('name')+']['+nameSegments.reverse().join('][')+']['+name+']'+arr
 
   # Turn content editables into actual textareas
   for el in $(this).find('[contenteditable]')
