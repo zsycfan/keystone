@@ -1,26 +1,30 @@
 $(document).on('update', '[data-typeahead]', function(event) {
-	$('.ta-token').each(function() {
-		var token = $(this);
-		var placeholder = $('.ta-placeholder[data-id="'+token.data().id+'"]');
-		if (!placeholder.size()) {
-			return token.remove();
-		}
-		placeholder.css({
-			'width': token.width()+10,
-			'height': token.height()
-		});
-		token.css({
-			'top': placeholder.offset().top,
-			'left': placeholder.offset().left+5,
-		});
-	});
+	// $('.ta-token').each(function() {
+	// 	var token = $(this);
+	// 	var placeholder = $('.ta-placeholder[data-id="'+token.data().id+'"]');
+	// 	if (!placeholder.size()) {
+	// 		return token.remove();
+	// 	}
+	// 	placeholder.css({
+	// 		'width': token.width()+10,
+	// 		'height': token.height(),
+	// 		// 'letter-spacing': token.width()+10
+	// 	});
+	// 	token.css({
+	// 		'top': placeholder.offset().top,
+	// 		'left': placeholder.offset().left+5,
+	// 	});
+	// });
 });
 
 $(document).on('click', '.ta-list a', function(e) {
 	var tag = $(this).data('data');
 	var input = $(this).closest('.ta-typeahead').data('typeahead-input');
-	$(document.body).append('<span class="ta-token" data-id="'+tag.id+'">'+tag.name+'</span>');
-	input.prepend('<img class="ta-placeholder" name="'+input.attr('data-typeahead-name')+'" value="'+tag.id+'" data-id="'+tag.id+'" src="/keystone/img/spacer.gif" />');
+	var tmp = $('<span class="ta-tmp" style="position:absolute;">'+tag.name+'</span>').insertBefore(input);
+	var placeholder = $('<input disabled class="ta-placeholder" name="'+input.attr('data-typeahead-name')+'" value="'+tag.id+'" data-id="'+tag.id+'" data-name="'+tag.name+'" src="/keystone/img/spacer.gif" />');
+	placeholder.css('width', tmp.outerWidth()+2);
+	tmp.remove();
+	input.prepend(placeholder);
 	input.trigger('update');
 	return false;
 });

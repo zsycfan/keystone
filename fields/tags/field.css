@@ -42,15 +42,8 @@
 
 
 .ta-placeholder {
-	display: inline;
-	margin: 0;
-	padding: 0 10px;
-	opacity: 0;
-}
-
-.ta-token {
-	position: absolute;
-	z-index: 1;
+	display: inline-block;
+	display: inline-block;
 	background: -webkit-linear-gradient(#eee, #ccc);
 	border: 1px solid #ccc;
 	color: #444;
