@@ -6,11 +6,13 @@ class Region implements \Iterator
 {
 
   public $name;
+  public $as;
   public $max = null;
   public $min = null;
   private $position = 0;
   public $fields = array();
   public $config = array();
+  public $allow = array();
 
   public static function make($params=array())
   {
