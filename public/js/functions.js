@@ -30230,7 +30230,7 @@ qq.DisposeSupport = {
       placeholder: 'keystone-ui-placeholder',
       cursor: '-webkit-grabbing',
       cursorAt: {
-        left: 15,
+        left: 90,
         top: 15
       },
       helper: function(event, field) {
@@ -30271,22 +30271,16 @@ qq.DisposeSupport = {
   });
 
   $(document).on('region:update', '.region', function(e) {
-    if (window.sortable) {
-      return $('.fields').sortable('refresh');
-    }
+    if (window.sortable) return $('.fields').sortable('refresh');
   });
 
   $(document).on('region:addField', '.region, .field', function(e, field, placeholder) {
     var config, el, fields, icon, markup, popover, region;
     region = $(this);
     fields = region.find('.fields:first');
-    if (!field.data) {
-      field.data = {};
-    }
+    if (!field.data) field.data = {};
     config = [];
-    if (region.data('config')) {
-      config = region.data('config')[field.type];
-    }
+    if (region.data('config')) config = region.data('config')[field.type];
     field.data.config = config;
     icon = false;
     if (window.templates['field.' + field.type + '.icon']) {
@@ -30346,35 +30340,31 @@ qq.DisposeSupport = {
   });
 
   $(document).on('submit', 'form:has([contenteditable])', function() {
-    var arr, el, layout, name, nameSegments, parent, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3, _ref4;
+    var arr, el, layout, name, nameSegments, parent, _i, _j, _k, _l, _len, _len2, _len3, _len4, _ref, _ref2, _ref3, _ref4, _ref5;
     _ref = $(this).find('.layout');
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       layout = _ref[_i];
-      _ref1 = $(layout).find('.region *[name]');
-      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-        el = _ref1[_j];
+      _ref2 = $(layout).find('.region *[name]');
+      for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+        el = _ref2[_j];
         nameSegments = [];
-        _ref2 = $(el).parents('[data-name]');
-        for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-          parent = _ref2[_k];
-          if ($(parent).hasClass('layout')) {
-            break;
-          }
+        _ref3 = $(el).parents('[data-name]');
+        for (_k = 0, _len3 = _ref3.length; _k < _len3; _k++) {
+          parent = _ref3[_k];
+          if ($(parent).hasClass('layout')) break;
           nameSegments.push($(parent).data('name') || $(parent).index());
         }
         name = $(el).attr('name').replace(/\[\]$/, '');
-        arr = (_ref3 = $(el).attr('name').match(/\[\]$/)) != null ? _ref3 : {
+        arr = (_ref4 = $(el).attr('name').match(/\[\]$/)) != null ? _ref4 : {
           '[]': ''
         };
         $(el).attr('name', 'page[regions][' + $(layout).data('name') + '][' + nameSegments.reverse().join('][') + '][' + name + ']' + arr);
       }
     }
-    _ref4 = $(this).find('[contenteditable]');
-    for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
-      el = _ref4[_l];
-      if ($(el).text() === $(el).attr('placeholder')) {
-        $(el).empty();
-      }
+    _ref5 = $(this).find('[contenteditable]');
+    for (_l = 0, _len4 = _ref5.length; _l < _len4; _l++) {
+      el = _ref5[_l];
+      if ($(el).text() === $(el).attr('placeholder')) $(el).empty();
       name = $(el).attr('name');
       if ($('textarea[name="' + name + '"]').size() === 0) {
         $(el).after($('<textarea />', {
@@ -30398,22 +30388,16 @@ qq.DisposeSupport = {
   });
 
   $(document).on('blur', '[contenteditable]', function() {
-    if ($(this).text() === '') {
-      return $(this).html($(this).attr('placeholder'));
-    }
+    if ($(this).text() === '') return $(this).html($(this).attr('placeholder'));
   });
 
   Handlebars.registerHelper('inArray', function(needle, haystack, block) {
     var value, _i, _len, _ref;
-    if (!this.allow) {
-      return block.fn(this);
-    }
+    if (!this.allow) return block.fn(this);
     _ref = this.allow;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       value = _ref[_i];
-      if (value === needle) {
-        return block.fn(this);
-      }
+      if (value === needle) return block.fn(this);
     }
     return '';
   });

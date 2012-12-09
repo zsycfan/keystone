@@ -15,7 +15,7 @@ $ ->
     handle: '.actions'
     placeholder: 'keystone-ui-placeholder'
     cursor: '-webkit-grabbing'
-    cursorAt: {left: 15, top: 15}
+    cursorAt: {left: 90, top: 15}
     helper: (event, field)->
       field.find('.keystone-ui-helper').clone(true).show()
     start: (event, ui)->
