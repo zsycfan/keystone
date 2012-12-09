@@ -37,3 +37,14 @@
 .tags-field [contenteditable]:focus {
 	outline: none !important;
 }
+
+.ta-placeholder {
+	background: green;
+	width: 50px;
+	display: inline-block;
+}
+
+.ta-token {
+	position: absolute;
+	z-index:100;
+}

@@ -1,12 +1,28 @@
 $(document).on('click', '.ta-list a', function(e) {
-  var input = $(this).closest('.ta-typeahead').data('typeahead-input');
-  input.before('<input name="'+input.attr('data-typeahead-name')+'" value="'+$(this).data('data').id+'" />');
-  return false;
+	var tag = $(this).data('data');
+	var input = $(this).closest('.ta-typeahead').data('typeahead-input');
+	$(document.body).append('<span class="ta-token" data-id="'+tag.id+'">'+tag.name+'</span>');
+	input.prepend('<span class="ta-placeholder" name="'+input.attr('data-typeahead-name')+'" value="'+tag.id+'" data-id="'+tag.id+'" contenteditable="false">&nbsp;</span>');
+
+	$('.ta-token').each(function() {
+		var token = $(this);
+		var placeholder = $('.ta-placeholder[data-id="'+token.data().id+'"]');
+		placeholder.css({
+			'width': token.width(),
+			'letter-spacing': token.width()
+		});
+		token.css({
+			'top': placeholder.offset().top,
+			'left': placeholder.offset().left,
+		});
+	});
+
+	return false;
 });
 
 $(function() {
-	$('[data-typeahead]').data('typeahead-renderRow', function(data) {
-		return '<li><a href="#" data-data="'+JSON.stringify(data).replace(/"/g,'&quot;')+'">'+data.tag+'</a></li>';
+	$('[data-typeahead]').data('typeahead-renderRow', function(tag) {
+		return '<li><a href="#" data-data="'+JSON.stringify(tag).replace(/"/g,'&quot;')+'">'+tag.name+'</a></li>';
 	});
 });
 

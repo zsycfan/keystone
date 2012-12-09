@@ -27,11 +27,11 @@ class Keystone_Api_Controller extends Keystone_Base_Controller
   public function get_tags($query=null)
   {
     $tags = array(
-      array('id' => 1, 'tag' => 'test'),
-      array('id' => 2, 'tag' => 'two'),
-      array('id' => 3, 'tag' => 'another'),
-      array('id' => 4, 'tag' => 'blah'),
-      array('id' => 5, 'tag' => date('r')),
+      array('id' => 1, 'name' => 'test'),
+      array('id' => 2, 'name' => 'two'),
+      array('id' => 3, 'name' => 'another'),
+      array('id' => 4, 'name' => 'blah'),
+      array('id' => 5, 'name' => date('r')),
     );
     shuffle($tags);
     return json_encode($tags);

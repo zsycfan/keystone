@@ -9,7 +9,7 @@ task :compile do
 
   # Merge our coffee script
   File.open("public/js/functions.compiled", 'w') do |js|
-    js.puts Dir.glob(File.join("public/js/**", "*.coffee")).map{|f| IO.read f}
+    js.puts Dir.glob(File.join("public/js/**", "*.coffee")).sort.map{|f| IO.read f}
   end
 
   # Add in the compiled JS
@@ -19,7 +19,4 @@ task :compile do
 
   # Delete the merged coffee script
   File.delete 'public/js/functions.compiled'
-  
-  # Notify
-  print "CoffeeScript Compiled\r\n"
 end
