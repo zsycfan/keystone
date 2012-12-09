@@ -28,13 +28,18 @@ class Keystone_Api_Controller extends Keystone_Base_Controller
   {
     $tags = array(
       array('id' => 1, 'tag' => 'test'),
-      array('id' => 1, 'tag' => 'two'),
-      array('id' => 1, 'tag' => 'another'),
-      array('id' => 1, 'tag' => 'blah'),
-      array('id' => 1, 'tag' => date('r')),
+      array('id' => 2, 'tag' => 'two'),
+      array('id' => 3, 'tag' => 'another'),
+      array('id' => 4, 'tag' => 'blah'),
+      array('id' => 5, 'tag' => date('r')),
     );
     shuffle($tags);
     return json_encode($tags);
+  }
+  
+  public function post_tag($tag)
+  {
+    
   }
 
 }
