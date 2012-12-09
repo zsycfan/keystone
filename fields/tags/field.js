@@ -1,22 +1,31 @@
+$(document).on('update', '[data-typeahead]', function(event) {
+	// $('.ta-token').each(function() {
+	// 	var token = $(this);
+	// 	var placeholder = $('.ta-placeholder[data-id="'+token.data().id+'"]');
+	// 	if (!placeholder.size()) {
+	// 		return token.remove();
+	// 	}
+	// 	placeholder.css({
+	// 		'width': token.width()+10,
+	// 		'height': token.height(),
+	// 		// 'letter-spacing': token.width()+10
+	// 	});
+	// 	token.css({
+	// 		'top': placeholder.offset().top,
+	// 		'left': placeholder.offset().left+5,
+	// 	});
+	// });
+});
+
 $(document).on('click', '.ta-list a', function(e) {
 	var tag = $(this).data('data');
 	var input = $(this).closest('.ta-typeahead').data('typeahead-input');
-	$(document.body).append('<span class="ta-token" data-id="'+tag.id+'">'+tag.name+'</span>');
-	input.prepend('<span class="ta-placeholder" name="'+input.attr('data-typeahead-name')+'" value="'+tag.id+'" data-id="'+tag.id+'" contenteditable="false">&nbsp;</span>');
-
-	$('.ta-token').each(function() {
-		var token = $(this);
-		var placeholder = $('.ta-placeholder[data-id="'+token.data().id+'"]');
-		placeholder.css({
-			'width': token.width(),
-			'letter-spacing': token.width()
-		});
-		token.css({
-			'top': placeholder.offset().top,
-			'left': placeholder.offset().left,
-		});
-	});
-
+	var tmp = $('<span class="ta-tmp" style="position:absolute;">'+tag.name+'</span>').insertBefore(input);
+	var placeholder = $('<input disabled class="ta-placeholder" name="'+input.attr('data-typeahead-name')+'" value="'+tag.id+'" data-id="'+tag.id+'" data-name="'+tag.name+'" src="/keystone/img/spacer.gif" />');
+	placeholder.css('width', tmp.outerWidth()+2);
+	tmp.remove();
+	input.prepend(placeholder);
+	input.trigger('update');
 	return false;
 });
 
@@ -32,6 +41,9 @@ $(document).on('keyup', '[data-typeahead]', function(event) {
 	var popover = input.data('typeahead-popover') || $('<div class="ta-typeahead"><ul class="ta-list"></ul><i class="icon-undo"></i></div>').hide().appendTo(document.body);
 	input.data('typeahead-popover', popover);
 	popover.data('typeahead-input', input);
+
+	// Trigger the update
+	input.trigger('update');
 
 	// Localize api methods
 	var renderRow = input.data('typeahead-renderRow');

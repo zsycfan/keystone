@@ -38,13 +38,17 @@
 	outline: none !important;
 }
 
-.ta-placeholder {
-	background: green;
-	width: 50px;
-	display: inline-block;
-}
 
-.ta-token {
-	position: absolute;
-	z-index:100;
+
+
+.ta-placeholder {
+	display: inline-block;
+	display: inline-block;
+	background: -webkit-linear-gradient(#eee, #ccc);
+	border: 1px solid #ccc;
+	color: #444;
+	text-shadow: 0 1px 0 #eee;
+	padding: 0 10px;
+	border-radius: 200px;
+	margin-top: -3px;
 }
