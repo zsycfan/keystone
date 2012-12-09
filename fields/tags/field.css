@@ -2,47 +2,7 @@
 	padding: 10px;
 }
 
-.tags-field-tag {
-	display: inline-block;
-	border: 1px solid #eee;
-	background: whiteSmoke;
-	padding: 0 10px;
-	margin: 0;
-	position: relative;
-	border-radius: 50px;
-}
-
-.tags-field-tag a {
-	color: #999;
-	margin-left: 5px;
-}
-
-.tags-field-selected {
-	background: #4a8fff;
-	color: #fff;
-	border-color: #2E5ECD;
-}
-
-.tags-field-selected a {
-	color: #fff;
-}
-
-.tags-field [contenteditable] {
-	display: inline-block;
-	/*background: red;*/
-	padding: 0 10px;
-	margin: 0 -10px;
-}
-
-.tags-field [contenteditable]:focus {
-	outline: none !important;
-}
-
-
-
-
 .ta-placeholder {
-	display: inline-block;
 	display: inline-block;
 	background: -webkit-linear-gradient(#eee, #ccc);
 	border: 1px solid #ccc;
@@ -51,4 +11,5 @@
 	padding: 0 10px;
 	border-radius: 200px;
 	margin-top: -3px;
+	text-align: center;
 }

@@ -21,8 +21,8 @@ $(document).on('click', '.ta-list a', function(e) {
 	var tag = $(this).data('data');
 	var input = $(this).closest('.ta-typeahead').data('typeahead-input');
 	var tmp = $('<span class="ta-tmp" style="position:absolute;">'+tag.name+'</span>').insertBefore(input);
-	var placeholder = $('<input disabled class="ta-placeholder" name="'+input.attr('data-typeahead-name')+'" value="'+tag.id+'" data-id="'+tag.id+'" data-name="'+tag.name+'" src="/keystone/img/spacer.gif" />');
-	placeholder.css('width', tmp.outerWidth()+2);
+	var placeholder = $('<input disabled class="ta-placeholder" name="'+input.attr('data-typeahead-name')+'" data-value="'+tag.id+'" data-id="'+tag.id+'" value="'+tag.name+'" src="/keystone/img/spacer.gif" />');
+	placeholder.css('width', tmp.outerWidth()+40);
 	tmp.remove();
 	input.prepend(placeholder);
 	input.trigger('update');
