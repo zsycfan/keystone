@@ -1,52 +1,98 @@
-$(document).on('update', '[data-typeahead]', function(event) {
-	// $('.ta-token').each(function() {
-	// 	var token = $(this);
-	// 	var placeholder = $('.ta-placeholder[data-id="'+token.data().id+'"]');
-	// 	if (!placeholder.size()) {
-	// 		return token.remove();
-	// 	}
-	// 	placeholder.css({
-	// 		'width': token.width()+10,
-	// 		'height': token.height(),
-	// 		// 'letter-spacing': token.width()+10
-	// 	});
-	// 	token.css({
-	// 		'top': placeholder.offset().top,
-	// 		'left': placeholder.offset().left+5,
-	// 	});
-	// });
-});
+function token(data) {
+	return $('<input type="submit" disabled class="token" data-token data-value="'+data.value+'" value="'+data.label+'" />').get(0)
+}
 
 $(document).on('click', '.ta-list a', function(e) {
+
+	// Get the window selection
+	var sel = window.getSelection();
+
+	// Get the current cursor position
+	var currentRange = sel.getRangeAt(0);
+
+	// Clone the current range so we can select the text content to be
+	// replaced by the token and then place the cursor after the inserted
+	// element.
+	var newRange = currentRange.cloneRange();
+
+	// Grab the data from the selected token
 	var tag = $(this).data('data');
-	var input = $(this).closest('.ta-typeahead').data('typeahead-input');
-	var tmp = $('<span class="ta-tmp" style="position:absolute;">'+tag.name+'</span>').insertBefore(input);
-	var placeholder = $('<input type="submit" disabled class="ta-placeholder" name="'+input.attr('data-typeahead-name')+'" data-value="'+tag.id+'" data-id="'+tag.id+'" value="'+tag.name+'" src="/keystone/img/spacer.gif" size="" />');
-	// placeholder.css('width', tmp.outerWidth()+40);
-	tmp.remove();
-	input.prepend(placeholder);
-	input.trigger('update');
+
+	// Get the input element we're associated with
+	var input = $(this).closest('.ta-token').data('token-input');
+
+	// Create the token element
+	// var placeholder = $('<input type="submit" disabled class="token" name="'+input.attr('data-token-name')+'" data-token data-value="'+tag.id+'" data-id="'+tag.id+'" value="'+tag.name+'" src="/keystone/img/spacer.gif" size="" />').get(0);
+	var placeholder = token({
+		'value': 'tags:'+tag.id,
+		'label': tag.name
+	});
+
+	// Insert the token
+	currentRange.insertNode(placeholder);
+
+	// Select the text prior to the inserted token and delete it
+	newRange.setStart(newRange.startContainer, newRange.startContainer.textContent.replace(/^(.*\s)?.*$/, '$1').length);
+	newRange.setEndBefore(placeholder);
+	newRange.deleteContents();
+
+	// Place the cursor after the inserted element so we can keep typing
+	newRange.setEndAfter(placeholder);
+	newRange.collapse(false);
+	sel.removeAllRanges();
+	sel.addRange(newRange);
+
 	return false;
 });
 
 $(function() {
-	$('[data-typeahead]').data('typeahead-renderRow', function(tag) {
+	$('[data-token-field]').data('token-renderRow', function(tag) {
 		return '<li><a href="#" data-data="'+JSON.stringify(tag).replace(/"/g,'&quot;')+'">'+tag.name+'</a></li>';
 	});
 });
 
-$(document).on('keyup', '[data-typeahead]', function(event) {
+$(document).on('keydown', '[data-token-field]', function(event) {
+	var input = $(this);
+	var popover = input.data('token-popover');
+
+	// Check that popover exists
+	if (!popover) {
+		return true;
+	}
+
+	// Check key
+	if (event.keyCode == 38 /* up */ || event.keyCode == 40 /* down */) {
+		var index = popover.find('.ta-list .active').removeClass('active').index();
+		index += event.keyCode == 38? -1 : 1;
+		popover.find('.ta-list li').eq(index).addClass('active');
+		return false;
+	}
+
+	else if (event.keyCode == 13 /* return */) {
+		popover.find('.ta-list .active a').trigger('click');
+		return false;
+	}
+
+	return true;
+});
+
+$(document).on('keyup', '[data-token-field]', function(event) {
+	// Check key
+	if (event.keyCode == 38 /* up */ || event.keyCode == 40 /* down */) {
+		return true;
+	}
+	else if (event.keyCode == 13 /* return */) {
+		return false;
+	}
+
 	// Localize Variables
 	var input = $(this);
-	var popover = input.data('typeahead-popover') || $('<div class="ta-typeahead"><ul class="ta-list"></ul><i class="icon-undo"></i></div>').hide().appendTo(document.body);
-	input.data('typeahead-popover', popover);
-	popover.data('typeahead-input', input);
-
-	// Trigger the update
-	input.trigger('update');
+	var popover = input.data('token-popover') || $('<div class="ta-token"><ul class="ta-list"></ul></div>').hide().appendTo(document.body);
+	input.data('token-popover', popover);
+	popover.data('token-input', input);
 
 	// Localize api methods
-	var renderRow = input.data('typeahead-renderRow');
+	var renderRow = input.data('token-renderRow');
 
 	// Remove the popover if there is nothing to display
 	if (!input.val() && !input.text()) {
@@ -55,19 +101,21 @@ $(document).on('keyup', '[data-typeahead]', function(event) {
 
 	// Apply styling and fade it in
 	popover.css({
+		// '-webkit-transition': 'all 0.5s',
 		'position':'absolute',
-		'left':input.offset().left,
-		'top':input.offset().top + input.height() + 20,
+		'top': window.getSelection().getRangeAt(0).getClientRects()[0].top + 5 + window.getSelection().getRangeAt(0).getClientRects()[0].height + $(document.body).scrollTop(),
+		'left': window.getSelection().getRangeAt(0).getClientRects()[0].left + window.getSelection().getRangeAt(0).getClientRects()[0].width - 7,
 		'z-index': 9999,
-		'background': '#fff',
-		'box-shadow': '0 0 10px #000',
-		'padding': 5,
+		'background': 'rgba(255,255,255,0.9)',
+		'color': '#fff',
+		'box-shadow': '0 2px 5px rgba(0,0,0,0.2)',
+		'padding': 2,
 		'border-radius': 4,
 		'min-width': 200
 	}).fadeIn();
 
 	// Fetch the data for the popover
-	$.get(input.data('typeahead-src'), function(data) {
+	$.get(input.data('token-src'), function(data) {
 
 		// Find our list of results
 		var list = popover.find('.ta-list');
@@ -75,7 +123,7 @@ $(document).on('keyup', '[data-typeahead]', function(event) {
 		var sorted = [];
 
 		// Mark everything for removal
-		children.attr('data-typeahead-remove', true);
+		children.attr('data-token-remove', true);
 
 		// Render each row
 		for (var rowIndex=0; rowCount=data.length,rowIndex<rowCount; rowIndex++) {
@@ -85,7 +133,7 @@ $(document).on('keyup', '[data-typeahead]', function(event) {
 			// cleanup routine
 			var matched = list.find('> *').filter(function(index) {
 				return $(this).html() == row.html();
-			}).removeAttr('data-typeahead-remove');
+			}).removeAttr('data-token-remove');
 
 			// If the element is already in the DOM then we'll just note the
 			// index so we can sort it later.
@@ -97,13 +145,13 @@ $(document).on('keyup', '[data-typeahead]', function(event) {
 			// sort index
 			else {
 				list.append(row.hide());
-				row.slideDown();
+				row.slideDown(0);
 				sorted.push(row);
 			}
 		}
 
 		// Remove rows that haven't been touched
-		list.find('[data-typeahead-remove]').slideUp(function() {
+		list.find('[data-token-remove]').slideUp(0, function() {
 			$(this).remove();
 		});
 
@@ -114,15 +162,15 @@ $(document).on('keyup', '[data-typeahead]', function(event) {
 	}, 'json');
 });
 
-$(document).on('focus', '[data-typeahead]', function(event) {
+$(document).on('focus', '[data-token-field]', function(event) {
 	var input = $(this);
 	if (input.val()) {
 		input.trigger('keyup');
 	}
 });
 
-$(document).on('blur', '[data-typeahead]', function(event) {
-	var popover = $(this).data('typeahead-popover');
+$(document).on('blur', '[data-token-field]', function(event) {
+	var popover = $(this).data('token-popover');
 	if (popover) {
 		popover.fadeOut();
 	}

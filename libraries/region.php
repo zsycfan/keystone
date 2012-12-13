@@ -13,6 +13,7 @@ class Region implements \Iterator
   public $fields = array();
   public $config = array();
   public $allow = array();
+  public $tokens = array();
 
   public static function make($params=array())
   {
@@ -38,11 +39,22 @@ class Region implements \Iterator
     else {
       $this->$key = $value;
     }
+
+    if ($tokens = \Keystone\Token::parse($value)) {
+      $this->tokens = array_merge($this->tokens, $tokens);
+    }
+
+    // var_dump($key);
+    // print_r($value);
+    // print_r($this->tokens);
+
     return $this;
   }
 
   public function form()
   {
+    // print_r($this);
+
     return (string)\Laravel\View::make('keystone::region.edit')
       ->with('region', $this)
     ;

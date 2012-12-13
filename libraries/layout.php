@@ -9,7 +9,7 @@ class Layout {
 	private static $active;
 	private static $screen;
   private $name;
-  private $regions = array();
+  public $regions = array();
 
 	public static function all()
 	{

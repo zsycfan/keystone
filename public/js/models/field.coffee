@@ -47,7 +47,8 @@ $(document).on 'region:update', '.region', (e)->
 # Add a field to the region
 $(document).on 'region:addField', '.region, .field', (e, field, placeholder)->
   region = $(this)
-  fields = region.find('.fields:first')
+  tokens = region.data 'tokens'
+  fields = region.find '.fields:first'
 
   if !field.data
     field.data = {}
@@ -61,13 +62,18 @@ $(document).on 'region:addField', '.region, .field', (e, field, placeholder)->
   if window.templates['field.'+field.type+'.icon']
     icon = window.templates['field.'+field.type+'.icon'] field.data || {}
 
-  markup = window.templates['field']
+  fieldmarkup = window.templates['field.'+field.type+'.field'] field.data || {}
+  fieldmarkup = fieldmarkup.replace /\[token:(.*?)\]/g, (match, key)->
+    token({value:tokens[key].id, label:tokens[key].name}).outerHTML
+
+
+  containermarkup = window.templates['field']
     field: field
     icon: icon
     topLevel: region.hasClass 'region'
-    content: window.templates['field.'+field.type+'.field'] field.data || {}
+    content: fieldmarkup
 
-  el = $(markup)
+  el = $(containermarkup)
 
   window.popoverCount = 0;
   popover = el.find('.more').click(->(false)).popover
