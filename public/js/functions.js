@@ -30277,9 +30277,8 @@ qq.DisposeSupport = {
   });
 
   $(document).on('region:addField', '.region, .field', function(e, field, placeholder) {
-    var config, containermarkup, el, fieldmarkup, fields, icon, popover, region, tokens;
+    var config, containermarkup, el, fieldmarkup, fields, icon, popover, region;
     region = $(this);
-    tokens = region.data('tokens');
     fields = region.find('.fields:first');
     if (!field.data) {
       field.data = {};
@@ -30294,12 +30293,6 @@ qq.DisposeSupport = {
       icon = window.templates['field.' + field.type + '.icon'](field.data || {});
     }
     fieldmarkup = window.templates['field.' + field.type + '.field'](field.data || {});
-    fieldmarkup = fieldmarkup.replace(/\[token:(.*?)\]/g, function(match, key) {
-      return token({
-        value: tokens[key].id,
-        label: tokens[key].name
-      }).outerHTML;
-    });
     containermarkup = window.templates['field']({
       field: field,
       icon: icon,

@@ -47,7 +47,6 @@ $(document).on 'region:update', '.region', (e)->
 # Add a field to the region
 $(document).on 'region:addField', '.region, .field', (e, field, placeholder)->
   region = $(this)
-  tokens = region.data 'tokens'
   fields = region.find '.fields:first'
 
   if !field.data
@@ -63,9 +62,6 @@ $(document).on 'region:addField', '.region, .field', (e, field, placeholder)->
     icon = window.templates['field.'+field.type+'.icon'] field.data || {}
 
   fieldmarkup = window.templates['field.'+field.type+'.field'] field.data || {}
-  fieldmarkup = fieldmarkup.replace /\[token:(.*?)\]/g, (match, key)->
-    token({value:tokens[key].id, label:tokens[key].name}).outerHTML
-
 
   containermarkup = window.templates['field']
     field: field

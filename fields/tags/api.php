@@ -1,6 +1,6 @@
 <?php
 
-class Tags_Token
+class Tags_Api
 {
   public function get($keys) {
     return array(

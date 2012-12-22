@@ -23,23 +23,4 @@ class Keystone_Api_Controller extends Keystone_Base_Controller
       'Content-type' => 'application/json'
     ));
   }
-
-  public function get_tags($query=null)
-  {
-    $tags = array(
-      array('id' => 1, 'name' => 'test'),
-      array('id' => 2, 'name' => 'two'),
-      array('id' => 3, 'name' => 'another'),
-      array('id' => 4, 'name' => 'blah'),
-      array('id' => 5, 'name' => date('r')),
-    );
-    shuffle($tags);
-    return json_encode($tags);
-  }
-  
-  public function post_tag($tag)
-  {
-    
-  }
-
 }
