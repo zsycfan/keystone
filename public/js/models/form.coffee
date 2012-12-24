@@ -1,12 +1,17 @@
 $ ->
-  $('select').each ->
+  $('[data-select]').each ->
     el = $(this)
     data = el.data()
     el.select2
-      placeholder: 'test'
-      tokenSeparators: [',', ' ']
+      tags: data.tags
+      tokenSeparators: data.tokenSeparators
       ajax:
-        url: data.url
+        url: data.ajaxUrl
+        dataType: data.dataType
+        data: (term, page)->
+          { q: term }
+        results: (data, page)->
+          { results: data }
 
 $(document).on 'submit', 'form:has([contenteditable])', ->
 
@@ -19,8 +24,8 @@ $(document).on 'submit', 'form:has([contenteditable])', ->
           break
         nameSegments.push $(parent).data('name') || $(parent).index()
       name = $(el).attr('name').replace(/\[\]$/, '')
-      arr = $(el).attr('name').match(/\[\]$/) ? '[]' : ''
-      $(el).attr 'name', 'page[regions]['+$(layout).data('name')+']['+nameSegments.reverse().join('][')+']['+name+']'+arr
+      arr = if $(el).attr('name').match(/\[\]$/) then '[]' else ''
+      $(el).attr 'name', 'page[regions]['+nameSegments.reverse().join('][')+']['+name+']'+arr
 
   # Turn content editables into actual textareas
   for el in $(this).find('[contenteditable]')

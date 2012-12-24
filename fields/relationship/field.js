@@ -30,5 +30,5 @@ $(document).on('field:init', '.field-relationship', function(e) {
       return item.title
     }
   });
-  $('.field-relationship').find('input').focus();
+  // $('.field-relationship').find('input').focus();
 });

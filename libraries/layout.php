@@ -32,16 +32,14 @@ class Layout {
 		return array(static::$active, static::$screen);
 	}
 
-	public function __construct($name, $screens=array())
+	public function __construct($name, $regions=array())
 	{
     $this->name = $name;
-    if (is_array($screens)) {
-  		foreach ($screens as $screen => $regions) {
-        foreach ($regions as $region => $fields) {
-          $this->regions[$screen][$region] = \Keystone\Region::make()
-            ->with('fields', $fields)
-          ;
-        }
+    if (is_array($regions)) {
+      foreach ($regions as $region => $fields) {
+        $this->regions[$region] = \Keystone\Region::make()
+          ->with('fields', $fields)
+        ;
       }
     }
 	}
@@ -81,10 +79,8 @@ class Layout {
   public function json()
   {
     $json = array();
-    foreach ($this->regions as $screen => $regions) {
-      foreach ($regions as $region_name => $region) {
-        $json[$screen][$region_name] = $region->to_array();
-      }
+    foreach ($this->regions as $region_name => $region) {
+      $json[$region_name] = $region->to_array();
     }
     return json_encode($json);
   }

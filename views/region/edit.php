@@ -9,7 +9,6 @@
   data-config="<?= htmlentities(json_encode($region->config)) ?>"
   data-tokens="<?= htmlentities(json_encode($region->tokens)) ?>"
 >
-  <input type="hidden" name="as" value="<?= $region->as ?>" />
   <div class="fields">
     <?php if ($region->fields): ?>
       <?php foreach ($region->fields as $index => $field): ?>

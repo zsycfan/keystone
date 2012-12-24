@@ -1,3 +1,10 @@
-<select name="tags[]" placeholder="Tags..." data-src="/keystone/api/tags/get" multiple data-token-separators="[',',' ']">
-  <option>test</option>
-</select>
+<input
+	multiple
+	data-select
+	name="tags[]"
+	placeholder="Tags..."
+	data-ajax-url="/keystone/api/tags/get"
+	data-ajax-data-type="JSON"
+	data-tags="true"
+	data-token-separators='[","," "]'
+/>

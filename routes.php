@@ -17,7 +17,9 @@ Route::get('(:bundle)/content/(:num)/revisions', array('as' => 'content_edit_rev
 Route::post('(:bundle)/assets', array('as' => 'asset_upload', 'uses' => 'keystone::assets@upload'));
 Route::get('(:bundle)/assets/(:num)', array('as' => 'asset_show', 'uses' => 'keystone::assets@show'));
 
-Route::controller('keystone::api');
+Route::get('(:bundle)/api/pages/(:all)', array('uses' => 'keystone::api@pages'));
+Route::post('(:bundle)/api/page/(:num)', array('uses' => 'keystone::api@page'));
+Route::any('(:bundle)/api/(:any)/(:any)', array('uses' => 'keystone::api@custom'));
 
 Route::get('(:bundle)(:all)', function($route) {
   if (file_exists($path = Bundle::path('keystone').'public'.$route)) {
