@@ -32792,32 +32792,6 @@ the specific language governing permissions and limitations under the Apache Lic
     return '<div class="field-placeholder" data-type="' + type + '" data-name="' + name + '" data-data="' + htmlEntities(JSON.stringify(this[name])) + '"></div>';
   });
 
-  $(function() {
-    return $('[data-select]').each(function() {
-      var data, el;
-      el = $(this);
-      data = el.data();
-      return el.select2({
-        tags: data.tags,
-        tokenSeparators: data.tokenSeparators,
-        ajax: {
-          url: data.ajaxUrl,
-          dataType: data.dataType,
-          data: function(term, page) {
-            return {
-              q: term
-            };
-          },
-          results: function(data, page) {
-            return {
-              results: data
-            };
-          }
-        }
-      });
-    });
-  });
-
   $(document).on('submit', 'form:has([contenteditable])', function() {
     var arr, el, layout, name, nameSegments, parent, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3;
     _ref = $(this).find('.layout');

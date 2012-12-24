@@ -1,18 +1,3 @@
-$ ->
-  $('[data-select]').each ->
-    el = $(this)
-    data = el.data()
-    el.select2
-      tags: data.tags
-      tokenSeparators: data.tokenSeparators
-      ajax:
-        url: data.ajaxUrl
-        dataType: data.dataType
-        data: (term, page)->
-          { q: term }
-        results: (data, page)->
-          { results: data }
-
 $(document).on 'submit', 'form:has([contenteditable])', ->
 
   # Give everything the proper nested name
