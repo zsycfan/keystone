@@ -1,4 +1,17 @@
-.tags-field {
+.select2-container ul {
+	border: none !important;
+	box-shadow: none !important;
+}
+
+.select2-container input {
+	height: 2em !important;
+}
+
+.select2-container input:focus {
+	outline: none !important;
+}
+
+/*.tags-field {
 	padding: 10px;
 	text-align: left;
 }
@@ -49,4 +62,4 @@
 	background: #4a8fff;
 	border-radius: 3px;
 	text-decoration: none;
-}
+}*/
