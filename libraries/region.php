@@ -40,14 +40,6 @@ class Region implements \Iterator
       $this->$key = $value;
     }
 
-    if ($tokens = \Keystone\Token::parse($value)) {
-      $this->tokens = array_merge($this->tokens, $tokens);
-    }
-
-    // var_dump($key);
-    // print_r($value);
-    // print_r($this->tokens);
-
     return $this;
   }
 
