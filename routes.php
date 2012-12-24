@@ -19,7 +19,7 @@ Route::get('(:bundle)/assets/(:num)', array('as' => 'asset_show', 'uses' => 'key
 
 Route::get('(:bundle)/api/pages/(:all)', array('uses' => 'keystone::api@pages'));
 Route::post('(:bundle)/api/page/(:num)', array('uses' => 'keystone::api@page'));
-Route::any('(:bundle)/api/(:any)/(:any)', array('uses' => 'keystone::api@custom'));
+Route::any('(:bundle)/api/(:any)/(:any?)', array('uses' => 'keystone::api@custom'));
 
 Route::get('(:bundle)(:all)', function($route) {
   if (file_exists($path = Bundle::path('keystone').'public'.$route)) {

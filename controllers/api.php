@@ -26,7 +26,7 @@ class Keystone_Api_Controller extends Keystone_Base_Controller
     ));
   }
 
-  public function action_custom($plugin, $method, $args='')
+  public function action_custom($plugin, $method='index', $args='')
   {
     $class = ucfirst($plugin).'_Api';
     $action = strtolower(Request::method()).'_'.$method;

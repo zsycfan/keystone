@@ -2,7 +2,7 @@
 
 class Tags_Api
 {
-  public function get_get() {
+  public function get_index() {
     return Response::make(json_encode(array(
       array("id" => 0, "text" => Input::get('q')),
       array("id" => 1, "text" => "one"),
