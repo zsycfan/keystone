@@ -81,7 +81,7 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
    */
   public function post_save($id=false)
   {
-    print_r(Input::get('page.regions')); die;
+    // print_r(Input::get('page.regions')); die;
 
     $page = Keystone\Repository\Page::find_or_create($id);
     $page->published = Input::get('page.publish') === '1';
@@ -92,8 +92,8 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
     if (Input::get('page.uri')) $page->uri = Input::get('page.uri');
     
     if (is_array(Input::get('page.regions'))) {
-      foreach (Input::get('page.regions') as $region_name => $fields) {
-        $page->layout->set_region($region_name, \Keystone\Region::make()->with('fields', $fields));
+      foreach (Input::get('page.regions') as $region_name => $region_data) {
+        $page->layout->set_region($region_name, new \Keystone\Region($region_data));
       }
     }
     
