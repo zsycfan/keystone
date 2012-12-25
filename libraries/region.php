@@ -9,11 +9,10 @@ class Region implements \Iterator
   public $as;
   public $max = null;
   public $min = null;
-  private $position = 0;
   public $fields = array();
   public $config = array();
   public $allow = array();
-  public $tokens = array();
+  private $index = 0;
 
   public static function make($params=array())
   {
@@ -103,12 +102,12 @@ class Region implements \Iterator
 
   public function rewind()
   {
-    $this->position = 0;
+    $this->index = 0;
   }
 
   public function current()
   {
-    $field = $this->fields[$this->position];
+    $field = $this->fields[$this->index];
     $type = $field['type'];
     if (file_exists($path = path('fields').$type.'/field.php')) {
       require_once $path;
@@ -126,17 +125,17 @@ class Region implements \Iterator
 
   public function key()
   {
-    return $this->position;
+    return $this->index;
   }
 
   public function next()
   {
-    ++$this->position;
+    ++$this->index;
   }
 
   public function valid()
   {
-    return isset($this->fields[$this->position]);
+    return isset($this->fields[$this->index]);
   }
 
 }
