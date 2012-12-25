@@ -78,24 +78,19 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   /**
    * @todo the page.uri check here is wrong. if a user tries to set the uri to
    * and empty string ("") the condition will fail
+   * @todo  page.layout should really be page.layout.name
+   * @todo  page.regions should really be page.layout.regions
    */
   public function post_save($id=false)
   {
-    // print_r(Input::get('page.regions')); die;
-
     $page = Keystone\Repository\Page::find_or_create($id);
     $page->published = Input::get('page.publish') === '1';
 
     if (Input::get('page.layout')) $page->layout->name = Input::get('page.layout');
+    if (Input::get('page.regions')) $page->layout->update_regions(Input::get('page.regions'));
     if (Input::get('page.published_at')) $page->published_at = Input::get('page.published_at');
     if (Input::get('page.parent')) $page->set_uri_by_parent(Input::get('page.parent'));
     if (Input::get('page.uri')) $page->uri = Input::get('page.uri');
-    
-    if (is_array(Input::get('page.regions'))) {
-      foreach (Input::get('page.regions') as $region_name => $region_data) {
-        $page->layout->set_region($region_name, new \Keystone\Region($region_data));
-      }
-    }
     
     Keystone\Repository\Page::save($page);
 

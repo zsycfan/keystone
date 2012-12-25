@@ -28,7 +28,7 @@ class Page extends \Keystone\Entity
       $this->attributes['language'] = 'en-us';
     }
     if (!@$this->attributes['layout']) {
-      $this->attributes['layout'] = new \Keystone\Layout('content');
+      $this->attributes['layout'] = new \Keystone\Layout();
     }
   }
 

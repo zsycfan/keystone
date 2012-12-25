@@ -92,7 +92,9 @@ class Region implements \Iterator
 
   public function to_array()
   {
-    return $this->fields;
+    return array(
+      'fields' => $this->fields
+    );
   }
 
   public function json()

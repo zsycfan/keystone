@@ -8,8 +8,8 @@ class Layout extends Object {
 
 	private static $active;
 	private static $screen;
-  private $name;
-  public $regions = array();
+  private $name = null;
+  private $regions = array();
 
 	public static function all()
 	{
@@ -32,16 +32,20 @@ class Layout extends Object {
 		return array(static::$active, static::$screen);
 	}
 
-	public function __construct($name, $regions=array())
+	public function __construct($name=null, $regions=array())
 	{
+    // print_r($regions);
+
     $this->name = $name;
-    if (is_array($regions)) {
-      foreach ($regions as $region => $fields) {
-        $this->regions[$region] = \Keystone\Region::make()
-          ->with('fields', $fields)
-        ;
-      }
-    }
+    $this->update_regions($regions);
+
+    // if (is_array($regions)) {
+    //   foreach ($regions as $region => $fields) {
+    //     $this->regions[$region] = \Keystone\Region::make()
+    //       ->with('fields', $fields)
+    //     ;
+    //   }
+    // }
 	}
 
 	public function set_active($screen)
@@ -65,6 +69,13 @@ class Layout extends Object {
 	{
 	  array_set($this->regions, $name, $region);
 	}
+
+  public function update_regions($regions)
+  {
+    foreach ($regions as $region_name => $region_data) {
+      $this->set_region($region_name, new \Keystone\Region($region_data));
+    }
+  }
 
   public function name()
   {
