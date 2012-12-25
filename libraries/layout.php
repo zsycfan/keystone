@@ -34,18 +34,8 @@ class Layout extends Object {
 
 	public function __construct($name=null, $regions=array())
 	{
-    // print_r($regions);
-
     $this->name = $name;
     $this->update_regions($regions);
-
-    // if (is_array($regions)) {
-    //   foreach ($regions as $region => $fields) {
-    //     $this->regions[$region] = \Keystone\Region::make()
-    //       ->with('fields', $fields)
-    //     ;
-    //   }
-    // }
 	}
 
 	public function set_active($screen)
