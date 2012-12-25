@@ -82,17 +82,18 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   public function post_save($id=false)
   {
     $page = Keystone\Repository\Page::find_or_create($id);
-
     $page->published = Input::get('page.publish') === '1';
-    $page->layout->set_name(Input::get('page.layout'));
+
+    if (Input::get('page.layout')) $page->layout->name = Input::get('page.layout');
+    if (Input::get('page.published_at')) $page->published_at = Input::get('page.published_at');
+    if (Input::get('page.parent')) $page->set_uri_by_parent(Input::get('page.parent'));
+    if (Input::get('page.uri')) $page->uri = Input::get('page.uri');
+    
     if (is_array(Input::get('page.regions'))) {
       foreach (Input::get('page.regions') as $region => $fields) {
         $page->layout->set_region($region, \Keystone\Region::make()->with('fields', $fields));
       }
     }
-    if (Input::get('page.published_at')) $page->published_at = Input::get('page.published_at');
-    if (Input::get('page.parent')) $page->set_uri_by_parent(Input::get('page.parent'));
-    if (Input::get('page.uri')) $page->uri = Input::get('page.uri');
     
     Keystone\Repository\Page::save($page);
 

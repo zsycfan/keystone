@@ -4,7 +4,7 @@ namespace Keystone;
 
 require \Bundle::path('keystone').'libraries'.DS.'layout'.DS.'helper'.EXT;
 
-class Layout {
+class Layout extends Object {
 
 	private static $active;
 	private static $screen;
@@ -101,7 +101,7 @@ class Layout {
     return \Bundle::path('keystone').'layouts/content/'.$components[1].EXT;
   }
 
-	public function form($__screen)
+	public function form($__screen='content')
 	{
 		$this->set_active($__screen);
 
