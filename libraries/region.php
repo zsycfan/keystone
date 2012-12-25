@@ -36,6 +36,21 @@ class Region implements \Iterator
     else if ($key == 'allow' && !is_array($value)) {
       $this->$key = array($value);
     }
+    else if ($key == 'fields') {
+      foreach ($value as $index => $field) {
+        if (file_exists($path = path('fields').$field['type'].'/field.php')) {
+          require_once $path;
+          $class = ucfirst($field['type']).'_Field';
+          if (class_exists($class)) {
+            $obj = new $class;
+            if (method_exists($obj, 'summary')) {
+              $field = $obj->save($this, $index, $field);
+            }
+          }
+        }
+      }
+      $this->$key = $value;
+    }
     else {
       $this->$key = $value;
     }
@@ -45,8 +60,6 @@ class Region implements \Iterator
 
   public function form()
   {
-    // print_r($this);
-
     return (string)\Laravel\View::make('keystone::region.edit')
       ->with('region', $this)
     ;

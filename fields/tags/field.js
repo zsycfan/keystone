@@ -7,7 +7,7 @@ $(function() {
         minimumInputLength: 1,
         tokenSeparators: [",", " "],
         ajax: {
-            url: '/keystone/api/tags',
+            url: '/keystone/api/tags/search',
             dataType: 'json',
             data: function (term, page) {
                 return {

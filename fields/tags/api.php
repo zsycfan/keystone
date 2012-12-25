@@ -2,7 +2,7 @@
 
 class Tags_Api
 {
-  public function get_index() {
+  public function get_search() {
     $result = array(
       array("id" => 1, "text" => "one"),
       array("id" => 2, "text" => "two"),

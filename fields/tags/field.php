@@ -2,7 +2,7 @@
 
 class Tags_Field
 {
-  public function save($data)
+  public function save($region, $index, $data)
   {
     print_r($data); die;
   }
