@@ -6,14 +6,13 @@ require \Bundle::path('keystone').'libraries'.DS.'layout'.DS.'helper'.EXT;
 
 class Layout extends Object {
 
-	private static $active;
-	private static $screen;
-  private $name = null;
-  private $regions = array();
+  private static $active;
+  public $name = null;
+  public $page = null;
 
-	public static function all()
-	{
-		$layouts = array();
+  public static function all()
+  {
+    $layouts = array();
     $layout_dirs = \Keystone\Config::get_paths('keystone::layout.directories');
     foreach ($layout_dirs as $dir) {
       if (is_dir($dir)) {
@@ -24,66 +23,22 @@ class Layout extends Object {
         }
       }
     }
-		return $layouts;
-	}
-
-	public static function active()
-	{
-		return array(static::$active, static::$screen);
-	}
-
-	public function __construct($name=null, $regions=array())
-	{
-    $this->name = $name;
-    $this->update_regions($regions);
-	}
-
-	public function set_active($screen)
-	{
-		static::$active = $this;
-		static::$screen = $screen;
-	}
-
-	public function release_active()
-	{
-		static::$active = null;
-		static::$screen = null;
-	}
-
-	public function region($name)
-	{
-    return array_get($this->regions, $name);
-	}
-	
-	public function set_region($name, $region)
-	{
-	  array_set($this->regions, $name, $region);
-	}
-
-  public function update_regions($regions)
-  {
-    foreach ($regions as $region_name => $region_data) {
-      $this->set_region($region_name, new \Keystone\Region($region_data));
-    }
+    return $layouts;
   }
 
-  public function name()
+  public static function active()
   {
-    return $this->name;
-  }
-  
-  public function set_name($name)
-  {
-    $this->name = $name;
+    return static::$active;
   }
 
-  public function json()
+  public function set_active()
   {
-    $json = array();
-    foreach ($this->regions as $region_name => $region) {
-      $json[$region_name] = $region->to_array();
-    }
-    return json_encode($json);
+    static::$active = $this;
+  }
+
+  public function release_active()
+  {
+    static::$active = null;
   }
 
   public static function path($name)
@@ -102,43 +57,19 @@ class Layout extends Object {
     return \Bundle::path('keystone').'layouts/content/'.$components[1].EXT;
   }
 
-	public function form($__screen='content')
-	{
-		$this->set_active($__screen);
+  public function form($page, $screen='content')
+  {
+    $this->set_active();
+    $page->set_active();
 
-		$__data = array();
+    $form = \Laravel\View::make('path: '.static::path("{$this->name}.{$screen}"))
+      ->__toString()
+    ;
 
-		$__path = static::path("{$this->name}.{$__screen}");
+    $this->release_active();
+    $page->release_active();
 
-    if (!is_file($__path)) {
-      throw new \Exception("Could not find layout [{$this->name}/{$__screen}].");
-    }
-
-		$__contents = \File::get(realpath($__path));
-
-		ob_start() and extract($__data, EXTR_SKIP);
-
-		// We'll include the view contents for parsing within a catcher
-		// so we can avoid any WSOD errors. If an exception occurs we
-		// will throw it out to the exception handler.
-		try
-		{
-			eval('?>'.$__contents);
-		}
-
-		// If we caught an exception, we'll silently flush the output
-		// buffer so that no partially rendered views get thrown out
-		// to the client and confuse the user with junk.
-		catch (\Exception $e)
-		{
-			ob_get_clean(); throw $e;
-		}
-
-		$content = ob_get_clean();
-
-		$this->release_active();
-
-		return $content;
-	}
+    return $form;
+  }
 
 }

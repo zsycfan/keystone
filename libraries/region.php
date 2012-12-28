@@ -2,7 +2,7 @@
 
 namespace Keystone;
 
-class Region implements \Iterator
+class Region extends Object implements \Iterator
 {
 
   public $name;
@@ -14,47 +14,9 @@ class Region implements \Iterator
   public $allow = array();
   private $index = 0;
 
-  public static function make($params=array())
+  public function set_allow($value)
   {
-    return new static($params);
-  }
-
-  public function __construct($params=array())
-  {
-    foreach ($params as $key => $value) {
-      $this->with($key, $value);
-    }
-  }
-
-  public function with($key, $value)
-  {
-    if (substr($key, 0, 6) == 'config' && strpos($key, ':')) {
-      list($config, $field_type, $option) = explode(':', $key);
-      $this->config[$field_type][$option] = $value;
-    }
-    else if ($key == 'allow' && !is_array($value)) {
-      $this->$key = array($value);
-    }
-    else if ($key == 'fields') {
-      foreach ($value as $index => $field) {
-        if (file_exists($path = path('fields').$field['type'].'/field.php')) {
-          require_once $path;
-          $class = ucfirst($field['type']).'_Field';
-          if (class_exists($class)) {
-            $obj = new $class;
-            if (method_exists($obj, 'summary')) {
-              $field = $obj->save($this, $index, $field);
-            }
-          }
-        }
-      }
-      $this->$key = $value;
-    }
-    else {
-      $this->$key = $value;
-    }
-
-    return $this;
+    $this->allow = !is_array($value)?array($value):$value;
   }
 
   public function form()
@@ -62,6 +24,29 @@ class Region implements \Iterator
     return (string)\Laravel\View::make('keystone::region.edit')
       ->with('region', $this)
     ;
+  }
+
+  public function save()
+  {
+    $json = array();
+
+    foreach ($this->fields as $index => $field) {
+      $type = $field['type'];
+      if (file_exists($path = path('fields').$type.'/field.php')) {
+        require_once $path;
+        $class = ucfirst($type).'_Field';
+        if (class_exists($class)) {
+          $obj = new $class;
+          if (method_exists($obj, 'save')) {
+            $json[$index] = $obj->save($this, $index, $field);
+            continue;
+          }
+        }
+      }
+      $json[$index] = $field;
+    }
+
+    return $json;
   }
 
   public function summary()
@@ -92,9 +77,7 @@ class Region implements \Iterator
 
   public function to_array()
   {
-    return array(
-      'fields' => $this->fields
-    );
+    return $this->fields;
   }
 
   public function json()

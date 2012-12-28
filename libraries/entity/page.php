@@ -28,13 +28,13 @@ class Page extends \Keystone\Entity
       $this->attributes['language'] = 'en-us';
     }
     if (!@$this->attributes['layout']) {
-      $this->attributes['layout'] = new \Keystone\Layout();
+      $this->attributes['layout'] = \Keystone\Layout::make();
     }
   }
 
   public function get_title()
   {
-    if ($region = $this->layout->region('content.title')) {
+    if ($region = $this->regions->region('content.title')) {
       return $region->summary();
     }
     return null;
@@ -42,7 +42,7 @@ class Page extends \Keystone\Entity
 
   public function get_excerpt()
   {
-    if ($region = $this->layout->region('content.body')) {
+    if ($region = $this->regions->region('content.body')) {
       return $region->summary();
     }
     return null;
@@ -72,5 +72,27 @@ class Page extends \Keystone\Entity
     catch (\Exception $e) {
       $this->attributes['uri'] = $uri.$index;
     }
+  }
+
+  public function set_regions($regions)
+  {
+    return $this->regions->set_regions($regions);
+  }
+
+  private static $active;
+
+  public static function active()
+  {
+    return static::$active;
+  }
+
+  public function set_active()
+  {
+    static::$active = $this;
+  }
+
+  public function release_active()
+  {
+    static::$active = null;
   }
 }

@@ -4,6 +4,13 @@ class Tags_Field
 {
   public function save($region, $index, $data)
   {
-    print_r($data); die;
+    foreach ($data['tags'] as $tag_id) {
+      DB::table('pages_taxonomy')->insert_get_id(array(
+        'page_id' => 1,
+        'taxonomy_id' => $tag_id
+      ));
+    }
+
+    return $data;
   }
 }

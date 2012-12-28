@@ -1,9 +1,11 @@
 <?php
 
 function region($params) {
-  list($layout, $screen) = \Keystone\Layout::active();
-  return \Keystone\Region::make($params)
-    ->with('fields', $layout->region($params['name']))
+  $layout = \Keystone\Layout::active();
+  $page = \Keystone\Entity\Page::active();
+  return \Keystone\Region::make()
+    ->with($params)
+    ->with('fields', $page->regions->region($params['name']))
     ->form()
   ;
 

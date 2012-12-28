@@ -1,22 +1,13 @@
 <div
   class="region"
   data-name="<?= $region->name ?>"
-  data-as="<?= $region->as ?>"
   data-allow='<?= htmlentities(json_encode($region->allow)) ?>'
   data-max="<?= $region->max ?>"
   data-min="<?= $region->min ?>"
   data-count="0"
   data-config="<?= htmlentities(json_encode($region->config)) ?>"
 >
-  <input type="hidden" name="name" value="<?= $region->name ?>" />
-  <input type="hidden" name="as" value="<?= $region->as ?>" />
-  <input type="hidden" name="allow" value="<?= htmlentities(json_encode($region->allow)) ?>" />
-  <input type="hidden" name="max" value="<?= $region->max ?>" />
-  <input type="hidden" name="min" value="<?= $region->min ?>" />
-  <input type="hidden" name="count" value="0" />
-  <input type="hidden" name="config" value="<?= htmlentities(json_encode($region->config)) ?>" />
-  
-  <div class="fields" data-name="fields">
+  <div class="fields">
     <?php if ($region->fields): ?>
       <?php foreach ($region->fields as $index => $field): ?>
         <div
