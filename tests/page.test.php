@@ -1,0 +1,314 @@
+<?php
+
+class TestPage extends PHPUnit_Framework_TestCase {
+
+  // Get text data from the expects folder so we're not placing expected HTML
+  // inline with our PHP
+  private function expects($name) {
+    return file_get_contents(
+      Bundle::path('keystone').
+      'tests/page.expects/'.$name.'.txt'
+    );
+  }
+
+  // START TESTS!
+
+  public function testSettingRegionsToString()
+  {
+    Bundle::start('keystone');
+    Bundle::start('troup');
+
+    try {
+      $page = \Keystone\Page::make();
+      $page->regions = 'test';
+    }
+    catch (Exception $e) {
+      return;
+    }
+
+    $this->fail('Invalid Argument denied.');
+  }
+
+  public function testSettingRegionsToRegionCollection()
+  {
+    Bundle::start('keystone');
+
+    try {
+      $page = \Keystone\Page::make();
+      $page->regions = array();
+    }
+    catch (Exception $e) {
+      $this->fail('Invalid Argument denied.');
+    }
+  }
+
+  public function testSettingLayoutToString()
+  {
+    Bundle::start('keystone');
+
+    try {
+      $page = \Keystone\Page::make();
+      $page->layout = 'test';
+    }
+    catch (Exception $e) {
+      return;
+    }
+
+    $this->fail('Invalid Argument denied.');
+  }
+
+  public function testSettingLayoutToObject()
+  {
+    Bundle::start('keystone');
+
+    try {
+      $page = \Keystone\Page::make();
+      $page->layout = \Keystone\Layout::makeNamed('home');
+    }
+    catch (Exception $e) {
+      $this->fail('Invalid Argument denied.');
+    }
+  }
+
+  public function testGetAllPages()
+  {
+    $this->assertEquals(
+      'Keystone\Page\Collection',
+      get_class(\Keystone\Page\Repository::all())
+    );
+  }
+
+  public function testGetOnePage()
+  {
+    $this->assertEquals(
+      'Keystone\Page',
+      get_class(\Keystone\Page\Repository::find(1))
+    );
+  }
+
+  public function testFieldType()
+  {
+    $field = \Keystone\Field::makeType('plain');
+
+    $this->assertEquals('Keystone\Field', get_class($field));
+  }
+
+  public function testFieldForm()
+  {
+    $field = \Keystone\Field::makeType('plain');
+
+    $this->assertEquals(
+      $this->expects('test-field-form'), 
+      $field->form(array('content' => 'test'))
+    );
+  }
+
+  public function testFieldFormSettingData()
+  {
+    $field = \Keystone\Field::makeType('plain')
+      ->with('data', array('content' => 'test'))
+    ;
+
+    $this->assertEquals(
+      $this->expects('test-field-form-setting-data'), 
+      $field->form()
+    );
+  }
+
+  public function testRenderEmptyRegion()
+  {
+    $region = \Keystone\Region::makeNamed('body');
+
+    $this->assertEquals(
+      $this->expects('test-render-empty-region'),
+      $region->form()
+    );
+  }
+
+  public function testRenderRegionWithOneField()
+  {
+    $field1 = \Keystone\Field::makeType('plain')
+      ->with('data', array('content' => 'test1'))
+    ;
+    $field2 = \Keystone\Field::makeType('plain')
+      ->with('data', array('content' => 'test2'))
+    ;
+
+    $region = \Keystone\Region::makeNamed('body')
+      ->addField($field1)
+      ->addField($field2)
+    ;
+
+    $this->assertEquals(
+      $this->expects('test-render-region-with-one-field'),
+      $region->form()
+    );
+  }
+
+  public function testRenderRegionWithOneFieldAndData()
+  {
+    $field = \Keystone\Field::makeType('plain')
+      ->with('data', array('content' => 'test'))
+    ;
+
+    $region = \Keystone\Region::makeNamed('body')
+      ->addField($field)
+    ;
+
+    $this->assertEquals(
+      $this->expects('test-render-region-with-one-field-and-data'), 
+      $region->form()
+    );
+  }
+
+  public function testRenderLayout()
+  {
+    Bundle::start('keystone');
+
+    $field1 = \Keystone\Field::makeType('plain')
+      ->with('data', array('content' => 'The Title'))
+    ;
+    $field2 = \Keystone\Field::makeType('plain')
+      ->with('data', array('content' => 'Body Line 1'))
+    ;
+    $field3 = \Keystone\Field::makeType('plain')
+      ->with('data', array('content' => 'Body Line 2'))
+    ;
+
+    $title = \Keystone\Region::makeNamed('title')
+      ->addField($field1)
+    ;
+
+    $body = \Keystone\Region::makeNamed('body')
+      ->addField($field2)
+      ->addField($field3)
+    ;
+
+    $layout = \Keystone\Layout::makeNamed('test-render-layout.php')
+      ->addRegion($title)
+      ->addRegion($body)
+    ;
+
+    $this->assertEquals('<p>Title</p>
+<div
+  class="region"
+  data-name="title"
+  data-allow="[]"
+  data-max="1"
+  data-min="1"
+  data-count="1"
+  data-config="[]"
+>
+  <div class="fields">
+                  <div
+  class="field-placeholder"
+  data-type="plain"
+  data-data="{&quot;content&quot;:&quot;The Title&quot;}"
+></div>            </div>
+  <div class="add-field">
+    <a href="#" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
+  </div>
+</div>
+<p>Body</p>
+<div
+  class="region"
+  data-name="body"
+  data-allow="[]"
+  data-max="0"
+  data-min="0"
+  data-count="2"
+  data-config="[]"
+>
+  <div class="fields">
+                  <div
+  class="field-placeholder"
+  data-type="plain"
+  data-data="{&quot;content&quot;:&quot;Body Line 1&quot;}"
+></div>              <div
+  class="field-placeholder"
+  data-type="plain"
+  data-data="{&quot;content&quot;:&quot;Body Line 2&quot;}"
+></div>            </div>
+  <div class="add-field">
+    <a href="#" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
+  </div>
+</div>', $layout->form());
+  }
+
+  public function testRenderTwigLayout()
+  {
+    Bundle::start('keystone');
+    Bundle::start('troup');
+
+    $field1 = \Keystone\Field::makeType('plain')
+      ->with('data', array('content' => 'The Title'))
+    ;
+    $field2 = \Keystone\Field::makeType('plain')
+      ->with('data', array('content' => 'Body Line 1'))
+    ;
+    $field3 = \Keystone\Field::makeType('plain')
+      ->with('data', array('content' => 'Body Line 2'))
+    ;
+
+    $title = \Keystone\Region::makeNamed('title')
+      ->addField($field1)
+    ;
+
+    $body = \Keystone\Region::makeNamed('body')
+      ->addField($field2)
+      ->addField($field3)
+    ;
+
+    $layout = \Keystone\Layout::makeNamed('test-render-twig-layout.twig')
+      ->addRegion($title)
+      ->addRegion($body)
+    ;
+
+    $this->assertEquals('<p>Title</p>
+<div
+  class="region"
+  data-name="title"
+  data-allow="[]"
+  data-max="1"
+  data-min="1"
+  data-count="1"
+  data-config="[]"
+>
+  <div class="fields">
+                  <div
+  class="field-placeholder"
+  data-type="plain"
+  data-data="{&quot;content&quot;:&quot;The Title&quot;}"
+></div>            </div>
+  <div class="add-field">
+    <a href="#" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
+  </div>
+</div>
+
+<p>Body</p>
+<div
+  class="region"
+  data-name="body"
+  data-allow="[]"
+  data-max="0"
+  data-min="0"
+  data-count="2"
+  data-config="[]"
+>
+  <div class="fields">
+                  <div
+  class="field-placeholder"
+  data-type="plain"
+  data-data="{&quot;content&quot;:&quot;Body Line 1&quot;}"
+></div>              <div
+  class="field-placeholder"
+  data-type="plain"
+  data-data="{&quot;content&quot;:&quot;Body Line 2&quot;}"
+></div>            </div>
+  <div class="add-field">
+    <a href="#" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
+  </div>
+</div>', $layout->form());
+  }
+
+}

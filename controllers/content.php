@@ -11,7 +11,6 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   {
     Session::put('last_viewed_style', 'list');
     return Keystone\View::make('keystone::content.list')
-      ->with('layouts', Keystone\Layout::all())
       ->with('pages', Keystone\Repository\Page::all())
     ;
   }
@@ -24,7 +23,6 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
     Session::put('last_viewed_style', 'tree');
     Session::put('last_viewed_uri', Input::get('uri'));
     return Keystone\View::make('keystone::content.tree')
-      ->with('layouts', Keystone\Layout::all())
       ->with('pages', Keystone\Repository\Page::find_at_uri(Input::get('uri')))
       ->with('tree', Keystone\Repository\Page::find_breadcrumbs_for_uri(Input::get('uri')))
     ;

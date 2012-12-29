@@ -1,0 +1,15 @@
+<div
+  class="region"
+  data-name="body"
+  data-allow="[]"
+  data-max="0"
+  data-min="0"
+  data-count="0"
+  data-config="[]"
+>
+  <div class="fields">
+      </div>
+  <div class="add-field">
+    <a href="#" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
+  </div>
+</div>

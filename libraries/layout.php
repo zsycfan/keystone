@@ -2,74 +2,48 @@
 
 namespace Keystone;
 
-require \Bundle::path('keystone').'libraries'.DS.'layout'.DS.'helper'.EXT;
-
 class Layout extends Object {
 
-  private static $active;
-  public $name = null;
-  public $page = null;
+  private $name;
+  private $path;
+  private $regions;
 
-  public static function all()
+  public static function make()
   {
-    $layouts = array();
-    $layout_dirs = \Keystone\Config::get_paths('keystone::layout.directories');
-    foreach ($layout_dirs as $dir) {
-      if (is_dir($dir)) {
-        $layout_files = scandir($dir);
-        foreach ($layout_files as $layout) {
-          if (substr($layout, 0, 1) == '.') continue;
-          $layouts[] = $layout;
-        }
-      }
-    }
-    return $layouts;
+    throw new \Exception('Layouts must be created with an explicit name. Try `Layout::makeNamed(\'sub-page\')` instead.');
   }
 
-  public static function active()
+  public static function makeNamed($name)
   {
-    return static::$active;
+    $obj = new static();
+    $obj->name = $name;
+    $obj->path = \Bundle::path('keystone').'tests/page.layouts/'.$name.'';
+    return $obj;
   }
 
-  public function set_active()
+  public function addRegion(Region $region)
   {
-    static::$active = $this;
+    $this->regions[] = $region;
+    return $this;
   }
 
-  public function release_active()
+  public function region($name)
   {
-    static::$active = null;
-  }
-
-  public static function path($name)
-  {
-    $components = preg_split('/\./', $name);
-    if (count($components) < 1) {
-      $components = array_unshift($components, 'content');
-    }
-
-    foreach (\Keystone\Config::get_paths('keystone::layout.directories') as $dir) {
-      if (file_exists($path = $dir.$components[0].'/'.$components[1].EXT)) {
-        return $path;
+    foreach ($this->regions as $region) {
+      if ($region->name == $name) {
+        return $region;
       }
     }
 
-    return \Bundle::path('keystone').'layouts/content/'.$components[1].EXT;
+    return Region::makeNamed($name);
   }
 
-  public function form($page, $screen='content')
+  public function form()
   {
-    $this->set_active();
-    $page->set_active();
-
-    $form = \Laravel\View::make('path: '.static::path("{$this->name}.{$screen}"))
-      ->__toString()
+    return \Troup\View::make("path: {$this->path}")
+      ->with('layout', $this)
+      ->render()
     ;
-
-    $this->release_active();
-    $page->release_active();
-
-    return $form;
   }
-
+  
 }

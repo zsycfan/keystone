@@ -2,99 +2,36 @@
 
 namespace Keystone;
 
-class Field
-{
+class Field extends Object {
 
-  public static function all()
+  private $type;
+  private $data = array();
+
+  public static function make()
   {
-    $return = array();
-    $field_dirs = \Keystone\Config::get_paths('keystone::field.directories');
-    foreach ($field_dirs as $dir) {
-      if (is_dir($dir)) {
-        $fields = scandir($dir);
-        foreach ($fields as $field) {
-          if (substr($field, 0, 1) == '.') continue;
-          $return[] = $field;
-        }
-      }
-    }
-
-    return $return;
+    throw new \Exception('Fields must be created with an explicit type. Try `Field::makeType(\'type\')` instead.');
   }
 
-  public static function javascript()
+  public static function makeType($type)
   {
-    $javascript = array();
-    $field_dirs = \Keystone\Config::get_paths('keystone::field.directories');
-    foreach ($field_dirs as $dir) {
-      if (is_dir($dir)) {
-        $templates = scandir($dir);
-        foreach ($templates as $field) {
-          if (substr($field, 0, 1) == '.') continue;
-          if (!file_exists($path = path('fields').$field.'/field.js')) continue;
-          $javascript[] = \File::get($path);
-        }
-      }
-    }
-
-    return implode('', $javascript);
+    $obj = new static();
+    $obj->type = $type;
+    return $obj;
   }
 
-  public static function templates()
+  public function setData($data)
   {
-    $return = array();
-    $field_dirs = \Keystone\Config::get_paths('keystone::field.directories');
-    foreach ($field_dirs as $dir) {
-      if (is_dir($dir)) {
-        $templates = scandir($dir);
-        foreach ($templates as $field) {
-          if (substr($field, 0, 1) == '.') continue;
-          if (file_exists($path = $dir.$field.'/field.handlebars')) {
-            $template = \File::get($path);
-            $return[] = <<<EOT
-              <script class="handlebars-template" data-name="field.{$field}.field" type="text/x-handlebars-template">
-              {$template}
-              </script>
-EOT;
-          }
-          if (file_exists($path = $dir.$field.'/icon.handlebars')) {
-            $template = \File::get($path);
-            $return[] = <<<EOT
-              <script class="handlebars-partial" data-name="field.{$field}.icon" type="text/x-handlebars-template">
-              {$template}
-              </script>
-EOT;
-          }
-          else {
-            $return[] = <<<EOT
-              <script class="handlebars-partial" data-name="field.{$field}.icon" type="text/x-handlebars-template">
-              <i class="icon-th-large"></i>
-              </script>
-EOT;
-          }
-        }
-      }
-    }
-
-    return implode('', $return);
+    $this->data = $data;
   }
 
-  public static function css()
+  public function form($data=array())
   {
-    $css = array();
-    $field_dirs = \Keystone\Config::get_paths('keystone::field.directories');
-    foreach ($field_dirs as $dir) {
-      if (is_dir($dir)) {
-        $templates = scandir($dir);
-        foreach ($templates as $field) {
-          if (substr($field, 0, 1) == '.') continue;
-          if (!file_exists($path = path('fields').$field.'/field.css')) continue;
-          $css[] = \File::get($path);
-        }
-      }
-    }
-
-    return implode('', $css);
+    $data = array_merge($this->data, $data);
+    return View::make('keystone::field.form')
+      ->with('type', $this->type)
+      ->with('data', $data)
+      ->render()
+    ;
   }
-
+  
 }
