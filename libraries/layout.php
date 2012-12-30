@@ -17,7 +17,7 @@ class Layout extends Object {
   {
     $obj = new static();
     $obj->name = $name;
-    $obj->path = \Bundle::path('keystone').'tests/page.layouts/'.$name.'';
+    $obj->path = \Bundle::path('keystone').'tests/page.layouts/'.$name;
     return $obj;
   }
 
