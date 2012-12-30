@@ -44,7 +44,7 @@ Autoloader::namespaces(array(
 |
 */
 
-require_once Bundle::path('keystone').'vendor'.DS.'autoload'.EXT;
+require Bundle::path('keystone').'vendor'.DS.'autoload'.EXT;
 
 // --------------------------------------------------------------
 // The path to the layouts directory.
