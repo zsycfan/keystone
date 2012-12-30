@@ -1,4 +1,5 @@
 .sass-cache
 .DS_Store
 composer.lock
-vendor/*
+vendor/twig
+vendor/markhuot
