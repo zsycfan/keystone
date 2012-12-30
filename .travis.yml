@@ -12,9 +12,9 @@ before_install:
   - cd ~/builds/laravel/bundles/keystone
   - composer install --no-interaction
   - echo "<?php return array('keystone' => array('auto' => true));" > ~/builds/laravel/application/bundles.php
-  - cd ~/builds/laravel
+  - cd ~/builds/laravel/bundles/keystone
 
-script: "php artisan test keystone"
+script: "php phpunit.phar"
 
 notifications:
   email: false
