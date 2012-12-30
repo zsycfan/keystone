@@ -11,12 +11,16 @@ class TestPage extends PHPUnit_Framework_TestCase {
     );
   }
 
+  // Load the bundle
+  protected function setUp()
+  {
+    Bundle::start('keystone');
+  }
+
   // START TESTS!
 
   public function testSettingRegionsToString()
   {
-    Bundle::start('keystone');
-
     try {
       $page = \Keystone\Page::make();
       $page->regions = 'test';
