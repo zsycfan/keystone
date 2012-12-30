@@ -5,6 +5,7 @@ php:
   - 5.4
 
 before_install:
+  - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - cd ~/builds
   - git clone git://github.com/laravel/laravel.git
   - mv ~/builds/keystone/keystone ~/builds/laravel/bundles/keystone
