@@ -1,12 +1,12 @@
 {
     "repositories": [
         {
-            "type": "vcs",
-            "url": "http://github.com/markhuot/troup"
+            "type": "git",
+            "url": "https://github.com/markhuot/troup"
         },
         {
-            "type": "vcs",
-            "url": "http://github.com/fabpot/Twig"
+            "type": "git",
+            "url": "https://github.com/fabpot/Twig"
         }
     ],
     "require": {
