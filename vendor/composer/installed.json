@@ -6,22 +6,22 @@
         "source": {
             "type": "git",
             "url": "git://github.com/fabpot/Twig.git",
-            "reference": "1a10ea2fbb2291142b4ee03665591c0762315204"
+            "reference": "1b1a6e7de018d300e6eb67727f3717c24f4540ba"
         },
         "dist": {
             "type": "zip",
-            "url": "https://github.com/fabpot/Twig/archive/1a10ea2fbb2291142b4ee03665591c0762315204.zip",
-            "reference": "1a10ea2fbb2291142b4ee03665591c0762315204",
+            "url": "https://github.com/fabpot/Twig/archive/1b1a6e7de018d300e6eb67727f3717c24f4540ba.zip",
+            "reference": "1b1a6e7de018d300e6eb67727f3717c24f4540ba",
             "shasum": ""
         },
         "require": {
             "php": ">=5.2.4"
         },
-        "time": "2012-11-08 09:25:11",
+        "time": "2012-12-27 16:33:50",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.11-dev"
+                "dev-master": "1.12-dev"
             }
         },
         "installation-source": "source",
@@ -48,5 +48,51 @@
         "keywords": [
             "templating"
         ]
+    },
+    {
+        "name": "markhuot/troup",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "http://github.com/markhuot/troup",
+            "reference": "a5786edd7ea96c53524382daddd829b4f3f1cfed"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/markhuot/troup/zipball/a5786edd7ea96c53524382daddd829b4f3f1cfed",
+            "reference": "a5786edd7ea96c53524382daddd829b4f3f1cfed",
+            "shasum": ""
+        },
+        "time": "2012-12-30 13:36:50",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Troup": ""
+            },
+            "files": [
+                "start.php"
+            ]
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Mark Huot",
+                "email": "troup@markhuot.com"
+            }
+        ],
+        "description": "A standard template interface for PHP",
+        "homepage": "http://github.com/markhuot/troup",
+        "keywords": [
+            "upload",
+            "more upload"
+        ],
+        "support": {
+            "source": "https://github.com/markhuot/troup/tree/master",
+            "issues": "https://github.com/markhuot/troup/issues"
+        }
     }
 ]

@@ -1,5 +1,16 @@
 {
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "http://github.com/markhuot/troup"
+        },
+        {
+            "type": "vcs",
+            "url": "http://github.com/fabpot/Twig"
+        }
+    ],
     "require": {
-        "twig/twig": "1.11.x-dev"
+        "twig/twig": "1.*",
+        "markhuot/troup": "dev-master"
     }
 }

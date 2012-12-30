@@ -16,7 +16,6 @@ class TestPage extends PHPUnit_Framework_TestCase {
   public function testSettingRegionsToString()
   {
     Bundle::start('keystone');
-    Bundle::start('troup');
 
     try {
       $page = \Keystone\Page::make();
@@ -189,56 +188,15 @@ class TestPage extends PHPUnit_Framework_TestCase {
       ->addRegion($body)
     ;
 
-    $this->assertEquals('<p>Title</p>
-<div
-  class="region"
-  data-name="title"
-  data-allow="[]"
-  data-max="1"
-  data-min="1"
-  data-count="1"
-  data-config="[]"
->
-  <div class="fields">
-                  <div
-  class="field-placeholder"
-  data-type="plain"
-  data-data="{&quot;content&quot;:&quot;The Title&quot;}"
-></div>            </div>
-  <div class="add-field">
-    <a href="#" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
-  </div>
-</div>
-<p>Body</p>
-<div
-  class="region"
-  data-name="body"
-  data-allow="[]"
-  data-max="0"
-  data-min="0"
-  data-count="2"
-  data-config="[]"
->
-  <div class="fields">
-                  <div
-  class="field-placeholder"
-  data-type="plain"
-  data-data="{&quot;content&quot;:&quot;Body Line 1&quot;}"
-></div>              <div
-  class="field-placeholder"
-  data-type="plain"
-  data-data="{&quot;content&quot;:&quot;Body Line 2&quot;}"
-></div>            </div>
-  <div class="add-field">
-    <a href="#" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
-  </div>
-</div>', $layout->form());
+    $this->assertEquals(
+      $this->expects('test-render-layout'),
+      $layout->form()
+    );
   }
 
   public function testRenderTwigLayout()
   {
     Bundle::start('keystone');
-    Bundle::start('troup');
 
     $field1 = \Keystone\Field::makeType('plain')
       ->with('data', array('content' => 'The Title'))
@@ -264,51 +222,10 @@ class TestPage extends PHPUnit_Framework_TestCase {
       ->addRegion($body)
     ;
 
-    $this->assertEquals('<p>Title</p>
-<div
-  class="region"
-  data-name="title"
-  data-allow="[]"
-  data-max="1"
-  data-min="1"
-  data-count="1"
-  data-config="[]"
->
-  <div class="fields">
-                  <div
-  class="field-placeholder"
-  data-type="plain"
-  data-data="{&quot;content&quot;:&quot;The Title&quot;}"
-></div>            </div>
-  <div class="add-field">
-    <a href="#" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
-  </div>
-</div>
-
-<p>Body</p>
-<div
-  class="region"
-  data-name="body"
-  data-allow="[]"
-  data-max="0"
-  data-min="0"
-  data-count="2"
-  data-config="[]"
->
-  <div class="fields">
-                  <div
-  class="field-placeholder"
-  data-type="plain"
-  data-data="{&quot;content&quot;:&quot;Body Line 1&quot;}"
-></div>              <div
-  class="field-placeholder"
-  data-type="plain"
-  data-data="{&quot;content&quot;:&quot;Body Line 2&quot;}"
-></div>            </div>
-  <div class="add-field">
-    <a href="#" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
-  </div>
-</div>', $layout->form());
+    $this->assertEquals(
+      $this->expects('test-render-twig-layout'),
+      $layout->form()
+    );
   }
 
 }
