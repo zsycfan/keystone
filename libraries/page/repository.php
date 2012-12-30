@@ -4,12 +4,12 @@ namespace Keystone\Page;
 
 class Repository extends \Keystone\Object {
 
-  public function all()
+  public static function all()
   {
     return Collection::make();
   }
 
-  public function find($id)
+  public static function find($id)
   {
     return \Keystone\Page::make();
   }
