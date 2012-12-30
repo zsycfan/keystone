@@ -1,5 +1,7 @@
 <?php
 
+// tick
+
 class TestPage extends PHPUnit_Framework_TestCase {
 
   // Get text data from the expects folder so we're not placing expected HTML
