@@ -5,6 +5,7 @@ php:
   - 5.4
 
 before_install:
+  - composer install
   - cd ~/builds
   - git clone git://github.com/laravel/laravel.git
   - mv ./keystone/keystone ./laravel/bundles/keystone
