@@ -89,7 +89,10 @@ class TestPage extends PHPUnit_Framework_TestCase {
   {
     $field = \Keystone\Field::makeType('plain');
 
-    $this->assertEquals('Keystone\Field', get_class($field));
+    $this->assertEquals(
+      'Keystone\Field', 
+      get_class($field)
+    );
   }
 
   public function testFieldForm()
