@@ -10,7 +10,7 @@ before_install:
   - mv ~/builds/keystone/keystone ~/builds/laravel/bundles/keystone
   - cd ~/builds/laravel/bundles/keystone
   - composer install
-  - echo "<?php return array('keystone' => array('auto' => true));" > ./laravel/application/bundles.php
+  - echo "<?php return array('keystone' => array('auto' => true));" > ~/builds/laravel/application/bundles.php
   - cd ~/builds/laravel
 
 script: "php artisan test keystone"
