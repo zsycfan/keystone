@@ -34,17 +34,16 @@ class TestPage extends PHPUnit_Framework_TestCase {
     $this->fail('Invalid Argument denied.');
   }
 
-  public function testSettingRegionsToRegionCollection()
+  public function testSettingUndefinedVar()
   {
-    Bundle::start('keystone');
-
     try {
       $page = \Keystone\Page::make();
       $page->regions = array();
     }
     catch (Exception $e) {
-      $this->fail('Invalid Argument denied.');
+      return;
     }
+    $this->fail('Incorrectly set an undefined variable.');
   }
 
   public function testSettingLayoutToString()
