@@ -1,6 +1,7 @@
 <?php
 
 namespace Keystone\Page;
+use Keystone\Page;
 
 class Repository extends \Keystone\Object {
 
@@ -11,7 +12,7 @@ class Repository extends \Keystone\Object {
 
   public static function find($id)
   {
-    return \Keystone\Page::make();
+    return Page::make();
   }
 
 }
