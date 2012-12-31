@@ -1,9 +1,10 @@
 <?php
 
 namespace Keystone\Page;
+use Keystone\Object;
 use Keystone\Page;
 
-class Repository extends \Keystone\Object {
+class Repository extends Object {
 
   public static function all()
   {
