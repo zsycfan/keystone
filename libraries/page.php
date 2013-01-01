@@ -12,6 +12,11 @@ class Page extends Object
   private $createdAt;
   private $updatedAt;
 
+  public function getId()
+  {
+    return $this->id;
+  }
+
   public function setId($id)
   {
     $this->id = $id;
@@ -65,5 +70,10 @@ class Page extends Object
   public function getTimeSinceUpdated()
   {
     return date_create('now')->diff($this->updatedAt);
+  }
+
+  public function getTitle()
+  {
+    return $this->layout->region('title')->summary;
   }
 }

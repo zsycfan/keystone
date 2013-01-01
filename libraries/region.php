@@ -57,6 +57,11 @@ class Region extends Object
     return $this;
   }
 
+  public function getSummary()
+  {
+    return 'testing';
+  }
+
   public function form()
   {
     return View::make('keystone::region.form')

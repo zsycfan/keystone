@@ -6,7 +6,7 @@ class Layout extends Object {
 
   private $name;
   private $path;
-  private $regions;
+  private $regions = array();
 
   public static function make()
   {
