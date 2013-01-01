@@ -15,11 +15,8 @@ class Object
       return call_user_func_array(array($this, $method), array($value));
     }
 
-    else if (property_exists($this, $key)) {
-      return $this->{$key} = $value;
-    }
-
-    throw new \Exception("Could not set [{$key}].");
+    $class = get_class($this);
+    throw new \Exception("`{$key}` is not defined or accessible on `{$class}`.");
   }
 
   public function __get($key)
@@ -28,7 +25,8 @@ class Object
       return call_user_func_array(array($this, $method), array());
     }
 
-    throw new \Exception("Could not get [{$key}].");
+    $class = get_class($this);
+    throw new \Exception("`{$key}` is not defined or accessible on `{$class}`.");
   }
 
   public function with($key, $value=null)

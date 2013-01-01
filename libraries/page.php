@@ -9,6 +9,11 @@ class Page extends Object
   private $layout;
   private $uri;
 
+  public function setId($id)
+  {
+    $this->id = $id;
+  }
+
   public function setLanguage(Language $language)
   {
     $this->language = $language;

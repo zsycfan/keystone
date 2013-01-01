@@ -74,22 +74,6 @@ class TestPage extends PHPUnit_Framework_TestCase {
     }
   }
 
-  public function testGetAllPages()
-  {
-    $this->assertEquals(
-      'Keystone\Page\Collection',
-      get_class(\Keystone\Page\Repository::all())
-    );
-  }
-
-  public function testGetOnePage()
-  {
-    $this->assertEquals(
-      'Keystone\Page',
-      get_class(\Keystone\Page\Repository::find(1))
-    );
-  }
-
   public function testFieldType()
   {
     $field = \Keystone\Field::makeType('plain');

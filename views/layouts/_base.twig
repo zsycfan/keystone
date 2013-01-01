@@ -29,10 +29,10 @@
     {% block crumb_actions %}{% endblock %}
   </div>
   <div class="container-fluid">
-    {% if sess('message') %}
-      <div class="alert alert-{{ sess('message_type') }}">
+    {% if sess_val('message') %}
+      <div class="alert alert-{{ sess_val('message_type') }}">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        {{ sess('message') }}
+        {{ sess_val('message') }}
       </div>
     {% endif %}
     {% block content %}{% endblock %}

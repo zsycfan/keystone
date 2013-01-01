@@ -10,8 +10,8 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   public function get_list()
   {
     Session::put('last_viewed_style', 'list');
-    return Keystone\View::make('keystone::content.list')
-      ->with('pages', Keystone\Repository\Page::all())
+    return Troup\View::make('keystone::content.list')
+      ->with('pages', Keystone\Page\Repository::findAll())
     ;
   }
 
