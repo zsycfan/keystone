@@ -1,6 +1,7 @@
 <?php
 
 namespace Keystone;
+use DateTime;
 
 class Page extends Object
 {
@@ -8,6 +9,8 @@ class Page extends Object
   private $language;
   private $layout;
   private $uri;
+  private $createdAt;
+  private $updatedAt;
 
   public function setId($id)
   {
@@ -19,6 +22,11 @@ class Page extends Object
     $this->language = $language;
   }
 
+  public function getLayout()
+  {
+    return $this->layout;
+  }
+
   public function setLayout(Layout $layout)
   {
     $this->layout = $layout;
@@ -27,5 +35,25 @@ class Page extends Object
   public function setUri(Uri $uri)
   {
     $this->uri = $uri;
+  }
+
+  public function setCreatedAt(DateTime $createdAt)
+  {
+    $this->createdAt = $createdAt;
+  }
+
+  public function getTimeSinceCreated()
+  {
+    return date_create('now')->diff($this->createdAt);
+  }
+
+  public function setUpdatedAt(DateTime $updatedAt)
+  {
+    $this->updatedAt = $updatedAt;
+  }
+
+  public function getTimeSinceUpdated()
+  {
+    return date_create('now')->diff($this->updatedAt);
   }
 }

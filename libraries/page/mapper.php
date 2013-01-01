@@ -1,6 +1,7 @@
 <?php
 
 namespace Keystone\Page;
+use DateTime;
 use Keystone\Language;
 use Keystone\Layout;
 use Keystone\Object;
@@ -23,6 +24,8 @@ class Mapper extends Object {
     $page->language = Language::makeWithCountryCode($row->language);
     $page->layout = Layout::makeNamed($row->layout);
     $page->uri = Uri::makeFromString($row->uri);
+    $page->createdAt = new DateTime($row->created_at);
+    $page->updatedAt = new DateTime($row->updated_at);
     return $page;
   }
 

@@ -38,6 +38,11 @@ class Layout extends Object {
     return Region::makeNamed($name);
   }
 
+  public function getName()
+  {
+    return $this->name;
+  }
+
   public function form()
   {
     return \Troup\View::make("path: {$this->path}")
