@@ -37,6 +37,11 @@ class Page extends Object
     $this->uri = $uri;
   }
 
+  public function getCreatedAt()
+  {
+    return $this->createdAt;
+  }
+
   public function setCreatedAt(DateTime $createdAt)
   {
     $this->createdAt = $createdAt;
@@ -45,6 +50,11 @@ class Page extends Object
   public function getTimeSinceCreated()
   {
     return date_create('now')->diff($this->createdAt);
+  }
+
+  public function getUpdatedAt()
+  {
+    return $this->updatedAt;
   }
 
   public function setUpdatedAt(DateTime $updatedAt)
