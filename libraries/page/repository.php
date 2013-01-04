@@ -31,12 +31,12 @@ class Repository extends Object {
 
   public static function findAll()
   {
-    return Mapper::mapAll(static::query()->get());
+    return Mapper::mapAllFromDatabase(static::query()->get());
   }
 
   public static function find($id)
   {
-    return Mapper::map(static::query()->where('p.id', '=', $id)->first());
+    return Mapper::mapFromDatabase(static::query()->where('p.id', '=', $id)->first());
   }
 
 }

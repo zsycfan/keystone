@@ -13,14 +13,7 @@ use Laravel\Session;
 
 class Mapper extends Object {
 
-  public static function mapAll(array $result)
-  {
-    return Collection::makeWithResult(array_map(function($row) {
-      return Mapper::map($row);
-    }, $result));
-  }
-
-  public static function map($row)
+  public static function mapFromDatabase($row)
   {
     $page = new Page;
     $page->id = $row->id;
@@ -30,6 +23,25 @@ class Mapper extends Object {
     $page->createdAt = new DateTime($row->created_at, new DateTimeZone(Session::get('timezone', Config::get('application.timezone'))));
     $page->updatedAt = new DateTime($row->updated_at, new DateTimeZone(Session::get('timezone', Config::get('application.timezone'))));
     return $page;
+  }
+
+  /**
+   * Magic Method
+   *
+   * Takes any static calls to `mapAllFromX` and calls `mapFromX` on each item
+   * in the array.
+   * 
+   * @param  string $method
+   * @param  array  $args
+   * @return mixed
+   */
+  public static function __callStatic($method, $args)
+  {
+    if (preg_match('/^mapAll(.*)$/', $method, $source)) {
+      return Collection::makeWithResult(array_map(function($row) use ($source) {
+        return call_user_func_array('\Keystone\Page\Mapper::map'.$source[1], $row);
+      }, $args));
+    }
   }
 
 }
