@@ -102,11 +102,13 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
   public function testFieldForm()
   {
-    $field = \Keystone\Field::makeType('plain');
+    $field = \Keystone\Field::makeType('plain')
+      ->with('data', array('content' => 'test'))
+    ;
 
     $this->assertEquals(
       $this->expects('test-field-form'), 
-      $field->form(array('content' => 'test'))
+      $field->form()
     );
   }
 

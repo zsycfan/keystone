@@ -24,12 +24,11 @@ class Field extends Object {
     $this->data = $data;
   }
 
-  public function form($data=array())
+  public function form()
   {
-    $data = array_merge($this->data, $data);
-    return View::make('keystone::field.form')
+    return View::makeView('field/form')
       ->with('type', $this->type)
-      ->with('data', $data)
+      ->with('data', $this->data)
       ->render()
     ;
   }

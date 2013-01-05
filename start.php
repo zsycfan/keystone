@@ -46,12 +46,15 @@ Autoloader::namespaces(array(
 
 require Bundle::path('keystone').'vendor'.DS.'autoload'.EXT;
 
-// --------------------------------------------------------------
-// The path to the layouts directory.
-// --------------------------------------------------------------
-$GLOBALS['laravel_paths']['layouts'] = Bundle::path('keystone').'layouts'.DS;
-
-// --------------------------------------------------------------
-// The path to the fields directory.
-// --------------------------------------------------------------
-$GLOBALS['laravel_paths']['fields'] = Bundle::path('keystone').'fields'.DS;
+/*
+|--------------------------------------------------------------------------
+| Add Default View Handlers & Paths
+|--------------------------------------------------------------------------
+|
+*/
+Keystone\View::addHandler('.txt', 'Keystone\View\Renderer\Text');
+Keystone\View::addHandler('.twig', 'Keystone\View\Renderer\Twig');
+Keystone\View::addHandler('.php', 'Keystone\View\Renderer\Php');
+Keystone\View::addDirectory('view', Bundle::path('keystone').'views');
+Keystone\View::addDirectory('layout', Bundle::path('keystone').'layouts');
+Keystone\View::addDirectory('layout', path('app').'layouts');

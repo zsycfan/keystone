@@ -59,7 +59,7 @@ class Region extends Object
 
   public function form()
   {
-    return View::make('keystone::region.form')
+    return View::makeView('region/form')
       ->with('fields', $this->fields)
       ->with('name', $this->name)
       ->with('allow', $this->allow)
