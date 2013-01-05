@@ -14,10 +14,10 @@ class Region extends Object
 
   public static function make()
   {
-    throw new \Exception('Regions must be created with an explicit name. Try `Region::makeNamed(\'body\')` instead.');
+    throw new \Exception('Regions must be created with an explicit name. Try `Region::makeWithName(\'body\')` instead.');
   }
 
-  public static function makeNamed($name)
+  public static function makeWithName($name)
   {
     $obj = new static();
     $obj->name = $name;
