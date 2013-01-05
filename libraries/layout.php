@@ -10,10 +10,10 @@ class Layout extends Object {
 
   public static function make()
   {
-    throw new \Exception('Layouts must be created with an explicit name. Try `Layout::makeNamed(\'sub-page\')` instead.');
+    throw new \Exception('Layouts must be created with an explicit name. Try `Layout::makeWithName(\'sub-page\')` instead.');
   }
 
-  public static function makeNamed($name)
+  public static function makeWithName($name)
   {
     $obj = new static();
     $obj->name = $name;
