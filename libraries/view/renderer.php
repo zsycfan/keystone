@@ -17,6 +17,11 @@ class Renderer extends Object
     $this->extension = $extension;
   }
 
+  public function __toString()
+  {
+    return $this->render();
+  }
+
   public function directory()
   {
     return $this->directory;
@@ -42,7 +47,7 @@ class Renderer extends Object
     return $this->directory.$this->name.$this->extension;
   }
   
-  public function with($key, $value)
+  public function with($key, $value=null)
   {
     $this->data[$key] = $value;
     return $this;
@@ -50,6 +55,6 @@ class Renderer extends Object
   
   public function render()
   {
-  
+    return file_get_contents($this->path());
   }
 }

@@ -21,7 +21,7 @@ class TestView extends PHPUnit_Framework_TestCase {
   {
 	Keystone\View::reset();
 	Keystone\View::addHandler('.twig', '\Keystone\View\Renderer\Twig');
-	Keystone\View::addDirectory('layout', '/home/markhuot/www/bundles/keystone/tests/layouts');
+	Keystone\View::addDirectory('layout', Bundle::path('keystone').'tests/layouts');
 	$this->assertEquals(
 	  Keystone\View::makeLayout('test')->with('name', 'Mark')->render(),
 	  'Hello Mark.'

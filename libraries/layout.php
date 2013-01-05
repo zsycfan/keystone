@@ -35,7 +35,7 @@ class Layout extends Object {
       }
     }
 
-    return Region::makeNamed($name);
+    return Region::makeWithName($name);
   }
 
   public function name()

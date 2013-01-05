@@ -10,7 +10,7 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   public function get_list()
   {
     Session::put('last_viewed_style', 'list');
-    return Troup\View::make('keystone::content.list')
+    return Keystone\View::makeView('content/list')
       ->with('pages', Keystone\Page\Repository::findAll())
     ;
   }
@@ -22,7 +22,7 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
     }
     Session::put('last_viewed_style', 'tree');
     Session::put('last_viewed_uri', Input::get('uri'));
-    return Troup\View::make('keystone::content.tree')
+    return Keystone\View::makeView('content/tree')
       ->with('pages', Keystone\Page\Repository::find_at_uri(Input::get('uri')))
       ->with('tree', Keystone\Page\Repository::find_breadcrumbs_for_uri(Input::get('uri')))
     ;
@@ -30,14 +30,14 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_new()
   {
-    return Troup\View::make('keystone::content.new')
+    return Keystone\View::makeView('content/new')
       ->with('layouts', Keystone\Layout::all())
     ;
   }
 
   public function get_layout($id)
   {
-    return Keystone\View::make('keystone::content.layout')
+    return Keystone\View::makeView('content/layout')
       ->with('layouts', Keystone\Layout::all())
       ->with('page', Keystone\Repository\Page::find($id, array('revision' => Input::get('revision'))))
     ;
@@ -45,12 +45,12 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_content($id)
   {
-    return Keystone\View::make('keystone::content.edit')
-      ->with('page', Keystone\Repository\Page::find($id, array('revision' => Input::get('revision'))))
-      ->with('fields', Keystone\Field::all())
-      ->with('field_css', Keystone\Field::css())
-      ->with('field_javascript', Keystone\Field::javascript())
-      ->with('field_templates', Keystone\Field::templates())
+    return Keystone\View::makeView('content/edit')
+      ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
+      // ->with('fields', Keystone\Field::all())
+      // ->with('field_css', Keystone\Field::css())
+      // ->with('field_javascript', Keystone\Field::javascript())
+      // ->with('field_templates', Keystone\Field::templates())
     ;
   }
 

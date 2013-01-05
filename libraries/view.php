@@ -27,11 +27,11 @@ class View extends Object
   public static function __callStatic($method, $args)
   {
     if (preg_match('/^make(.*)$/', $method, $group)) {
-      return call_user_func_array('Keystone\View::make', array(strtolower($group[1]), $args[0]));
+      return call_user_func_array('Keystone\View::makeGroup', array(strtolower($group[1]), $args[0]));
     }
   }
 
-  public static function make($group, $name)
+  public static function makeGroup($group, $name)
   {
     $directories = static::$directories[$group];
     foreach ($directories as $dir) {
