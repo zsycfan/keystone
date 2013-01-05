@@ -38,7 +38,7 @@ class Layout extends Object {
     return Region::makeWithName($name);
   }
 
-  public function name()
+  public function getName()
   {
     return $this->name;
   }
