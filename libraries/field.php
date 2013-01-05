@@ -9,10 +9,10 @@ class Field extends Object {
 
   public static function make()
   {
-    throw new \Exception('Fields must be created with an explicit type. Try `Field::makeType(\'type\')` instead.');
+    throw new \Exception('Fields must be created with an explicit type. Try `Field::makeWithType(\'type\')` instead.');
   }
 
-  public static function makeType($type)
+  public static function makeWithType($type)
   {
     $obj = new static();
     $obj->type = $type;
