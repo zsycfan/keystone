@@ -67,7 +67,7 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
     try {
       $page = \Keystone\Page::make();
-      $page->layout = \Keystone\Layout::makeNamed('home');
+      $page->layout = \Keystone\Layout::makeWithName('home');
     }
     catch (Exception $e) {
       $this->fail('Invalid Argument denied.');
@@ -76,7 +76,7 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
   public function testFieldType()
   {
-    $field = \Keystone\Field::makeType('plain');
+    $field = \Keystone\Field::makeWithType('plain');
 
     $this->assertEquals(
       'Keystone\Field', 
@@ -86,7 +86,7 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
   public function testFieldForm()
   {
-    $field = \Keystone\Field::makeType('plain')
+    $field = \Keystone\Field::makeWithType('plain')
       ->with('data', array('content' => 'test'))
     ;
 
@@ -98,7 +98,7 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
   public function testFieldFormSettingData()
   {
-    $field = \Keystone\Field::makeType('plain')
+    $field = \Keystone\Field::makeWithType('plain')
       ->with('data', array('content' => 'test'))
     ;
 
@@ -110,7 +110,7 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
   public function testRenderEmptyRegion()
   {
-    $region = \Keystone\Region::makeNamed('body');
+    $region = \Keystone\Region::makeWithName('body');
 
     $this->assertEquals(
       $this->expects('test-render-empty-region'),
@@ -120,14 +120,14 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
   public function testRenderRegionWithOneField()
   {
-    $field1 = \Keystone\Field::makeType('plain')
+    $field1 = \Keystone\Field::makeWithType('plain')
       ->with('data', array('content' => 'test1'))
     ;
-    $field2 = \Keystone\Field::makeType('plain')
+    $field2 = \Keystone\Field::makeWithType('plain')
       ->with('data', array('content' => 'test2'))
     ;
 
-    $region = \Keystone\Region::makeNamed('body')
+    $region = \Keystone\Region::makeWithName('body')
       ->addField($field1)
       ->addField($field2)
     ;
@@ -140,11 +140,11 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
   public function testRenderRegionWithOneFieldAndData()
   {
-    $field = \Keystone\Field::makeType('plain')
+    $field = \Keystone\Field::makeWithType('plain')
       ->with('data', array('content' => 'test'))
     ;
 
-    $region = \Keystone\Region::makeNamed('body')
+    $region = \Keystone\Region::makeWithName('body')
       ->addField($field)
     ;
 
@@ -158,26 +158,26 @@ class TestPage extends PHPUnit_Framework_TestCase {
   {
     Bundle::start('keystone');
 
-    $field1 = \Keystone\Field::makeType('plain')
+    $field1 = \Keystone\Field::makeWithType('plain')
       ->with('data', array('content' => 'The Title'))
     ;
-    $field2 = \Keystone\Field::makeType('plain')
+    $field2 = \Keystone\Field::makeWithType('plain')
       ->with('data', array('content' => 'Body Line 1'))
     ;
-    $field3 = \Keystone\Field::makeType('plain')
+    $field3 = \Keystone\Field::makeWithType('plain')
       ->with('data', array('content' => 'Body Line 2'))
     ;
 
-    $title = \Keystone\Region::makeNamed('title')
+    $title = \Keystone\Region::makeWithName('title')
       ->addField($field1)
     ;
 
-    $body = \Keystone\Region::makeNamed('body')
+    $body = \Keystone\Region::makeWithName('body')
       ->addField($field2)
       ->addField($field3)
     ;
 
-    $layout = \Keystone\Layout::makeNamed('test-render-layout.php')
+    $layout = \Keystone\Layout::makeWithName('test-render-layout.php')
       ->addRegion($title)
       ->addRegion($body)
     ;
@@ -192,26 +192,26 @@ class TestPage extends PHPUnit_Framework_TestCase {
   {
     Bundle::start('keystone');
 
-    $field1 = \Keystone\Field::makeType('plain')
+    $field1 = \Keystone\Field::makeWithType('plain')
       ->with('data', array('content' => 'The Title'))
     ;
-    $field2 = \Keystone\Field::makeType('plain')
+    $field2 = \Keystone\Field::makeWithType('plain')
       ->with('data', array('content' => 'Body Line 1'))
     ;
-    $field3 = \Keystone\Field::makeType('plain')
+    $field3 = \Keystone\Field::makeWithType('plain')
       ->with('data', array('content' => 'Body Line 2'))
     ;
 
-    $title = \Keystone\Region::makeNamed('title')
+    $title = \Keystone\Region::makeWithName('title')
       ->addField($field1)
     ;
 
-    $body = \Keystone\Region::makeNamed('body')
+    $body = \Keystone\Region::makeWithName('body')
       ->addField($field2)
       ->addField($field3)
     ;
 
-    $layout = \Keystone\Layout::makeNamed('test-render-twig-layout.twig')
+    $layout = \Keystone\Layout::makeWithName('test-render-twig-layout.twig')
       ->addRegion($title)
       ->addRegion($body)
     ;
