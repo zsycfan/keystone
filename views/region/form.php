@@ -13,7 +13,7 @@
         <?= $field->form() ?>
       <?php endforeach; ?>
     <?php elseif ($min > 0): ?>
-      <div class="field-placeholder" data-type="<?= current($region->allow) ?:'plain' ?>"></div>
+      <div class="field-placeholder" data-type="<?= current($allow) ?:'plain' ?>"></div>
     <?php endif; ?>
   </div>
   <div class="add-field">
