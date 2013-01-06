@@ -52,9 +52,33 @@ require Bundle::path('keystone').'vendor'.DS.'autoload'.EXT;
 |--------------------------------------------------------------------------
 |
 */
+
 Keystone\View::addHandler('.txt', 'Keystone\View\Renderer\Text');
 Keystone\View::addHandler('.twig', 'Keystone\View\Renderer\Twig');
 Keystone\View::addHandler('.php', 'Keystone\View\Renderer\Php');
 Keystone\View::addDirectory('view', Bundle::path('keystone').'views');
 Keystone\View::addDirectory('layout', Bundle::path('keystone').'layouts');
 Keystone\View::addDirectory('layout', path('app').'layouts');
+
+/*
+|--------------------------------------------------------------------------
+| Extend Twig with Laravel specific methods
+|--------------------------------------------------------------------------
+|
+*/
+
+function twig_fn_route() {
+  return Request::route()->action['as'];
+}
+
+Keystone\View\Renderer\Twig::addFunction('route', 'twig_fn_route');
+Keystone\View\Renderer\Twig::addFunction('url_to_route', 'URL::to_route');
+Keystone\View\Renderer\Twig::addFunction('session_get', 'Session::get');
+Keystone\View\Renderer\Twig::addFunction('val', 'Input::get');
+
+function twig_fltr_with_query_string($url) {
+  $query = Request::foundation()->query->all();
+  return $url.($query?'?'.http_build_query($query, '', '&amp;'):'');
+}
+
+Keystone\View\Renderer\Twig::addFilter('with_query_string', 'twig_fltr_with_query_string');

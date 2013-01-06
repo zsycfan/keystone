@@ -17,6 +17,7 @@ class TestPage extends PHPUnit_Framework_TestCase {
   protected function setUp()
   {
     Bundle::start('keystone');
+    Keystone\View::addLayoutDirectory(Bundle::path('keystone').'tests/layouts');
   }
 
   // START TESTS!
@@ -48,8 +49,6 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
   public function testSettingLayoutToString()
   {
-    Bundle::start('keystone');
-
     try {
       $page = \Keystone\Page::make();
       $page->layout = 'test';
@@ -63,8 +62,6 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
   public function testSettingLayoutToObject()
   {
-    Bundle::start('keystone');
-
     try {
       $page = \Keystone\Page::make();
       $page->layout = \Keystone\Layout::makeWithName('home');
@@ -156,8 +153,6 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
   public function testRenderLayout()
   {
-    Bundle::start('keystone');
-
     $field1 = \Keystone\Field::makeWithType('plain')
       ->with('data', array('content' => 'The Title'))
     ;
@@ -177,21 +172,19 @@ class TestPage extends PHPUnit_Framework_TestCase {
       ->addField($field3)
     ;
 
-    $layout = \Keystone\Layout::makeWithName('test-render-layout.php')
+    $layout = \Keystone\Layout::makeWithName('test-render-layout')
       ->addRegion($title)
       ->addRegion($body)
     ;
 
     $this->assertEquals(
       $this->expects('test-render-layout'),
-      $layout->form()
+      $layout->form('content')
     );
   }
 
   public function testRenderTwigLayout()
   {
-    Bundle::start('keystone');
-
     $field1 = \Keystone\Field::makeWithType('plain')
       ->with('data', array('content' => 'The Title'))
     ;
@@ -211,14 +204,14 @@ class TestPage extends PHPUnit_Framework_TestCase {
       ->addField($field3)
     ;
 
-    $layout = \Keystone\Layout::makeWithName('test-render-twig-layout.twig')
+    $layout = \Keystone\Layout::makeWithName('test-render-twig-layout')
       ->addRegion($title)
       ->addRegion($body)
     ;
 
     $this->assertEquals(
       $this->expects('test-render-twig-layout'),
-      $layout->form()
+      $layout->form('content')
     );
   }
 

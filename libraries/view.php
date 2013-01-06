@@ -29,6 +29,9 @@ class View extends Object
     if (preg_match('/^make(.*)$/', $method, $group)) {
       return call_user_func_array('Keystone\View::makeGroup', array(strtolower($group[1]), $args[0]));
     }
+    if (preg_match('/^add(.*)Directory$/', $method, $group)) {
+      return call_user_func_array('Keystone\View::addDirectory', array(strtolower($group[1]), $args[0]));
+    }
   }
 
   public static function makeGroup($group, $name)
@@ -42,7 +45,7 @@ class View extends Object
       }
     }
     
-    throw new \Exception("Could not find view for: {$group}::{$name}");
+    throw new \Exception("Could not find {$group} at `{$name}`. Searched (".implode(', ', $directories).")");
   }
 
 }

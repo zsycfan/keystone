@@ -5,17 +5,53 @@ use Keystone\View\Renderer;
 
 class Twig extends Renderer
 {
+  private static $cache = null;
+  private static $debug = true;
+  private static $autoreload = true;
+  private static $functions = array();
+  private static $filters = array();
+  private static $tags = array();
+
+  public static function setCache($cache)
+  {
+    static::$cache = $cache;
+  }
+
+  public static function setDebug($debug)
+  {
+    static::$debug = $debug;
+  }
+
+  public static function setAutoReload($autoreload)
+  {
+    static::$autoreload = $autoreload;
+  }
+
+  public static function addFunction($name, $function, $params=array())
+  {
+    static::$functions[] = array(
+      'name' => $name,
+      'function' => $function,
+      'params' => $params,
+    );
+  }
+
+  public static function addFilter($name, $filter, $params=array())
+  {
+    static::$filters[] = array(
+      'name' => $name,
+      'filter' => $filter,
+      'params' => $params,
+    );
+  }
+
+  public static function addTag($class)
+  {
+    static::$tags[] = $class;
+  }
+
 	public function render()
 	{
-    // Grab our config file
-    // $config = require __DIR__.'/Twig/config.php';
-
-    // Include the Twig functions we wish to register.
-    /* foreach ($config['include'] as $file)
-    {
-      require_once $file;
-    } */
-
     // Register the Twig Autoloader.
     \Twig_Autoloader::register();
 
@@ -25,36 +61,26 @@ class Twig extends Renderer
       $this->directory()
     ));
 
-    // Load the Twig_Environment configuration.
-    $cache = @$config['cache'] ?: null;
-    $debug = @$config['debug'] ?: true;
-    $autoreload = @$config['autoreload'] ?: true;
-    $functions = @$config['functions'] ?: array();
-    $filters = @$config['filters'] ?: array();
-    $tags = @$config['tags'] ?: array();
-
     // Define the Twig environment.
     $twig_env = new \Twig_Environment($loader, array(
-      'cache' => $cache,
-      'debug' => $debug,
-      'autoreload' => $autoreload,
+      'cache' => static::$cache,
+      'debug' => static::$debug,
+      'autoreload' => static::$autoreload,
     ));
 
     // Register functions as Twig functions
-    foreach ($functions as $name => $value) {
-      $params = isset($value['params']) ? $value['params'] : array();
-      $twig_env->addFunction($name, new \Twig_Function_Function($value['function'], $params));
+    foreach (static::$functions as $function) {
+      $twig_env->addFunction($function['name'], new \Twig_Function_Function($function['function'], $function['params']));
     }
 
     // Register filters as Twig filters
-    foreach ($filters as $name => $value) {
-      $params = isset($value['params']) ? $value['params'] : array();
-      $twig_env->addFilter($name, new \Twig_Filter_Function($value['filter'], $params));
+    foreach (static::$filters as $name => $filter) {
+      $twig_env->addFilter($filter['name'], new \Twig_Filter_Function($filter['filter'], $filter['params']));
     }
 
     // Register tags as Twig tags
-    foreach ($tags as $name) {
-      $twig_env->addTokenParser(new $name);
+    foreach (static::$tags as $tag) {
+      $twig_env->addTokenParser(new $tag);
     }
 
     return $twig_env->render($this->name().$this->extension(), $this->data());

@@ -43,9 +43,9 @@ class Layout extends Object {
     return $this->name;
   }
 
-  public function form()
+  public function form($name=null)
   {
-    return \Troup\View::make("path: {$this->path}")
+    return View::makeLayout("{$this->name}/{$name}")
       ->with('layout', $this)
       ->render()
     ;
