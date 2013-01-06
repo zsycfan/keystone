@@ -17,7 +17,10 @@ class TestPage extends PHPUnit_Framework_TestCase {
   protected function setUp()
   {
     Bundle::start('keystone');
-    Keystone\View::addLayoutDirectory(Bundle::path('keystone').'tests/layouts');
+	Keystone\View::addHandler('.txt', 'Keystone\View\Renderer\Text');
+    Keystone\View::addHandler('.twig', 'Keystone\View\Renderer\Twig');
+    Keystone\View::addHandler('.php', 'Keystone\View\Renderer\Php');
+    Keystone\View::addLayoutDirectory(Bundle::path('keystone').'tests/page.layouts');
   }
 
   // START TESTS!
