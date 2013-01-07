@@ -10,7 +10,7 @@
   <div class="fields">
     <?php if ($fields): ?>
       <?php foreach ($fields as $index => $field): ?>
-        <?= $field->form() ?>
+        <?= $field->renderForm() ?>
       <?php endforeach; ?>
     <?php elseif ($min > 0): ?>
       <div class="field-placeholder" data-type="<?= current($allow) ?:'plain' ?>"></div>

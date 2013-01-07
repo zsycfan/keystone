@@ -1,5 +1,5 @@
 <p>Title</p>
-{{ layout.region('title').with({'max':1, 'min':1}).form|raw }}
+{{ layout.getRegion('title').with({'max':1, 'min':1}).renderForm|raw }}
 
 <p>Body</p>
-{{ layout.region('body').form|raw }}
+{{ layout.getRegion('body').renderForm|raw }}

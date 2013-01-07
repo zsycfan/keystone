@@ -21,6 +21,11 @@ class Page extends Object
   {
     $this->id = $id;
   }
+  
+  public function getLanguage()
+  {
+    return $this->language;
+  }
 
   public function setLanguage(Language $language)
   {
@@ -35,6 +40,11 @@ class Page extends Object
   public function setLayout(Layout $layout)
   {
     $this->layout = $layout;
+  }
+  
+  public function getUri()
+  {
+    return $this->uri;
   }
 
   public function setUri(Uri $uri)
@@ -75,5 +85,10 @@ class Page extends Object
   public function getTitle()
   {
     return $this->layout->region('title')->summary;
+  }
+
+  public function getExcerpt()
+  {
+    return $this->layout->region('body')->summary;
   }
 }

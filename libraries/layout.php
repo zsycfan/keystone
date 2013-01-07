@@ -27,7 +27,7 @@ class Layout extends Object {
     return $this;
   }
 
-  public function region($name)
+  public function getRegion($name)
   {
     foreach ($this->regions as $region) {
       if ($region->name == $name) {
@@ -43,7 +43,7 @@ class Layout extends Object {
     return $this->name;
   }
 
-  public function form($name=null)
+  public function renderForm($name=null)
   {
     return View::makeLayout("{$this->name}/{$name}")
       ->with('layout', $this)

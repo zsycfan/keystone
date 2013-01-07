@@ -62,7 +62,7 @@ class Region extends Object
     return 'testing';
   }
 
-  public function form()
+  public function renderForm()
   {
     return View::makeView('region/form')
       ->with('fields', $this->fields)

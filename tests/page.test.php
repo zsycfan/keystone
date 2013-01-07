@@ -92,7 +92,7 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
     $this->assertEquals(
       $this->expects('test-field-form'), 
-      $field->form()
+      $field->renderForm()
     );
   }
 
@@ -104,7 +104,7 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
     $this->assertEquals(
       $this->expects('test-field-form-setting-data'), 
-      $field->form()
+      $field->renderForm()
     );
   }
 
@@ -114,7 +114,7 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
     $this->assertEquals(
       $this->expects('test-render-empty-region'),
-      $region->form()
+      $region->renderForm()
     );
   }
 
@@ -134,7 +134,7 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
     $this->assertEquals(
       $this->expects('test-render-region-with-one-field'),
-      $region->form()
+      $region->renderForm()
     );
   }
 
@@ -150,7 +150,7 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
     $this->assertEquals(
       $this->expects('test-render-region-with-one-field-and-data'), 
-      $region->form()
+      $region->renderForm()
     );
   }
 
@@ -182,7 +182,7 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
     $this->assertEquals(
       $this->expects('test-render-layout'),
-      $layout->form('content')
+      $layout->renderForm('content')
     );
   }
 
@@ -214,7 +214,7 @@ class TestPage extends PHPUnit_Framework_TestCase {
 
     $this->assertEquals(
       $this->expects('test-render-twig-layout'),
-      $layout->form('content')
+      $layout->renderForm('content')
     );
   }
 

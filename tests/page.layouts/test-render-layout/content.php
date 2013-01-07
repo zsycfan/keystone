@@ -1,5 +1,5 @@
 <p>Title</p>
-<?= $layout->region('title')->with(array('max' => 1, 'min' => 1))->form() ?>
+<?= $layout->getRegion('title')->with(array('max' => 1, 'min' => 1))->renderForm() ?>
 
 <p>Body</p>
-<?= $layout->region('body')->form() ?>
+<?= $layout->getRegion('body')->renderForm() ?>
