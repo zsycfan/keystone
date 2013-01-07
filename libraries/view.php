@@ -14,14 +14,17 @@ class View extends Object
     static::$directories = array();
   }
 
-  public static function addHandler($extension, $class)
+  public static function addHandler($extension, $className)
   {
-    static::$handlers[$extension] = $class;
+    static::$handlers[$extension] = $className;
   }
   
   public static function addDirectory($group, $directory)
   {
-    static::$directories[$group][] = str_finish($directory, '/');
+    static::$directories[$group] = array_unique(array_merge(
+      @static::$directories[$group] ?: array(),
+      array(str_finish($directory, '/'))
+    ));
   }
 
   public static function __callStatic($method, $args)
