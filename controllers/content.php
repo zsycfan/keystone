@@ -45,6 +45,9 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_content($id)
   {
+    //header('content-type:text/plain');
+    //die(print_r(Keystone\Page\Repository::find($id, array('revision' => Input::get('revision')))));
+  
     return Keystone\View::makeView('content/edit')
       ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
       // ->with('fields', Keystone\Field::all())

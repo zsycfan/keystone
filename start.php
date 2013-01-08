@@ -48,6 +48,15 @@ require Bundle::path('keystone').'vendor'.DS.'autoload'.EXT;
 
 /*
 |--------------------------------------------------------------------------
+| Add Field Dirs
+|--------------------------------------------------------------------------
+|
+*/
+
+Keystone\Field::addDirectory(Bundle::path('keystone').'fields');
+
+/*
+|--------------------------------------------------------------------------
 | Add Default View Handlers & Paths
 |--------------------------------------------------------------------------
 |
@@ -77,6 +86,7 @@ Keystone\View\Renderer\Twig::addFunction('route', 'twig_fn_route');
 Keystone\View\Renderer\Twig::addFunction('url_to_route', 'URL::to_route');
 Keystone\View\Renderer\Twig::addFunction('session_get', 'Session::get');
 Keystone\View\Renderer\Twig::addFunction('val', 'Input::get');
+Keystone\View\Renderer\Twig::addFunction('each_field_type', 'Keystone\Field::getAll');
 
 if (!function_exists('twig_fltr_with_query_string')) {
   function twig_fltr_with_query_string($url) {
@@ -86,3 +96,4 @@ if (!function_exists('twig_fltr_with_query_string')) {
 }
 
 Keystone\View\Renderer\Twig::addFilter('with_query_string', 'twig_fltr_with_query_string');
+
