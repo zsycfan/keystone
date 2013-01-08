@@ -116,15 +116,22 @@ EOT;
     $obj->type = $type;
     return $obj;
   }
+  
+  public function getType()
+  {
+    return $this->type;
+  }
 
   public function setData($data)
   {
     $this->data = $data;
+    return $this;
   }
   
   public function addData($key, $value=null)
   {
     $this->data[$key] = $value;
+    return $this;
   }
 
   public function getSummary()

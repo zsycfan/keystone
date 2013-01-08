@@ -17,7 +17,8 @@ class TestPage extends PHPUnit_Framework_TestCase {
   protected function setUp()
   {
     Bundle::start('keystone');
-	Keystone\View::addHandler('.txt', 'Keystone\View\Renderer\Text');
+    Session::load('file');
+	  Keystone\View::addHandler('.txt', 'Keystone\View\Renderer\Text');
     Keystone\View::addHandler('.twig', 'Keystone\View\Renderer\Twig');
     Keystone\View::addHandler('.php', 'Keystone\View\Renderer\Php');
     Keystone\View::addLayoutDirectory(Bundle::path('keystone').'tests/page.layouts');
@@ -85,6 +86,25 @@ class TestPage extends PHPUnit_Framework_TestCase {
     $this->assertEquals(
       'Test',
       $region->summary
+    );
+  }
+  
+  public function testMapping()
+  {
+    $row = (object)array(
+      'id' => 1,
+      'language' => 'en-us',
+      'uri' => 'test',
+      'layout' => 'content',
+      'created_at' => date('r'),
+      'updated_at' => date('r'),
+      'regions' => '{"body":[{"type":"plain","content":"Test"}]}',
+    );
+    $entity = Keystone\Page\Mapper::mapFromDatabase($row);
+    
+    $this->assertEquals(
+      'plain',
+      $entity->layout->getRegion('body')->getFieldAtIndex(0)->type
     );
   }
 

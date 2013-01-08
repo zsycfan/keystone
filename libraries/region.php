@@ -46,15 +46,20 @@ class Region extends Object
 
   public function addField(Field $field)
   {
-    $this->addFieldAt(count($this->fields), $field);
+    $this->addFieldAtIndex(count($this->fields), $field);
     return $this;
   }
 
-  public function addFieldAt($index, Field $field)
+  public function addFieldAtIndex($index, Field $field)
   {
     $this->fields[$index] = $field;
     $this->count = count($this->fields);
     return $this;
+  }
+  
+  public function getFieldAtIndex($index)
+  {
+    return @$this->fields[$index];
   }
 
   public function getSummary($glue=' ')

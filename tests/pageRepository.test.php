@@ -13,7 +13,7 @@ class TestPageRepository extends PHPUnit_Framework_TestCase {
 
   // START TESTS!
 
-  public function testGetAllPages()
+  /*public function testGetAllPages()
   {
     $this->assertEquals(
       'Keystone\Page\Collection',
@@ -27,7 +27,7 @@ class TestPageRepository extends PHPUnit_Framework_TestCase {
       'Keystone\Page',
       get_class(\Keystone\Page\Repository::find(1))
     );
-  }
+  }*/
 
   public function testCreatedDateTimezone()
   {

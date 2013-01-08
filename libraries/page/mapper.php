@@ -3,10 +3,12 @@
 namespace Keystone\Page;
 use DateTime;
 use DateTimeZone;
+use Keystone\Field;
 use Keystone\Language;
 use Keystone\Layout;
 use Keystone\Object;
 use Keystone\Page;
+use Keystone\Region;
 use Keystone\Uri;
 use Laravel\Config;
 use Laravel\Session;
@@ -22,6 +24,17 @@ class Mapper extends Object {
     $page->uri = Uri::makeFromString($row->uri);
     $page->createdAt = new DateTime($row->created_at, new DateTimeZone(Session::get('timezone', Config::get('application.timezone'))));
     $page->updatedAt = new DateTime($row->updated_at, new DateTimeZone(Session::get('timezone', Config::get('application.timezone'))));
+
+    if ($regions = json_decode($row->regions, true)) {
+      foreach ($regions as $region_name => $fields) {
+        $region = Region::makeWithName($region_name);
+        foreach ($fields as $field) {
+          $region->addField(Field::makeWithType($field['type'])->setData($field));
+        }
+        $page->layout->addRegion($region);
+      }
+    }
+    
     return $page;
   }
 
@@ -30,6 +43,8 @@ class Mapper extends Object {
    *
    * Takes any static calls to `mapAllFromX` and calls `mapFromX` on each item
    * in the array.
+   * 
+   * Returns a Collection of entities.
    * 
    * @param  string $method
    * @param  array  $args
