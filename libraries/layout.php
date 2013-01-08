@@ -5,7 +5,6 @@ namespace Keystone;
 class Layout extends Object {
 
   private $name;
-  private $path;
   private $regions = array();
 
   public static function make()
@@ -17,7 +16,6 @@ class Layout extends Object {
   {
     $obj = new static();
     $obj->name = $name;
-    $obj->path = \Bundle::path('keystone').'tests/page.layouts/'.$name;
     return $obj;
   }
 

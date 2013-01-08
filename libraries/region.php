@@ -65,8 +65,8 @@ class Region extends Object
   public function renderForm()
   {
     return View::makeView('region/form')
-      ->with('fields', $this->fields)
       ->with('name', $this->name)
+      ->with('fields', $this->fields)
       ->with('allow', $this->allow)
       ->with('max', $this->max)
       ->with('min', $this->min)
