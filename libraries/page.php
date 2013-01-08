@@ -84,11 +84,11 @@ class Page extends Object
 
   public function getTitle()
   {
-    return $this->layout->region('title')->summary;
+    return $this->layout->getRegion('title')->summary;
   }
 
   public function getExcerpt()
   {
-    return $this->layout->region('body')->summary;
+    return $this->layout->getRegion('body')->summary;
   }
 }

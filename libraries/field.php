@@ -23,6 +23,16 @@ class Field extends Object {
   {
     $this->data = $data;
   }
+  
+  public function addData($key, $value=null)
+  {
+    $this->data[$key] = $value;
+  }
+
+  public function getSummary()
+  {
+    return @$this->data['content'];
+  }
 
   public function renderForm()
   {

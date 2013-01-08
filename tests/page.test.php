@@ -73,6 +73,20 @@ class TestPage extends PHPUnit_Framework_TestCase {
       $this->fail('Invalid Argument denied.');
     }
   }
+  
+  public function testRegionSummary()
+  {
+    $field = \Keystone\Field::makeWithType('plain');
+    $field->addData('content', 'Test');
+  
+    $region = \Keystone\Region::makeWithName('title');
+    $region->addField($field);
+    
+    $this->assertEquals(
+      'Test',
+      $region->summary
+    );
+  }
 
   public function testFieldType()
   {

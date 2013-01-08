@@ -57,9 +57,13 @@ class Region extends Object
     return $this;
   }
 
-  public function getSummary()
+  public function getSummary($glue=' ')
   {
-    return 'testing';
+    $summary = array();
+    foreach ($this->fields as $field) {
+      $summary[] = $field->summary;
+    }
+    return trim(implode($glue, $summary));
   }
 
   public function renderForm()
