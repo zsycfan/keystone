@@ -40,12 +40,19 @@ $layout->addRegion($region);
 :getRegion(string $name)
 ----
 
-Get a region, by name, from this layout. The way Keystone works, Regions are cheap objects. They can be created and destroyed rather effortlessly. A developer could add a new region into their layout by simply adding `<? region('body') ?>`. Likewise, they could destroy a region by removing that line. Because of this `:region` will always return a Region object even if a matching name has not been added with `:addRegion`.
+Get a region, by name, from this layout.
+
+The way Keystone works, Regions are cheap objects. They can be created and destroyed rather effortlessly. A developer could add a new region into their layout by simply adding `<? region('body') ?>`. Likewise, they could destroy a region by removing that line. Because of this `:region` will always return a Region object even if a matching name has not been added with `:addRegion`.
+
+To determine if a region exists on the layout or was newly created you can check the `mock` property on the `Region` object.
 
 ```php
-$layout = \Keystone\Layout::makeNamed('landing')->addRegion(\Keystone\Region::makeNamed('body'));
-$layout->region('body');    // returns the previously added region
-$layout->region('sidebar'); // returns a new region, named 'sidebar'
+$region = \Keystone\Region::makeNamed('body');
+$layout = \Keystone\Layout::makeNamed('landing')->addRegion($region);
+$layout->getRegion('body');         // returns the previously added region
+$layout->getRegion('body')->mock    // returns false
+$layout->getRegion('sidebar');      // returns a new region, named 'sidebar'
+$layout->getRegion('sidebar')->mock // returns true
 ```
 
 :getName()

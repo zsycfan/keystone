@@ -56,7 +56,7 @@ class Layout extends Object {
       }
     }
 
-    return Region::makeWithName($name);
+    return Region::makeWithName($name)->with('mock', true);
   }
 
   public function getName()

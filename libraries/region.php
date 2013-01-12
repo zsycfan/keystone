@@ -36,6 +36,7 @@ class Region extends Object
   private $min = 0;
   private $count = 0;
   private $config = array();
+  private $mock = false;
 
   /**
    * makeWithName($name)
@@ -104,6 +105,16 @@ class Region extends Object
   public function setAllow(array $allow)
   {
     $this->allow = $allow;
+  }
+
+  public function getMock()
+  {
+    return $this->mock;
+  }
+
+  public function setMock($mock)
+  {
+    $this->mock = $mock;
   }
 
   public function addField(Field $field)
