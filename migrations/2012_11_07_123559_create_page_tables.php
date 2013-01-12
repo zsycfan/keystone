@@ -21,7 +21,7 @@ class Keystone_Create_Page_Tables {
       $table->string('title', 255)->nullable();
       $table->text('excerpt')->nullable();
       $table->text('regions')->nullable();
-      $table->integer('order')->nullable();
+      $table->integer('index')->nullable();
       $table->timestamps();
       $table->index('page_id');
     });

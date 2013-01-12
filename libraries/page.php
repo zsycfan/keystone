@@ -6,9 +6,11 @@ use DateTime;
 class Page extends Object
 {
   private $id;
+  private $index;
   private $language;
   private $layout;
   private $uri;
+  private $published;
   private $createdAt;
   private $updatedAt;
 
@@ -20,6 +22,16 @@ class Page extends Object
   public function setId($id)
   {
     $this->id = $id;
+  }
+
+  public function getIndex()
+  {
+    return $this->index;
+  }
+
+  public function setIndex($index)
+  {
+    $this->index = $index;
   }
   
   public function getLanguage()
@@ -50,6 +62,19 @@ class Page extends Object
   public function setUri(Uri $uri)
   {
     $this->uri = $uri;
+  }
+
+  public function getPublished()
+  {
+    return $this->published;
+  }
+
+  /**
+   * @todo check for bool
+   */
+  public function setPublished($published)
+  {
+    $this->published = $published;
   }
 
   public function getCreatedAt()

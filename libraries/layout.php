@@ -6,6 +6,29 @@ class Layout extends Object {
 
   private $name;
   private $regions = array();
+  private static $directories = array();
+
+  public static function addDirectory($dir)
+  {
+    static::$directories[] = str_finish($dir, '/');
+  }
+
+  public static function getAll()
+  {
+    $return = array();
+    $dirs = static::$directories;
+    foreach ($dirs as $dir) {
+      if (is_dir($dir)) {
+        $layouts = scandir($dir);
+        foreach ($layouts as $layout) {
+          if (substr($layout, 0, 1) == '.') continue;
+          $return[] = $layout;
+        }
+      }
+    }
+
+    return $return;
+  }
 
   public static function make()
   {

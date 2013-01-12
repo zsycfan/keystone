@@ -14,4 +14,9 @@ class Language extends Object
     return $obj;
   }
 
+  public function getCountryCode()
+  {
+    return $this->countryCode;
+  }
+
 }

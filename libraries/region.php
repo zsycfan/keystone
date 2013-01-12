@@ -1,5 +1,30 @@
 <?php
 
+/**
+ * Region
+ * ====
+ * 
+ * Regions are the editable areas within a layout. They can be
+ * configured to have one or more fields representing the data
+ * of the region.
+ *
+ * Initialization & Identificafion
+ * 
+ * * [makeWithName]()
+ * * [name]()
+ *
+ * Managing Settings
+ *
+ * * [max]()
+ * * [min]()
+ *
+ * Adding and removing Fields
+ *
+ * * [addField]()
+ *
+ * ----
+ */
+
 namespace Keystone;
 
 class Region extends Object
@@ -12,6 +37,18 @@ class Region extends Object
   private $count = 0;
   private $config = array();
 
+  /**
+   * makeWithName($name)
+   * ----
+   *
+   * Creates a new region specified by the passed name
+   * parameter. Regions are always referred to by name and never
+   * by an index or other identifier.
+   *
+   * ```php
+   * $region = \Keystone\Region::makeWithName('body');
+   * ```
+   */
   public static function make()
   {
     throw new \Exception('Regions must be created with an explicit name. Try `Region::makeWithName(\'body\')` instead.');
@@ -24,11 +61,36 @@ class Region extends Object
     return $obj;
   }
 
+  /**
+   * name
+   * ----
+   *
+   * Returns the string name of the region.
+   *
+   * ```php
+   * $region = \Keystone\Region::makeWithName('body');
+   * $region->name // returns "body"
+   * ```
+   */
   public function getName()
   {
     return $this->name;
   }
 
+  /**
+   * max
+   * ----
+   *
+   * Configures the maximum number of fields this region 
+   * may contain. This setting only affects new fields, if it
+   * is updated and existing regions exceed the max their content
+   * will remain as is, yet uneditable, until the number of
+   * fields is reduced.
+   *
+   * ```php
+   * \Keystone\Region::makeWithName('body')->max = 3;
+   * ```
+   */
   public function setMax($max)
   {
     $this->max = $max;

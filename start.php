@@ -54,6 +54,7 @@ require Bundle::path('keystone').'vendor'.DS.'autoload'.EXT;
 */
 
 Keystone\Field::addDirectory(Bundle::path('keystone').'fields');
+Keystone\Layout::addDirectory(Bundle::path('keystone').'layouts');
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +76,8 @@ Keystone\View::addDirectory('layout', path('app').'layouts');
 |--------------------------------------------------------------------------
 |
 */
+
+Keystone\View\Renderer\Twig::addFunction('ucfirst', 'ucfirst');
 
 if (!function_exists('twig_fn_route')) {
   function twig_fn_route() {

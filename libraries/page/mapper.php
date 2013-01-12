@@ -17,6 +17,8 @@ class Mapper extends Object {
 
   public static function mapFromDatabase($row)
   {
+    if (!$row) return false;
+
     $page = new Page;
     $page->id = $row->id;
     $page->language = Language::makeWithCountryCode($row->language);
@@ -54,8 +56,8 @@ class Mapper extends Object {
   {
     if (preg_match('/^mapAll(.*)$/', $method, $source)) {
       return Collection::makeWithResult(array_map(function($row) use ($source) {
-        return call_user_func_array('\Keystone\Page\Mapper::map'.$source[1], $row);
-      }, $args));
+        return call_user_func_array('\Keystone\Page\Mapper::map'.$source[1], array($row));
+      }, $args[0]));
     }
   }
 

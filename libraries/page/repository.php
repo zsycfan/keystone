@@ -39,4 +39,74 @@ class Repository extends Object {
     return Mapper::mapFromDatabase(static::query()->where('p.id', '=', $id)->first());
   }
 
+  public static function findOrCreate($id)
+  {
+    return static::find($id) ?: Page::make();
+  }
+
+  public static function save(Page $page)
+  {
+        // If the page exists in the database we'll just touch it's updated
+    // timestamp to track the change
+    if ($page->id) {
+      DB::table('pages')
+        ->where('id', '=', $page->id)
+        ->update(array('updated_at' => date('Y-m-d G:i:s')))
+      ;
+    }
+
+    // If the page doesn't exist in the database we'll create it
+    else {
+      $page->id = DB::table('pages')->insert_get_id(array(
+        'created_at' => date('Y-m-d G:i:s'),
+        'updated_at' => date('Y-m-d G:i:s'),
+      ));
+    }
+
+    // Now add a revision containing all the data about the page
+    $revision_id = DB::table('page_revisions')->insert_get_id(array(
+      'page_id' => $page->id,
+      'language' => $page->language->countryCode,
+      'layout' => $page->layout->name,
+      //'regions' => $page->layout->regions,
+      'title' => $page->title,
+      'excerpt' => $page->excerpt,
+      //'index' => $page->index,
+      'created_at' => date('Y-m-d G:i:s'),
+      'updated_at' => date('Y-m-d G:i:s'),
+    ));
+
+    // Add a row to the path table to track the URI of this revision
+    $path = array(
+      'revision_id' => $revision_id,
+      'uri' => $page->uri
+    );
+    $segments = array_filter(preg_split('#/#', $page->uri));
+    foreach ($segments as $index => $seg) {
+      $index++;
+      $path["segment{$index}"] = $seg;
+    }
+    DB::table('page_paths')->insert($path);
+
+    // If we're publishing the page then update the table of published revisions
+    if ($page->published) {
+      $row = DB::table('page_publishes')->where('page_id', '=', $page->id)->first();
+      if ($row) {
+        DB::table('page_publishes')
+          ->where('page_id', '=', $page->id)
+          ->update(array(
+            'revision_id' => $revision_id,
+            'published_at' => date('Y-m-d G:i:s'),
+        ));
+      }
+      else {
+        DB::table('page_publishes')->insert_get_id(array(
+          'page_id' => $page->id,
+          'revision_id' => $revision_id,
+          'published_at' => date('Y-m-d G:i:s'),
+        ));
+      }
+    }
+  }
+
 }
