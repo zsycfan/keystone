@@ -22,8 +22,8 @@ class Mapper extends Object {
     $page = new Page;
     $page->id = $row->id;
     $page->language = Language::makeWithCountryCode($row->language);
-    $page->layout = Layout::makeWithName($row->layout);
-    $page->uri = Uri::makeFromString($row->uri);
+    if($row->layout) $page->layout = Layout::makeWithName($row->layout);
+    if($row->uri) $page->uri = Uri::makeFromString($row->uri);
     $page->createdAt = new DateTime($row->created_at, new DateTimeZone(Session::get('timezone', Config::get('application.timezone'))));
     $page->updatedAt = new DateTime($row->updated_at, new DateTimeZone(Session::get('timezone', Config::get('application.timezone'))));
 

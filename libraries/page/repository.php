@@ -12,7 +12,7 @@ class Repository extends Object {
     $query = DB::table('pages AS p')
       ->select(array('p.*', 'pp.*', 'pu.*', 'pr.*', 'pr.id AS active_revision', 'pu.revision_id AS published_revision', 'pr.id AS revision_id', 'p.id'))
       ->join('page_revisions AS pr', 'pr.page_id', '=', 'p.id')
-      ->join('page_paths AS pp', 'pp.revision_id', '=', 'pr.id')
+      ->left_join('page_paths AS pp', 'pp.revision_id', '=', 'pr.id')
       ->left_join('page_publishes AS pu', 'pu.page_id', '=', 'p.id')
     ;
 
@@ -46,7 +46,7 @@ class Repository extends Object {
 
   public static function save(Page $page)
   {
-        // If the page exists in the database we'll just touch it's updated
+    // If the page exists in the database we'll just touch it's updated
     // timestamp to track the change
     if ($page->id) {
       DB::table('pages')
@@ -77,16 +77,17 @@ class Repository extends Object {
     ));
 
     // Add a row to the path table to track the URI of this revision
-    $path = array(
-      'revision_id' => $revision_id,
-      'uri' => $page->uri
-    );
-    $segments = array_filter(preg_split('#/#', $page->uri));
-    foreach ($segments as $index => $seg) {
-      $index++;
-      $path["segment{$index}"] = $seg;
+    if ($page->uri) {
+      $path = array(
+        'revision_id' => $revision_id,
+        'uri' => $page->uri
+      );
+      foreach ($page->uri->segments as $index => $seg) {
+        $index++;
+        $path["segment{$index}"] = $seg;
+      }
+      DB::table('page_paths')->insert($path);
     }
-    DB::table('page_paths')->insert($path);
 
     // If we're publishing the page then update the table of published revisions
     if ($page->published) {

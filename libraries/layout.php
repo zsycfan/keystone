@@ -37,6 +37,8 @@ class Layout extends Object {
 
   public static function makeWithName($name)
   {
+    if (!$name) throw new \Exception('Layouts must have a name');
+
     $obj = new static();
     $obj->name = $name;
     return $obj;
@@ -62,6 +64,11 @@ class Layout extends Object {
   public function getName()
   {
     return $this->name;
+  }
+
+  public function setName($name)
+  {
+    $this->name = $name;
   }
 
   public function renderForm($name=null)

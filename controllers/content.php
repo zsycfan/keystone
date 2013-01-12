@@ -39,7 +39,7 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   {
     return Keystone\View::makeView('content/layout')
       ->with('layouts', Keystone\Layout::getAll())
-      ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
+      ->with('page', Keystone\Page\Repository::find($id))
     ;
   }
 
@@ -86,14 +86,21 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   {
     $page = Keystone\Page\Repository::findOrCreate($id);
     $page->published = Input::get('page.publish') === '1';
-
     $page->language = Keystone\Language::makeWithCountryCode('en-us');
-    if (Input::get('page.layout')) $page->layout = Keystone\Layout::makeWithName(Input::get('page.layout'));
+
+    if (Input::get('page.layout') and !$page->layout) {
+      $page->layout = Keystone\Layout::makeWithName(Input::get('page.layout'));
+    }
+    if (Input::get('page.layout') and $page->layout) {
+      $page->layout->name = Input::get('page.layout');
+    }
+
+
     //if (Input::get('page.regions')) $page->regions = Input::get('page.regions');
     if (Input::get('page.published_at')) $page->published_at = Input::get('page.published_at');
     if (Input::get('page.parent')) $page->set_uri_by_parent(Input::get('page.parent'));
     if (Input::get('page.uri')) $page->uri = Input::get('page.uri');
-    
+
     Keystone\Page\Repository::save($page);
 
     return Redirect::to_route(Input::get('redirect'), $page->id)

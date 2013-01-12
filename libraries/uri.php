@@ -14,9 +14,14 @@ class Uri extends Object
     return $obj;
   }
 
+  public function getSegments()
+  {
+    return array();
+  }
+
   public function __toString()
   {
-    return implode('/', $segments);
+    return implode('/', $this->segments);
   }
 
 }
