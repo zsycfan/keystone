@@ -7,12 +7,12 @@ Initialization
 
 Properties
 
-* [:name](#name)
+* [:name](#getName)
 
 Managing Regions
 
 * [:addRegion](#addRegionRegion-region)
-* [:region](#regionstring-name)
+* [:getRegion](#getRegionstring-name)
 
 ---
 
@@ -37,7 +37,7 @@ $layout = \Keystone\Layout::makeNamed('landing');
 $layout->addRegion($region);
 ```
 
-:region(string $name)
+:getRegion(string $name)
 ----
 
 Get a region, by name, from this layout. The way Keystone works, Regions are cheap objects. They can be created and destroyed rather effortlessly. A developer could add a new region into their layout by simply adding `<? region('body') ?>`. Likewise, they could destroy a region by removing that line. Because of this `:region` will always return a Region object even if a matching name has not been added with `:addRegion`.
@@ -48,10 +48,15 @@ $layout->region('body');    // returns the previously added region
 $layout->region('sidebar'); // returns a new region, named 'sidebar'
 ```
 
-:name()
+:getName()
 ----
 
 Returns the name of this layout.
+
+```php
+$layout = \Keystone\Layout::makeNamed('landing');
+$layout->name; // returns 'lamding'
+```
 
 :form()
 ----
