@@ -102,6 +102,11 @@ class Region extends Object
     $this->min = $min;
   }
 
+  public function getAllow()
+  {
+    return $this->allow;
+  }
+
   public function setAllow(array $allow)
   {
     $this->allow = $allow;

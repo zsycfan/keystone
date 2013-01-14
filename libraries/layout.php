@@ -41,6 +41,10 @@ class Layout extends Object {
 
     $obj = new static();
     $obj->name = $name;
+    View::makeLayout("{$obj->name}/content")
+      ->with('layout', $obj)
+      ->render()
+    ;
     return $obj;
   }
 
@@ -58,7 +62,9 @@ class Layout extends Object {
       }
     }
 
-    return Region::makeWithName($name)->with('mock', true);
+    return $this->regions[] = Region::makeWithName($name)
+      ->with('mock', true)
+    ;
   }
 
   public function getName()

@@ -45,12 +45,9 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_content($id)
   {
-    //header('content-type:text/plain');
-    //die(print_r(Keystone\Page\Repository::find($id, array('revision' => Input::get('revision')))));
- 
     return Keystone\View::makeView('content/edit')
       ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
-      // ->with('fields', Keystone\Field::all())
+      // ->with('fields', Keystone\Field::getAll())
       // ->with('field_css', Keystone\Field::css())
       // ->with('field_javascript', Keystone\Field::javascript())
       // ->with('field_templates', Keystone\Field::templates())
@@ -66,6 +63,23 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
       ->with('field_javascript', Keystone\Field::javascript())
       ->with('field_templates', Keystone\Field::templates())
     ;
+  }
+
+  public function get_add_field($id, $screen, $region_name)
+  {
+    $page = Keystone\Page\Repository::find($id, array('revision' => Input::get('revision')));
+    $region = $page->layout->getRegion($region_name);
+    return Keystone\View::makeView('content/add_field')
+      ->with('page', $page)
+      ->with('screen', $screen)
+      ->with('region', $region)
+      ->with('allowedFields', $region->allow ?: Keystone\Field::getAll())
+    ;
+  }
+
+  public function post_add_field($id, $screen, $region_name)
+  {
+    print_r(Input::get('type'));
   }
 
   public function get_revisions($id)

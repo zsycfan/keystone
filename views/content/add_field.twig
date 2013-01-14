@@ -1,0 +1,24 @@
+add field: {{ regionName }}<br />
+acreen: {{ screen }}<br />
+mock: {{ page.layout.getRegion(regionName).mock }}<br />
+allow:
+
+{% for field in page.layout.getRegion(regionName).allow %}
+<li>{{ field }}</li>
+{% endfor %}
+
+<div class="modal hide fade field-chooser" data-name="field_chooser">
+	    <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	      <h3>Choose a Field</h3>
+	      <p>Fields describe the type of data you can store in a region.</p>
+	    </div>
+	    <div class="modal-body">
+	      <form action="{{ url_to_route('content_add_field', [page.id, screen, region.name]) }}" method="post">
+	      <ul class="cards">
+	      	{% for field in allowedFields %}
+	      		<li><button class="card" data-add-field data-type="{{ field }}" name="type" value="{{ field }}">{{ field }}.icon {{ field }}</button></li>
+	      	{% endfor %}
+	      </ul>
+	    </div>
+	  </div>
