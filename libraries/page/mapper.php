@@ -31,7 +31,7 @@ class Mapper extends Object {
       foreach ($regions as $region_name => $fields) {
         $region = Region::makeWithName($region_name);
         foreach ($fields as $field) {
-          $region->addField(Field::makeWithType($field['type'])->setData($field));
+          $region->addField(Field::makeWithType($field['type'])->setData($field['data']));
         }
         $page->layout->addRegion($region);
       }

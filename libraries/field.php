@@ -59,6 +59,11 @@ class Field extends Object {
     return $this;
   }
 
+  public function getData()
+  {
+    return $this->data;
+  }
+
   public function getSummary()
   {
     return @$this->data['content'];

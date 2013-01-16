@@ -15,6 +15,7 @@ allow:
 	    </div>
 	    <div class="modal-body">
 	      <form action="{{ url_to_route('content_add_field', [page.id, screen, region.name]) }}" method="post">
+	      <input type="hidden" name="redirect" value="content_edit_{{ screen }}" />
 	      <ul class="cards">
 	      	{% for field in allowedFields %}
 	      		<li><button class="card" data-add-field data-type="{{ field }}" name="type" value="{{ field }}">{{ field }}.icon {{ field }}</button></li>

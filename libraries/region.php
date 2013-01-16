@@ -140,6 +140,11 @@ class Region extends Object
     return @$this->fields[$index];
   }
 
+  public function getFields()
+  {
+    return $this->fields;
+  }
+
   public function getSummary($glue=' ')
   {
     $summary = array();

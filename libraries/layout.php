@@ -67,6 +67,11 @@ class Layout extends Object {
     ;
   }
 
+  public function getRegions()
+  {
+    return $this->regions;
+  }
+
   public function getName()
   {
     return $this->name;

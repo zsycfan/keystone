@@ -63,12 +63,23 @@ class Repository extends Object {
       ));
     }
 
+    // Organize the regions
+    $regions = array();
+    foreach ($page->layout->regions as $region) {
+      foreach ($region->fields as $field) {
+        $regions[$region->name][] = array(
+          'type' => $field->type,
+          'data' => $field->data,
+        );
+      }
+    }
+
     // Now add a revision containing all the data about the page
     $revision_id = DB::table('page_revisions')->insert_get_id(array(
       'page_id' => $page->id,
       'language' => $page->language->countryCode,
       'layout' => $page->layout->name,
-      //'regions' => $page->layout->regions,
+      'regions' => json_encode($regions),
       'title' => $page->title,
       'excerpt' => $page->excerpt,
       //'index' => $page->index,

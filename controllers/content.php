@@ -79,7 +79,14 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function post_add_field($id, $screen, $region_name)
   {
-    print_r(Input::get('type'));
+	$page = Keystone\Page\Repository::find($id, array('revision' => Input::get('revision')));
+	$page->layout->getRegion($region_name)->addField(Keystone\Field::makeWithType(Input::get('type')));
+    Keystone\Page\Repository::save($page);
+
+    return Redirect::to_route(Input::get('redirect'), $page->id)
+      ->with('message', 'Field Added!')
+      ->with('message_type', 'success')
+    ;
   }
 
   public function get_revisions($id)
