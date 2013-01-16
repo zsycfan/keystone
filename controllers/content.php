@@ -56,12 +56,12 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_settings($id)
   {
-    return Keystone\View::make('keystone::content.settings')
-      ->with('page', Keystone\Repository\Page::find($id, array('revision' => Input::get('revision'))))
-      ->with('fields', Keystone\Field::all())
-      ->with('field_css', Keystone\Field::css())
-      ->with('field_javascript', Keystone\Field::javascript())
-      ->with('field_templates', Keystone\Field::templates())
+    return Keystone\View::makeView('content/settings')
+      ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
+      // ->with('fields', Keystone\Field::all())
+      // ->with('field_css', Keystone\Field::css())
+      // ->with('field_javascript', Keystone\Field::javascript())
+      // ->with('field_templates', Keystone\Field::templates())
     ;
   }
 

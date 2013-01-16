@@ -66,6 +66,7 @@ Keystone\Layout::addDirectory(Bundle::path('keystone').'layouts');
 Keystone\View::addHandler('.txt', 'Keystone\View\Renderer\Text');
 Keystone\View::addHandler('.twig', 'Keystone\View\Renderer\Twig');
 Keystone\View::addHandler('.php', 'Keystone\View\Renderer\Php');
+Keystone\View::addDirectory('field', Bundle::path('keystone').'fields');
 Keystone\View::addDirectory('view', Bundle::path('keystone').'views');
 Keystone\View::addDirectory('layout', Bundle::path('keystone').'layouts');
 Keystone\View::addDirectory('layout', path('app').'layouts');

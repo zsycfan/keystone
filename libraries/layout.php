@@ -50,6 +50,13 @@ class Layout extends Object {
 
   public function addRegion(Region $region)
   {
+    foreach ($this->regions as &$existingRegion) {
+      if ($region->name == $existingRegion->name) {
+        $existingRegion = $region;
+        return $this;
+      }
+    }
+
     $this->regions[] = $region;
     return $this;
   }

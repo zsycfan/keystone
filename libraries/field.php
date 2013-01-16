@@ -74,6 +74,7 @@ class Field extends Object {
     return View::makeView('field/form')
       ->with('type', $this->type)
       ->with('data', $this->data)
+      ->with('form', View::makeField('plain/form')->render())
       ->render()
     ;
   }

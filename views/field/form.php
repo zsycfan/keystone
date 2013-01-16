@@ -1,3 +1,4 @@
+[<?= $form ?>]
 <div
   class="field-placeholder"
   data-type="<?= $type ?>"
