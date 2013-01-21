@@ -15,6 +15,8 @@ Route::get('(:bundle)/content/(:num)/settings', array('as' => 'content_edit_sett
 Route::get('(:bundle)/content/(:num)/revisions', array('as' => 'content_edit_revisions', 'uses' => 'keystone::content@revisions'));
 Route::any('(:bundle)/content/(:num)/(:any)/add_field/(:any)', array('as' => 'content_add_field', 'uses' => 'keystone::content@add_field'));
 
+Route::get('(:bundle)/field/css', array('as' => 'field_css', 'uses' => 'keystone::field@css'));
+
 Route::post('(:bundle)/assets', array('as' => 'asset_upload', 'uses' => 'keystone::assets@upload'));
 Route::get('(:bundle)/assets/(:num)', array('as' => 'asset_show', 'uses' => 'keystone::assets@show'));
 

@@ -6,29 +6,7 @@ class Field extends Object {
 
   private $type;
   private $data = array();
-  private static $directories = array();
-
-  public static function addDirectory($dir)
-  {
-    static::$directories[] = str_finish($dir, '/');
-  }
-
-  public static function getAll()
-  {
-    $return = array();
-    $dirs = static::$directories;
-    foreach ($dirs as $dir) {
-      if (is_dir($dir)) {
-        $fields = scandir($dir);
-        foreach ($fields as $field) {
-          if (substr($field, 0, 1) == '.') continue;
-          $return[] = $field;
-        }
-      }
-    }
-
-    return $return;
-  }
+  private $actionable = true;
 
   public static function make()
   {
@@ -45,6 +23,16 @@ class Field extends Object {
   public function getType()
   {
     return $this->type;
+  }
+
+  public function setActionable($actionable)
+  {
+    $this->actionable = $actionable;
+  }
+
+  public function getActionable()
+  {
+    return $this->actionable;
   }
 
   public function setData($data)
@@ -69,11 +57,17 @@ class Field extends Object {
     return @$this->data['content'];
   }
 
+  public function renderIcon()
+  {
+  }
+
   public function renderForm()
   {
     return View::makeView('field/form')
       ->with('type', $this->type)
       ->with('data', $this->data)
+      ->with('actionable', $this->actionable)
+      ->with('icon', $this->renderIcon())
       ->with('form', View::makeField('plain/form')->render())
       ->render()
     ;

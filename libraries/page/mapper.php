@@ -42,6 +42,38 @@ class Mapper extends Object {
     return $page;
   }
 
+  public static function mapFromPost($row)
+  {
+    $page = Repository::findOrCreate(array_get($row, 'id'));
+    $page->published = array_get($row, 'publish') === '1';
+    $page->language = Language::makeWithCountryCode('en-us');
+
+    if (array_get($row, 'layout') and !$page->layout) {
+      $page->layout = Layout::makeWithName(array_get($row, 'layout'));
+    }
+    if (array_get($row, 'layout') and $page->layout) {
+      $page->layout->name = array_get($row, 'layout');
+    }
+
+    if ($regions = array_get($row, 'regions')) {
+      foreach ($regions as $region_name => $fields) {
+        $region = Region::makeWithName($region_name);
+        foreach ($fields as $field) {
+          $region->addField(Field::makeWithType($field['type'])
+            ->setData($field['data'])
+          );
+        }
+        $page->layout->addRegion($region);
+      }
+    }
+
+    if (array_get($row, 'published_at')) $page->published_at = array_get($row, 'published_at');
+    if (array_get($row, 'parent')) $page->set_uri_by_parent(array_get($row, 'parent'));
+    if (array_get($row, 'uri')) $page->uri = array_get($row, 'uri');
+
+    return $page;
+  }
+
   /**
    * Magic Method
    *

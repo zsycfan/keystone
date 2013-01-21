@@ -104,7 +104,7 @@ class Region extends Object
 
   public function getAllow()
   {
-    return $this->allow;
+    return $this->allow ?: Keystone\FileManager::getFieldDirectoryContents();
   }
 
   public function setAllow(array $allow)

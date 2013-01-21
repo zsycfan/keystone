@@ -1,1 +1,11 @@
-woot!!!!
+<div
+	contenteditable
+	name="content"
+	placeholder="Content..."
+>
+	{% if content %}
+		{{ content }}
+	{% else %}
+		Content...
+	{% endif %}
+</div>

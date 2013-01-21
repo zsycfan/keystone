@@ -1,0 +1,15 @@
+<div class="field field-{{ type }}" data-type="{{ type }}" data-data="{{ data|json }}" data-name>
+  <input type="hidden" name="type" value="{{ type }}" />
+  <div class="keystone-ui-helper">
+    {{ icon|raw }}
+  </div>
+  <div class="field-content" data-name="data">
+    {{ form|raw }}
+  </div>
+  {% if actionable %}
+    <div class="actions">
+      <a href="#" class="move"><i class="icon-move"></i></a>
+      <a href="#" class="more"><i class="icon-cog"></i></a>
+    </div>
+  {% endif %}
+</div>
