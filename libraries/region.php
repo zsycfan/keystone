@@ -32,8 +32,8 @@ class Region extends Object
   private $name;
   private $fields = array();
   private $allow = array();
-  private $max = 0;
-  private $min = 0;
+  private $max = false;
+  private $min = false;
   private $count = 0;
   private $config = array();
   private $mock = false;

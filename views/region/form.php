@@ -10,16 +10,16 @@
   <div class="fields">
     <?php if ($fields): ?>
       <?php foreach ($fields as $index => $field): ?>
-        <?= $field->renderForm() ?>
+        <?= $field->with(array_get($config, $type))->renderForm() ?>
       <?php endforeach; ?>
     <?php endif; ?>
     <?php while ($count++ < $min): ?>
 	  <?= Keystone\Field::makeWithType($type=current($allow))->with(array_get($config, $type))->renderForm() ?>
     <?php endwhile; ?>
   </div>
-  <?php if ($count < $max): ?>
+  <?php if ($max === false || $count < $max): ?>
     <div class="add-field">
-      <a href="#" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
+      <a href="<?= URL::to_route('content_add_field', array()) ?>" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
     </div>
   <?php endif; ?>
 </div>

@@ -48,17 +48,19 @@ require Bundle::path('keystone').'vendor'.DS.'autoload'.EXT;
 
 /*
 |--------------------------------------------------------------------------
-| Add Field Dirs
+| Add Directory Mappings
 |--------------------------------------------------------------------------
 |
 */
 
-Keystone\FileManager::addFieldDirectory(Bundle::path('keystone').'fields');
+Keystone\FileManager::addViewDirectory(Bundle::path('keystone').'views');
 Keystone\FileManager::addLayoutDirectory(Bundle::path('keystone').'layouts');
+Keystone\FileManager::addLayoutDirectory(Bundle::path('application').'layouts');
+Keystone\FileManager::addFieldDirectory(Bundle::path('keystone').'fields');
 
 /*
 |--------------------------------------------------------------------------
-| Add Default View Handlers & Paths
+| Add Default View Handlers
 |--------------------------------------------------------------------------
 |
 */
@@ -66,10 +68,6 @@ Keystone\FileManager::addLayoutDirectory(Bundle::path('keystone').'layouts');
 Keystone\View::addHandler('.txt', 'Keystone\View\Renderer\Text');
 Keystone\View::addHandler('.twig', 'Keystone\View\Renderer\Twig');
 Keystone\View::addHandler('.php', 'Keystone\View\Renderer\Php');
-Keystone\View::addDirectory('field', Bundle::path('keystone').'fields');
-Keystone\View::addDirectory('view', Bundle::path('keystone').'views');
-Keystone\View::addDirectory('layout', Bundle::path('keystone').'layouts');
-Keystone\View::addDirectory('layout', path('app').'layouts');
 
 /*
 |--------------------------------------------------------------------------
