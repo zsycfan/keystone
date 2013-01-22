@@ -6,6 +6,6 @@
 
 <div class="row-fluid">
   <div class="span12">
-    <?= $layout->getRegion('body')->renderForm() ?>
+    <?= $layout->getRegion('body')->with('config.plain.placeholder', 'Body...')->renderForm() ?>
   </div>
 </div>

@@ -10,7 +10,7 @@
   <div class="fields">
     <?php if ($fields): ?>
       <?php foreach ($fields as $index => $field): ?>
-        <?= $field->with(array_get($config, $type))->renderForm() ?>
+        <?= $field->with(array_get($config, $field->type, array()))->renderForm() ?>
       <?php endforeach; ?>
     <?php endif; ?>
     <?php while ($count++ < $min): ?>
