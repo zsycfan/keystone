@@ -112,6 +112,11 @@ class Region extends Object
     $this->allow = $allow;
   }
 
+  public function setConfig($config, $index)
+  {
+    array_set($this->config, $index, $config);
+  }
+
   public function getMock()
   {
     return $this->mock;

@@ -2,6 +2,8 @@
 
 namespace Keystone;
 
+require_once(\Bundle::path('keystone').'fields/plain/field.php');
+
 class Field extends Object {
 
   private $type;
@@ -16,6 +18,7 @@ class Field extends Object {
   public static function makeWithType($type)
   {
     $obj = new static();
+    $obj = new Fields\Plain\Field();
     $obj->type = $type;
     return $obj;
   }
@@ -63,12 +66,21 @@ class Field extends Object {
 
   public function renderForm()
   {
+    $form = View::makeField($this->type.'/form')
+      ->with($this->publicProperties())
+      ->with('type', $this->type)
+      ->with('data', $this->data)
+      ->with('actionable', $this->actionable)
+      ->with('icon', $this->renderIcon())
+      ->render()
+    ;
+
     return View::makeView('field/form')
       ->with('type', $this->type)
       ->with('data', $this->data)
       ->with('actionable', $this->actionable)
       ->with('icon', $this->renderIcon())
-      ->with('form', View::makeField('plain/form')->render())
+      ->with('form', $form)
       ->render()
     ;
   }

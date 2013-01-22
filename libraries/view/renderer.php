@@ -49,6 +49,13 @@ class Renderer extends Object
   
   public function with($key, $value=null)
   {
+    if (is_array($key)) {
+      foreach ($key as $property => $value) {
+        $this->with($property, $value);
+      }
+      return $this;
+    }
+
     $this->data[$key] = $value;
     return $this;
   }

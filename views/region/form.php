@@ -12,11 +12,14 @@
       <?php foreach ($fields as $index => $field): ?>
         <?= $field->renderForm() ?>
       <?php endforeach; ?>
-    <?php elseif ($min > 0): ?>
-      <div class="field-placeholder" data-type="<?= current($allow) ?:'plain' ?>"></div>
     <?php endif; ?>
+    <?php while ($count++ < $min): ?>
+	  <?= Keystone\Field::makeWithType($type=current($allow))->with(array_get($config, $type))->renderForm() ?>
+    <?php endwhile; ?>
   </div>
-  <div class="add-field">
-    <a href="#" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
-  </div>
+  <?php if ($count < $max): ?>
+    <div class="add-field">
+      <a href="#" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
+    </div>
+  <?php endif; ?>
 </div>

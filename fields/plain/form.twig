@@ -1,11 +1,7 @@
 <div
 	contenteditable
 	name="content"
-	placeholder="Content..."
+	placeholder="{{ placeholder }}"
 >
-	{% if content %}
-		{{ content }}
-	{% else %}
-		Content...
-	{% endif %}
+    {{ data.content|default(placeholder) }}
 </div>

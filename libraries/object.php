@@ -11,8 +11,20 @@ class Object
 
   public function __set($key, $value)
   {
-    if (method_exists($this, $method='set'.ucfirst($key))) {
-      return call_user_func_array(array($this, $method), array($value));
+    $index = null;
+    if (strpos($key, '.') !== false) {
+      $index = explode('.', $key);
+      $key = array_shift($index);
+      $index = implode('.', $index);
+    }
+
+	if (method_exists($this, $method='set'.ucfirst($key))) {
+      return call_user_func_array(array($this, $method), array($value, $index));
+    }
+
+    $reflection = new \ReflectionClass($this);
+    if ($reflection->getProperty($key)->isPublic()) {
+      return $this->{$key} = $value;
     }
 
     $class = get_class($this);
@@ -40,5 +52,15 @@ class Object
 
     $this->__set($key, $value);
     return $this;
+  }
+
+  public function publicProperties()
+  {
+    $properties = array();
+    $reflection = new \ReflectionClass($this);
+    foreach ($reflection->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
+      $properties[$name=$property->getName()] = $this->{$name};
+    }
+    return $properties;
   }
 }
