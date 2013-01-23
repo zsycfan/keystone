@@ -10,12 +10,4 @@ class TestLayout extends PHPUnit_Framework_TestCase {
 
   // START TESTS!
 
-  public function testGetAll()
-  {
-    
-    $this->assertTrue(
-      in_array('content', Keystone\Layout::getAll())
-    );
-  }
-
 }

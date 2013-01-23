@@ -4,7 +4,9 @@ namespace Keystone;
 
 class Layout extends Object {
 
+  private $parentPage;
   private $name;
+  private $screen;
   private $regions = array();
 
   public static function make()
@@ -18,15 +20,41 @@ class Layout extends Object {
 
     $obj = new static();
     $obj->name = $name;
-    View::makeLayout("{$obj->name}/content")
-      ->with('layout', $obj)
-      ->render()
-    ;
+    // View::makeLayout("{$obj->name}/content")
+    //   ->with('layout', $obj)
+    //   ->render()
+    // ;
     return $obj;
+  }
+  
+  /**
+   * parentPage
+   * ----
+   *
+   * Regions will commonly be nested within a page. This property provides
+   * access into that page.
+   *
+   * Returns the parent `Page` or `null` if the region is orphaned.
+   *
+   * ```php
+   * $region = \Keystone\Region::makeWithName('body');
+   * $region->parentPage
+   * ```
+   */
+  public function getParentPage()
+  {
+    return $this->parentPage;
+  }
+
+  public function setParentPage(Page $parentPage)
+  {
+    $this->parentPage = $parentPage;
   }
 
   public function addRegion(Region $region)
   {
+    $region->parentLayout = $this;
+
     foreach ($this->regions as &$existingRegion) {
       if ($region->name == $existingRegion->name) {
         $existingRegion = $region;
@@ -46,9 +74,8 @@ class Layout extends Object {
       }
     }
 
-    return $this->regions[] = Region::makeWithName($name)
-      ->with('mock', true)
-    ;
+    $this->addRegion($region=Region::makeWithName($name)->with('mock', true));
+    return $region;
   }
 
   public function getRegions()
@@ -66,12 +93,25 @@ class Layout extends Object {
     $this->name = $name;
   }
 
+  public function getScreen()
+  {
+    return $this->screen;
+  }
+
+  public function setScreen($screen)
+  {
+    $this->screen = $screen;
+  }
+
   public function renderForm($name=null)
   {
-    return View::makeLayout("{$this->name}/{$name}")
+    $this->screen = $name;
+    $form = View::makeLayout("{$this->name}/{$name}")
       ->with('layout', $this)
       ->render()
     ;
+    $this->screen = null;
+    return $form;
   }
   
 }

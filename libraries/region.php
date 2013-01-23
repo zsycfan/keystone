@@ -29,6 +29,8 @@ namespace Keystone;
 
 class Region extends Object
 {
+  private $parentLayout;
+  private $parentPage;
   private $name;
   private $fields = array();
   private $allow = array();
@@ -66,7 +68,8 @@ class Region extends Object
    * name
    * ----
    *
-   * Returns the string name of the region.
+   * Returns the string name of the region. This property can not be set
+   * except for during initalization within the `makeWithName` static method.
    *
    * ```php
    * $region = \Keystone\Region::makeWithName('body');
@@ -79,6 +82,54 @@ class Region extends Object
   }
 
   /**
+   * parentLayout
+   * ----
+   *
+   * Regions will commonly be nested within a layout. This property provides
+   * access into that layout.
+   *
+   * Returns the parent `Layout` or `null` if the region is orphaned.
+   *
+   * ```php
+   * $region = \Keystone\Region::makeWithName('body');
+   * $region->parentLayout
+   * ```
+   */
+  public function getParentLayout()
+  {
+    return $this->parentLayout;
+  }
+
+  public function setParentLayout(Layout $parentLayout)
+  {
+    $this->parentLayout = $parentLayout;
+  }
+
+  /**
+   * parentPage
+   * ----
+   *
+   * Regions will commonly be nested within a page. This property provides
+   * access into that page.
+   *
+   * Returns the parent `Page` or `null` if the region is orphaned.
+   *
+   * ```php
+   * $region = \Keystone\Region::makeWithName('body');
+   * $region->parentPage
+   * ```
+   */
+  public function getParentPage()
+  {
+    return $this->parentPage;
+  }
+
+  public function setParentPage(Page $parentPage)
+  {
+    $this->parentPage = $parentPage;
+  }
+
+  /**
    * max
    * ----
    *
@@ -87,6 +138,10 @@ class Region extends Object
    * is updated and existing regions exceed the max their content
    * will remain as is, yet uneditable, until the number of
    * fields is reduced.
+   *
+   * This field additionallh controls the presence of the Add Field
+   * button within the UI. If the number of fields meets or
+   * exceeds the max, the add field button will be hidden.
    *
    * ```php
    * \Keystone\Region::makeWithName('body')->max = 3;
@@ -104,7 +159,7 @@ class Region extends Object
 
   public function getAllow()
   {
-    return $this->allow ?: Keystone\FileManager::getFieldDirectoryContents();
+    return $this->allow ?: FileManager::getFieldDirectoryContents();
   }
 
   public function setAllow(array $allow)
@@ -162,6 +217,7 @@ class Region extends Object
   public function renderForm()
   {
     return View::makeView('region/form')
+      ->with('region', $this)
       ->with('name', $this->name)
       ->with('fields', $this->fields)
       ->with('allow', $this->allow)

@@ -19,7 +19,7 @@
   </div>
   <?php if ($max === false || $count < $max): ?>
     <div class="add-field">
-      <a href="<?= URL::to_route('content_add_field', array()) ?>" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
+      <a href="<?= URL::to_route('content_add_field', array($region->parentPage->id, $region->parentLayout->screen, $name)) ?>" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
     </div>
   <?php endif; ?>
 </div>
