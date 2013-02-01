@@ -20,3 +20,17 @@ task :compile do
   # Delete the merged coffee script
   File.delete 'public/js/functions.compiled'
 end
+
+task :document do
+  Dir.glob('libraries**/*.php').each do |f|
+    file = File.open(f, "rb")
+    contents = file.read
+    if contents.include?('/**') then
+      comments = []
+      contents.gsub(/\/\*\*.*?\*\//m) do |match|
+        comments.push match.gsub(/^[[:blank:]]*(\/\*\*|\*\/|\*)[[:blank:]]*/m, '')
+      end
+      File.open(f.gsub(/\.php$/, '.md'), 'w') {|f| f.write(comments.join("\r\n").strip) }
+    end
+  end
+end
