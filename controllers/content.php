@@ -23,8 +23,8 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
     Session::put('last_viewed_style', 'tree');
     Session::put('last_viewed_uri', Input::get('uri'));
     return Keystone\View::makeView('content/tree')
-      ->with('pages', Keystone\Page\Repository::find_at_uri(Input::get('uri')))
-      ->with('tree', Keystone\Page\Repository::find_breadcrumbs_for_uri(Input::get('uri')))
+      ->with('pages', Keystone\Page\Repository::findAtUri(Input::get('uri')))
+      ->with('tree', Keystone\Page\Repository::findBreadcrumbsForUri(Input::get('uri')))
     ;
   }
 
@@ -45,11 +45,9 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_content($id)
   {
-    $view = Keystone\View::makeView('content/edit')
+    return Keystone\View::makeView('content/edit')
       ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
     ;
-// dd(e($view->render()));
-    return $view;
   }
 
   public function get_settings($id)
@@ -73,8 +71,8 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function post_add_field($id, $screen, $region_name)
   {
-	$page = Keystone\Page\Repository::find($id, array('revision' => Input::get('revision')));
-	$page->layout->getRegion($region_name)->addField(Keystone\Field::makeWithType(Input::get('type')));
+    $page = Keystone\Page\Repository::find($id, array('revision' => Input::get('revision')));
+    $page->layout->getRegion($region_name)->addField(Keystone\Field::makeWithType(Input::get('type')));
     Keystone\Page\Repository::save($page);
 
     return Redirect::to_route(Input::get('redirect'), $page->id)
