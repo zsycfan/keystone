@@ -7,7 +7,12 @@
 
 {% block css %}
   {{ parent() }}
-  <link rel="stylesheet" href="/keystone/field/css" type="text/css" />
+  <link rel="stylesheet" href="{{ url_to_route('field_css') }}" type="text/css" />
+{% endblock %}
+
+{% block javascript %}
+  {{ parent() }}
+	<script type="text/javascript" src="{{ url_to_route('field_javascript') }}"></script>
 {% endblock %}
 
 {% block page_preamble %}
@@ -53,54 +58,4 @@
 
 {% block page_postscript %}
 </form>
-{% endblock %}
-
-{% block stylesheets %}
-	<style type="text/css">
-		{{ field_css|raw }}
-	</style>
-	{{ parent() }}
-{% endblock %}
-
-{% block javascript %}
-	{# <script class="handlebars-template" data-name="field_chooser" type="text/x-handlebars-template">
-	  <div class="modal hide fade field-chooser" data-name="field_chooser">
-	    <div class="modal-header">
-	      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	      <h3>Choose a Field</h3>
-	      <p>Fields describe the type of data you can store in a region.</p>
-	    </div>
-	    <div class="modal-body">
-	      <ul class="cards">
-	      	{% for field in each_field_type() %}
-	      		{{ '{{' }}#inArray '{{ field }}' this.allow {{ '}}' }}<li><a class="card" href="#" data-add-field data-type="{{ field }}">{{ '{{' }}> field.{{ field }}.icon{{ '}}' }}{{ field }}</a></li>{{ '{{' }}/inArray{{ '}}' }}
-	      	{% endfor %}
-	      </ul>
-	    </div>
-	  </div>
-	</script> #}
-	{% raw %}
-	<script class="handlebars-template" data-name="field" type="text/x-handlebars-template">
-	  <div class="field field-{{ field.type }}" data-type="{{ field.type }}" data-name="{{ field.name }}">
-	    <input type="hidden" name="type" value="{{ field.type }}" />
-	    <div class="keystone-ui-helper">
-	    	{{{ fieldIcon field.type }}}
-	    </div>
-	    <div class="field-content">
-	      {{{ content }}}
-	    </div>
-	    {{#if topLevel}}
-		    <div class="actions">
-		    	<a href="#" class="move"><i class="icon-move"></i></a>
-		    	<a href="#" class="more"><i class="icon-cog"></i></a>
-		    </div>
-	    {{/if}}
-	  </div>
-	</script>
-	{% endraw %}
-	{{ field_templates|raw }}
-	{{ parent() }}
-	<script>
-		{{ field_javascript|raw }}
-	</script>
 {% endblock %}

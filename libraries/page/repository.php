@@ -91,7 +91,9 @@ class Repository extends Object {
     if ($page->uri) {
       $path = array(
         'revision_id' => $revision_id,
-        'uri' => $page->uri
+        'uri' => $page->uri,
+        'created_at' => date('Y-m-d G:i:s'),
+        'updated_at' => date('Y-m-d G:i:s'),
       );
       foreach ($page->uri->segments as $index => $seg) {
         $index++;

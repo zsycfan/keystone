@@ -20,6 +20,9 @@ class FileManager extends Object {
     if (preg_match('/^get(.*)Directory$/', $method, $group)) {
       return call_user_func_array('Keystone\FileManager::getDirectory', array($group[1]));
     }
+    if (preg_match('/^start(.*)Directory$/', $method, $group)) {
+      return call_user_func_array('Keystone\FileManager::startDirectory', array($group[1]));
+    }
     if (preg_match('/^get(.*)DirectoryContents$/', $method, $group)) {
       return call_user_func_array('Keystone\FileManager::getDirectoryContents', array($group[1]));
     }
@@ -41,6 +44,15 @@ class FileManager extends Object {
   {
     return @static::$directories[strtolower($key)];
   }
+  
+  public static function startDirectory($key)
+  {
+    foreach (static::getDirectoryContents($key) as $path) {
+      if (file_exists($start = $path.'/start.php')) {
+        require $start;
+      }
+    }
+  }
 
   public static function getDirectoryContents($key)
   {
@@ -53,7 +65,7 @@ class FileManager extends Object {
         $fields = scandir($dir);
         foreach ($fields as $field) {
           if (substr($field, 0, 1) == '.') continue;
-          $return[] = $field;
+          $return[] = str_finish(str_finish($dir, '/').$field, '/');
         }
       }
     }

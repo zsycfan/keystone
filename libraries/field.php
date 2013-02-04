@@ -17,8 +17,16 @@ class Field extends Object {
 
   public static function makeWithType($type)
   {
-    $obj = new static();
+    if (false && $class = FileManager::getFieldClass($type)) {
+      $obj = new $class;
+    }
+    else {
+      $obj = new static();
+    }
+
+    // $obj = new static();
     $obj = new Fields\Plain\Field();
+    
     $obj->type = $type;
     return $obj;
   }
@@ -31,6 +39,7 @@ class Field extends Object {
   public function setActionable($actionable)
   {
     $this->actionable = $actionable;
+    return $this;
   }
 
   public function getActionable()
@@ -38,10 +47,30 @@ class Field extends Object {
     return $this->actionable;
   }
 
+  /**
+   * Set Data
+   * ----
+   *
+   * Setting the data of a field can happen in many different ways. We
+   * could be pulling the data out of a data repository (the database)
+   * or parsing user input throuth the POST. Because of this the Field
+   * object provides named methods for each. They are:
+   * 
+   * * setDataFromDatabase
+   * * setDataFromPost
+   */
   public function setData($data)
   {
     $this->data = $data;
     return $this;
+  }
+  public function setDataFromDatabase($data)
+  {
+    return $this->setData($data);
+  }
+  public function setDataFromPost($data)
+  {
+    return $this->setData($data);
   }
   
   public function addData($key, $value=null)

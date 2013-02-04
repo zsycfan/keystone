@@ -54,6 +54,7 @@ class Layout extends Object {
   public function addRegion(Region $region)
   {
     $region->parentLayout = $this;
+    $region->parentPage = $this->parentPage;
 
     foreach ($this->regions as &$existingRegion) {
       if ($region->name == $existingRegion->name) {
@@ -74,7 +75,9 @@ class Layout extends Object {
       }
     }
 
-    $this->addRegion($region=Region::makeWithName($name)->with('mock', true));
+    $this->addRegion($region=Region::makeWithName($name)
+      ->with('mock', true)
+    );
     return $region;
   }
 

@@ -38,7 +38,7 @@ class Mapper extends Object {
         ;
         foreach ($fields as $field) {
           $region->addField(Field::makeWithType($field['type'])
-            ->setData($field['data'])
+            ->setDataFromDatabase($field['data'])
           );
         }
         $page->layout->addRegion($region);
@@ -63,23 +63,27 @@ class Mapper extends Object {
     
     $page->layout->parentPage = $page;
 
-    if ($regions = array_get($row, 'regions')) {
-      foreach ($regions as $region_name => $fields) {
-        $region = Region::makeWithName($region_name)
-          ->with('parentPage', $page);
-        ;
-        foreach ($fields as $field) {
-          $region->addField(Field::makeWithType($field['type'])
-            ->setData($field['data'])
-          );
-        }
-        $page->layout->addRegion($region);
+    foreach (array_get($row, 'regions', array()) as $region_name => $fields) {
+      $region = Region::makeWithName($region_name)
+        ->with('parentPage', $page);
+      ;
+
+      foreach ($fields as $field) {
+        $region->addField(Field::makeWithType($field['type'])
+          ->setDataFromPost($field['data'])
+        );
       }
+
+      $page->layout->addRegion($region);
+    }
+
+    $uri = $page->layout->getRegion('uri');
+    if ($uri->mock === false) {
+      $page->uri = Uri::makeFromString($uri->summary);
     }
 
     if (array_get($row, 'published_at')) $page->published_at = array_get($row, 'published_at');
     if (array_get($row, 'parent')) $page->set_uri_by_parent(array_get($row, 'parent'));
-    if (array_get($row, 'uri')) $page->uri = array_get($row, 'uri');
 
     return $page;
   }

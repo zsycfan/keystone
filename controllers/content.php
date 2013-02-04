@@ -54,9 +54,11 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_settings($id)
   {
-    return Keystone\View::makeView('content/settings')
+    $view = Keystone\View::makeView('content/settings')
       ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
     ;
+// dd(e($view->render()));
+    return $view;
   }
 
   public function get_add_field($id, $screen, $region_name)
@@ -91,18 +93,12 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
     ;
   }
 
-  /**
-   * @todo the page.uri check here is wrong. if a user tries to set the uri to
-   * and empty string ("") the condition will fail
-   * @todo  page.layout should really be page.layout.name
-   * @todo  page.regions should really be page.regions
-   */
   public function post_save($id=false)
   {
     $page = Keystone\Page\Mapper::mapFromPost(Input::get('page'));
     Keystone\Page\Repository::save($page);
     return Redirect::to_route(Input::get('redirect'), $page->id)
-      ->with('message', 'Saved!')
+      ->with('message', 'Page Saved!')
       ->with('message_type', 'success')
     ;
   }

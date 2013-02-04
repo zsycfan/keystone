@@ -14,7 +14,7 @@
       <?php endforeach; ?>
     <?php endif; ?>
     <?php while ($count++ < $min): ?>
-	  <?= Keystone\Field::makeWithType($type=current($allow))->with(array_get($config, $type))->renderForm() ?>
+	  <?= Keystone\Field::makeWithType($type=current($allow))->with(array_get($config, $type, array()))->renderForm() ?>
     <?php endwhile; ?>
   </div>
   <?php if ($max === false || $count < $max): ?>

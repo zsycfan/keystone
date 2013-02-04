@@ -58,6 +58,9 @@ Keystone\FileManager::addLayoutDirectory(Bundle::path('keystone').'layouts');
 Keystone\FileManager::addLayoutDirectory(Bundle::path('application').'layouts');
 Keystone\FileManager::addFieldDirectory(Bundle::path('keystone').'fields');
 
+Keystone\FileManager::addPluginDirectory(Bundle::path('keystone').'plugins');
+Keystone\FileManager::startPluginDirectory();
+
 /*
 |--------------------------------------------------------------------------
 | Add Default View Handlers

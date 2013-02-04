@@ -16,7 +16,7 @@ class Uri extends Object
 
   public function getSegments()
   {
-    return array();
+    return $this->segments;
   }
 
   public function __toString()
