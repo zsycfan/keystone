@@ -5,7 +5,7 @@ The plugin class handles starting and registering plugins with their
 default naming schemes.
 
 
-Start
+::start()
 ----
 
 Loops through all registered plugin directories and either:
@@ -19,7 +19,7 @@ Keystone\Plugin::start()
 ```
 
 
-Register
+::register()
 ----
 
 Passed the name of a plugin this method will register the appropriate sub
