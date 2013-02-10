@@ -34,7 +34,8 @@ Autoloader::map(array(
 */
 
 Autoloader::namespaces(array(
-	'Keystone' => Bundle::path('keystone').'libraries',
+  'Keystone' => Bundle::path('keystone').'libraries',
+  'Plugins' => Bundle::path('keystone').'plugins',
 ));
 
 /*
@@ -56,10 +57,16 @@ require Bundle::path('keystone').'vendor'.DS.'autoload'.EXT;
 Keystone\FileManager::addViewDirectory(Bundle::path('keystone').'views');
 Keystone\FileManager::addLayoutDirectory(Bundle::path('keystone').'layouts');
 Keystone\FileManager::addLayoutDirectory(Bundle::path('application').'layouts');
-Keystone\FileManager::addFieldDirectory(Bundle::path('keystone').'fields');
-
 Keystone\FileManager::addPluginDirectory(Bundle::path('keystone').'plugins');
-Keystone\FileManager::startPluginDirectory();
+
+/*
+|--------------------------------------------------------------------------
+| Start Plugins
+|--------------------------------------------------------------------------
+|
+*/
+
+Keystone\Plugin::start();
 
 /*
 |--------------------------------------------------------------------------

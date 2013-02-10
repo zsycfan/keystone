@@ -20,9 +20,6 @@ class FileManager extends Object {
     if (preg_match('/^get(.*)Directory$/', $method, $group)) {
       return call_user_func_array('Keystone\FileManager::getDirectory', array($group[1]));
     }
-    if (preg_match('/^start(.*)Directory$/', $method, $group)) {
-      return call_user_func_array('Keystone\FileManager::startDirectory', array($group[1]));
-    }
     if (preg_match('/^get(.*)DirectoryContents$/', $method, $group)) {
       return call_user_func_array('Keystone\FileManager::getDirectoryContents', array($group[1]));
     }
@@ -30,9 +27,9 @@ class FileManager extends Object {
 
   public static function addDirectory()
   {
-	$directories = func_get_args();
-	$group = strtolower(array_shift($directories));
-	foreach ($directories as $directory) {
+    $directories = func_get_args();
+    $group = strtolower(array_shift($directories));
+    foreach ($directories as $directory) {
       static::$directories[$group] = array_unique(array_merge(
         @static::$directories[$group] ?: array(),
         array(str_finish($directory, '/'))
@@ -42,24 +39,19 @@ class FileManager extends Object {
 
   public static function getDirectory($key)
   {
-    return @static::$directories[strtolower($key)];
+    if ($directories = @static::$directories[strtolower($key)]) {
+      return $directories;
+    }
+
+    throw new \Exception("Could not find any `{$key}` directories.");
   }
   
-  public static function startDirectory($key)
-  {
-    foreach (static::getDirectoryContents($key) as $path) {
-      if (file_exists($start = $path.'/start.php')) {
-        require $start;
-      }
-    }
-  }
-
   public static function getDirectoryContents($key)
   {
     $return = array();
     $dirs = static::getDirectory($key);
     if (!$dirs) return array();
-	
+  
     foreach ($dirs as $dir) {
       if (is_dir($dir)) {
         $fields = scandir($dir);

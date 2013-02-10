@@ -1,8 +1,6 @@
 <?php
 
-namespace Keystone\Fields\Plain;
-
-class Field extends \Keystone\Field {
+class PlainField extends \Keystone\Field {
 
     public $placeholder = 'Content...';
 

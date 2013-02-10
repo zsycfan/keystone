@@ -19,14 +19,14 @@ class View extends Object
 
   public static function __callStatic($method, $args)
   {
-    if (preg_match('/^make(.*)$/', $method, $group)) {
-      return call_user_func_array('Keystone\View::makeGroup', array(strtolower($group[1]), $args[0]));
+    if (preg_match('/^make(.*)$/', $method, $type)) {
+      return static::makeWithType(strtolower($type[1]), $args[0]);
     }
   }
 
-  public static function makeGroup($group, $name)
+  public static function makeWithType($type, $name)
   {
-    $directories = call_user_func_array("Keystone\FileManager::get{$group}Directory", array());
+    $directories = call_user_func_array("Keystone\FileManager::getDirectory", array($type));
     foreach ($directories as $dir) {
       foreach (static::$handlers as $ext=>$handler) {
         if (file_exists($path=$dir.$name.$ext)) {
@@ -35,7 +35,7 @@ class View extends Object
       }
     }
     
-    throw new \Exception("Could not find {$group} at `{$name}`. Searched (".implode(', ', $directories).")");
+    throw new \Exception("Could not find {$type} at `{$name}`. Searched (".implode(', ', $directories).")");
   }
 
 }

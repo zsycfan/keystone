@@ -2,13 +2,17 @@
 
 namespace Keystone;
 
-require_once(\Bundle::path('keystone').'fields/plain/field.php');
-
 class Field extends Object {
 
+  private static $types = array();
   private $type;
   private $data = array();
   private $actionable = true;
+
+  public static function register($type, $class)
+  {
+    static::$types[$type] = $class;
+  }
 
   public static function make()
   {
@@ -17,15 +21,12 @@ class Field extends Object {
 
   public static function makeWithType($type)
   {
-    if (false && $class = FileManager::getFieldClass($type)) {
+    if ($class = @static::$types[$type]) {
       $obj = new $class;
     }
     else {
       $obj = new static();
     }
-
-    // $obj = new static();
-    $obj = new Fields\Plain\Field();
     
     $obj->type = $type;
     return $obj;
@@ -95,7 +96,7 @@ class Field extends Object {
 
   public function renderForm()
   {
-    $form = View::makeField($this->type.'/form')
+    $form = View::makeWithType('fields.'.$this->type, 'form')
       ->with($this->publicProperties())
       ->with('type', $this->type)
       ->with('data', $this->data)
