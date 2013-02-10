@@ -98,6 +98,7 @@ Keystone\View\Renderer\Twig::addFunction('route', 'twig_fn_route');
 Keystone\View\Renderer\Twig::addFunction('url_to_route', 'URL::to_route');
 Keystone\View\Renderer\Twig::addFunction('session_get', 'Session::get');
 Keystone\View\Renderer\Twig::addFunction('val', 'Input::get');
+Keystone\View\Renderer\Twig::addFunction('css_assets', 'Keystone\Asset::getCss');
 
 if (!function_exists('twig_fltr_with_query_string')) {
   function twig_fltr_with_query_string($url) {

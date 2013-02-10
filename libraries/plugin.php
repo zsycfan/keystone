@@ -61,5 +61,9 @@ class Plugin extends Object
     if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/views")) {
       \Keystone\FileManager::addDirectory("fields.{$name}", $path);
     }
+
+    if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/css/field.css")) {
+      \Keystone\Asset::addCssFile($path);
+    }
   }
 }

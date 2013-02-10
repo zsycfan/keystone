@@ -7,7 +7,9 @@
 
 {% block css %}
   {{ parent() }}
-  <link rel="stylesheet" href="{{ url_to_route('field_css') }}" type="text/css" />
+  <style type="text/css">
+    {{ css_assets() }}
+  </style>
 {% endblock %}
 
 {% block javascript %}
