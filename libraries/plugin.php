@@ -13,7 +13,7 @@ class Plugin extends Object
 {
 
   /**
-   * Start
+   * ::start()
    * ----
    * 
    * Loops through all registered plugin directories and either:
@@ -39,7 +39,7 @@ class Plugin extends Object
   }
 
   /**
-   * Register
+   * ::register()
    * ----
    * 
    * Passed the name of a plugin this method will register the appropriate sub
