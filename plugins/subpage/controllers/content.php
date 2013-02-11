@@ -14,6 +14,6 @@ class SubpageLayoutController
 
   public function content_json()
   {
-    
+
   }
 }

@@ -78,8 +78,8 @@ class Plugin extends Object
       \Keystone\Asset::addJavascriptFile($path);
     }
 
-    if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/layouts/content.php")) {
-      \Keystone\LayoutManager::register("{$name}.content", $path);
-    }
+    // if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/layouts/content.php")) {
+    //   \Keystone\LayoutManager::register("{$name}.content", $path);
+    // }
   }
 }
