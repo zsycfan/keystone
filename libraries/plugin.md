@@ -23,10 +23,18 @@ Keystone\Plugin::start()
 ----
 
 Passed the name of a plugin this method will register the appropriate sub
-classes determined by the existance of specially named files. For example,
-if a `Field` is defined in `libraries/field` it will be registered with
-the `Keystone\Field` class.
+classes determined by the existance of conventionally named files.
 
 ```php
 Keystone\Plugin::register('tags')
 ```
+
+When called it looks for the following:
+
+* `libraries/field.php` to define a `TagsField` class which will respond
+to sleep and wakeup events.
+* `css/field.css` for display of the field UI
+* `javascript/field.js` for display of the field UI
+* `views` folder, used to render `views/field.twig` in the field UI
+* `layouts` folder, which contains one or more layouts provided by the
+plugin
