@@ -52,11 +52,9 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_settings($id)
   {
-    $view = Keystone\View::makeView('content/settings')
+    return Keystone\View::makeView('content/settings')
       ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
     ;
-// dd(e($view->render()));
-    return $view;
   }
 
   public function get_add_field($id, $screen, $region_name)
