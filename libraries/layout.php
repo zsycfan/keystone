@@ -2,6 +2,21 @@
 
 namespace Keystone;
 
+/**
+ * Layout
+ * ====
+ *
+ * A layout is similar to a "content type" or "channel" in traditional
+ * blogging systems. Layouts setup a UI for a specific format of data,
+ * whether it's a blog or a biography.
+ *
+ * Notable Methods
+ * ----
+ *
+ * * ::makeWithName($name)
+ * * ->addRegion(Region $region)
+ * * ->renderForm($screen)
+ */
 class Layout extends Object {
 
   private $parentPage;
@@ -9,6 +24,12 @@ class Layout extends Object {
   private $screen;
   private $regions = array();
 
+  /**
+   * ::makeWithName($name)
+   * ----
+   *
+   * Creates a new layout with the specified `$name`.
+   */
   public static function make()
   {
     throw new \Exception('Layouts must be created with an explicit name. Try `Layout::makeWithName(\'sub-page\')` instead.');
@@ -102,10 +123,10 @@ class Layout extends Object {
     $this->screen = $screen;
   }
 
-  public function renderForm($name=null)
+  public function renderForm($screen=null)
   {
-    $this->screen = $name;
-    $form = View::makeLayout("{$this->name}/{$name}")
+    $this->screen = $screen;
+    $form = View::makeWithType('layouts.'.$this->name, $screen)
       ->with('layout', $this)
       ->render()
     ;

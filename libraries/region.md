@@ -2,22 +2,8 @@ Region
 ====
 
 Regions are the editable areas within a layout. They can be
-configured to have one or more fields representing the data
-of the region.
-
-Initialization & Identificafion
-
-* [makeWithName]()
-* [name]()
-
-Managing Settings
-
-* [max]()
-* [min]()
-
-Adding and removing Fields
-
-* [addField]()
+configured to have one or more fields representing the field data
+of a region.
 
 ----
 
@@ -50,13 +36,14 @@ parentLayout
 ----
 
 Regions will commonly be nested within a layout. This property provides
-access into that layout.
+access to that layout.
 
 Returns the parent `Layout` or `null` if the region is orphaned.
 
 ```php
-$region = \Keystone\Region::makeWithName('body');
-$region->parentLayout
+$layout = \Keystone\Layout::makeWithName('subpage');
+$layout->addRegion(\Keystone\Region::makeWithName('body'));
+$layout->getRegion('body')->parentLayout // same as $layout
 ```
 
 
@@ -64,7 +51,7 @@ parentPage
 ----
 
 Regions will commonly be nested within a page. This property provides
-access into that page.
+access to that page.
 
 Returns the parent `Page` or `null` if the region is orphaned.
 

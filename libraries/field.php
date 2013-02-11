@@ -2,6 +2,15 @@
 
 namespace Keystone;
 
+/**
+ * Field
+ * ====
+ *
+ * The field object represents smallest divisible piece of content within
+ * Keystone. Fields are assembled into regions which are contained within
+ * layouts that eventually get rendered to a page. It is the `Field` that
+ * does most of the work with the database and the content of the site.
+ */
 class Field extends Object {
 
   private $type;

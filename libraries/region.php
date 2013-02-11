@@ -5,22 +5,8 @@
  * ====
  * 
  * Regions are the editable areas within a layout. They can be
- * configured to have one or more fields representing the data
- * of the region.
- *
- * Initialization & Identificafion
- * 
- * * [makeWithName]()
- * * [name]()
- *
- * Managing Settings
- *
- * * [max]()
- * * [min]()
- *
- * Adding and removing Fields
- *
- * * [addField]()
+ * configured to have one or more fields representing the field data
+ * of a region.
  *
  * ----
  */

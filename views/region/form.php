@@ -17,7 +17,7 @@
 	  <?= Keystone\Field::makeWithType($type=current($allow))->with(array_get($config, $type, array()))->renderForm() ?>
     <?php endwhile; ?>
   </div>
-  <?php if ($region->parentPage && ($max === false || $count < $max)): ?>
+  <?php if ($region->parentPage && $region->parentLayout && ($max === false || $count < $max)): ?>
     <div class="add-field">
       <a href="<?= URL::to_route('content_add_field', array($region->parentPage->id, $region->parentLayout->screen, $name)) ?>" data-choose-field><i class="icon-plus"></i> <span>Add</span></a>
     </div>

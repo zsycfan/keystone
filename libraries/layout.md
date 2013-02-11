@@ -1,3 +1,11 @@
+Layout
+====
+
+A layout is similar to a "content type" or "channel" in traditional
+blogging systems. Layouts setup a UI for a specific format of data,
+whether it's a blog or a biography.
+
+
 parentPage
 ----
 

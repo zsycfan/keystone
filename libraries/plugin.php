@@ -85,8 +85,8 @@ class Plugin extends Object
       \Keystone\ApiManager::register($name, ucfirst($name).'Api');
     }
 
-    // if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/layouts/content.php")) {
-    //   \Keystone\LayoutManager::register("{$name}.content", $path);
-    // }
+    if (is_dir($path=\Bundle::path('keystone')."plugins/{$name}/layouts/")) {
+      \Keystone\FileManager::addDirectory("layouts.{$name}", $path);
+    }
   }
 }
