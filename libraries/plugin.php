@@ -43,13 +43,18 @@ class Plugin extends Object
    * ----
    * 
    * Passed the name of a plugin this method will register the appropriate sub
-   * classes determined by the existance of specially named files. For example,
-   * if a `Field` is defined in `libraries/field` it will be registered with
-   * the `Keystone\Field` class.
+   * classes determined by the existance of conventionally named files.
    *
    * ```php
    * Keystone\Plugin::register('tags')
    * ```
+   *
+   * When called it looks for the following:
+   *
+   * * A `TagsField` class in `libraries/field.php`
+   * * A CSS file for the field in `css/field.css`
+   * * A Javascript file for the field in `javascript/field.js`
+   * * A `views` folder (used to render `views/field.twig` in the UI)
    */
   public static function register($name)
   {
@@ -68,6 +73,10 @@ class Plugin extends Object
 
     if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/javascript/field.js")) {
       \Keystone\Asset::addJavascriptFile($path);
+    }
+
+    if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/layouts/content.php")) {
+      \Keystone\LayoutManager::register("{$name}.content", $path);
     }
   }
 }
