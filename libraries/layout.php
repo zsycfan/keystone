@@ -20,10 +20,6 @@ class Layout extends Object {
 
     $obj = new static();
     $obj->name = $name;
-    // View::makeLayout("{$obj->name}/content")
-    //   ->with('layout', $obj)
-    //   ->render()
-    // ;
     return $obj;
   }
   

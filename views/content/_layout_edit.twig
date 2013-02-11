@@ -25,11 +25,11 @@
 
 {% block crumb_navigation %}
 <ul class="crumb-navigation">
-  <li><a {{ route() == 'content_edit_layout' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_layout', page.id)|with_query_string }}"><i class="icon-columns"></i> <span class="title">Layout</span></a></li>
-  <li><a {{ route() == 'content_edit_content' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_content', page.id)|with_query_string }}"><i class="icon-file"></i> <span class="title">Content</span></a></li>
-  <li><a {{ route() == 'content_edit_settings' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_settings', page.id)|with_query_string }}"><i class="icon-cog"></i> <span class="title">Settings</span></a></li>
-  <li><a {{ route() == 'content_edit_translations' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_settings', page.id)|with_query_string }}"><i class="icon-globe"></i> <span class="title">Translations</span></a></li>
-  <li><a {{ route() == 'content_edit_revisions' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit_revisions', page.id)|with_query_string }}"><i class="icon-undo"></i> <span class="title">Revisions</span></a></li>
+  <li><a {{ route() == 'content_edits' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit', [page.id, 'layout'])|with_query_string }}"><i class="icon-columns"></i> <span class="title">Layout</span></a></li>
+  <li><a {{ route() == 'content_edits' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit', [page.id, 'content'])|with_query_string }}"><i class="icon-file"></i> <span class="title">Content</span></a></li>
+  <li><a {{ route() == 'content_edits' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit', [page.id, 'settings'])|with_query_string }}"><i class="icon-cog"></i> <span class="title">Settings</span></a></li>
+  <li><a {{ route() == 'content_edits' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit', [page.id, 'settings'])|with_query_string }}"><i class="icon-globe"></i> <span class="title">Translations</span></a></li>
+  <li><a {{ route() == 'content_edits' ? 'class="active"' : '' }} href="{{ url_to_route('content_edit', [page.id, 'revisions'])|with_query_string }}"><i class="icon-undo"></i> <span class="title">Revisions</span></a></li>
 </ul>
 {% endblock %}
 

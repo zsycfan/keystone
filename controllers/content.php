@@ -35,6 +35,13 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
     ;
   }
 
+  public function get_edit($id, $screen)
+  {
+    return Keystone\View::makeView('content/edit')
+      ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
+    ;
+  }
+
   public function get_layout($id)
   {
     return Keystone\View::makeView('content/layout')
