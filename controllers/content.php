@@ -39,30 +39,31 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   {
     return Keystone\View::makeView('content/edit')
       ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
+      ->with('screen', $screen)
     ;
   }
 
-  public function get_layout($id)
-  {
-    return Keystone\View::makeView('content/layout')
-      ->with('layouts', Keystone\FileManager::getLayoutDirectoryContents())
-      ->with('page', Keystone\Page\Repository::find($id))
-    ;
-  }
+  // public function get_layout($id)
+  // {
+  //   return Keystone\View::makeView('content/layout')
+  //     ->with('layouts', Keystone\FileManager::getLayoutDirectoryContents())
+  //     ->with('page', Keystone\Page\Repository::find($id))
+  //   ;
+  // }
 
-  public function get_content($id)
-  {
-    return Keystone\View::makeView('content/edit')
-      ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
-    ;
-  }
+  // public function get_content($id)
+  // {
+  //   return Keystone\View::makeView('content/edit')
+  //     ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
+  //   ;
+  // }
 
-  public function get_settings($id)
-  {
-    return Keystone\View::makeView('content/settings')
-      ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
-    ;
-  }
+  // public function get_settings($id)
+  // {
+  //   return Keystone\View::makeView('content/settings')
+  //     ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
+  //   ;
+  // }
 
   public function get_add_field($id, $screen, $region_name)
   {
@@ -88,13 +89,13 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
     ;
   }
 
-  public function get_revisions($id)
-  {
-    return Keystone\View::make('keystone::content.revisions')
-      ->with('page', Keystone\Repository\Page::find($id, array('revision' => Input::get('revision'))))
-      ->with('revisions', Keystone\Repository\Page::revisions($id))
-    ;
-  }
+  // public function get_revisions($id)
+  // {
+  //   return Keystone\View::make('keystone::content.revisions')
+  //     ->with('page', Keystone\Repository\Page::find($id, array('revision' => Input::get('revision'))))
+  //     ->with('revisions', Keystone\Repository\Page::revisions($id))
+  //   ;
+  // }
 
   public function post_save($id=false)
   {
