@@ -53,7 +53,7 @@ class Plugin extends Object
    */
   public static function register($name)
   {
-    if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/Libraries/field.php")) {
+    if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/libraries/field.php")) {
       require_once $path;
       \Keystone\FieldManager::register($name, ucfirst($name).'Field');
     }
