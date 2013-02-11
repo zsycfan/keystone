@@ -55,7 +55,7 @@ class Plugin extends Object
   {
     if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/Libraries/field.php")) {
       require_once $path;
-      \Keystone\Field::register($name, ucfirst($name).'Field');
+      \Keystone\FieldManager::register($name, ucfirst($name).'Field');
     }
 
     if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/views")) {

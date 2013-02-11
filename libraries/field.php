@@ -4,15 +4,9 @@ namespace Keystone;
 
 class Field extends Object {
 
-  private static $types = array();
   private $type;
   private $data = array();
   private $actionable = true;
-
-  public static function register($type, $class)
-  {
-    static::$types[$type] = $class;
-  }
 
   public static function make()
   {
@@ -21,7 +15,7 @@ class Field extends Object {
 
   public static function makeWithType($type)
   {
-    if ($class = @static::$types[$type]) {
+    if ($class = FieldManager::getClassOfType($type)) {
       $obj = new $class;
     }
     else {
