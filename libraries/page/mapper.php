@@ -22,20 +22,19 @@ class Mapper extends Object {
     $page = new Page;
     $page->id = $row->id;
     $page->language = Language::makeWithCountryCode($row->language);
-    if($row->layout) $page->layout = Layout::makeWithName($row->layout);
-    if($row->uri) $page->uri = Uri::makeFromString($row->uri);
+    if ($row->uri) $page->uri = Uri::makeFromString($row->uri);
     $page->createdAt = new DateTime($row->created_at, new DateTimeZone(Session::get('timezone', Config::get('application.timezone'))));
     $page->updatedAt = new DateTime($row->updated_at, new DateTimeZone(Session::get('timezone', Config::get('application.timezone'))));
     
-    if ($page->layout) {
-      $page->layout->parentPage = $page;
+    if ($row->layout) {
+      $page->layout = Layout::makeWithName($row->layout)
+        ->with('parentPage', $page)
+      ;
     }
 
     if ($regions = json_decode($row->regions, true)) {
       foreach ($regions as $region_name => $fields) {
-        $region = Region::makeWithName($region_name)
-          ->with('parentPage', $page);
-        ;
+        $region = Region::makeWithName($region_name);
         foreach ($fields as $field) {
           $region->addField(Field::makeWithType($field['type'])
             ->setDataFromDatabase($field['data'])
@@ -60,13 +59,12 @@ class Mapper extends Object {
     if (array_get($row, 'layout') and $page->layout) {
       $page->layout->name = array_get($row, 'layout');
     }
-    
-    $page->layout->parentPage = $page;
+    if ($page->layout) {
+      $page->layout->parentPage = $page;
+    }
 
     foreach (array_get($row, 'regions', array()) as $region_name => $fields) {
-      $region = Region::makeWithName($region_name)
-        ->with('parentPage', $page);
-      ;
+      $region = Region::makeWithName($region_name);
 
       foreach ($fields as $field) {
         $region->addField(Field::makeWithType($field['type'])

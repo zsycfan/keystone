@@ -86,13 +86,14 @@ class Region extends Object
    * ----
    *
    * Regions will commonly be nested within a layout. This property provides
-   * access into that layout.
+   * access to that layout.
    *
    * Returns the parent `Layout` or `null` if the region is orphaned.
    *
    * ```php
-   * $region = \Keystone\Region::makeWithName('body');
-   * $region->parentLayout
+   * $layout = \Keystone\Layout::makeWithName('subpage');
+   * $layout->addRegion(\Keystone\Region::makeWithName('body'));
+   * $layout->getRegion('body')->parentLayout // same as $layout
    * ```
    */
   public function getParentLayout()
@@ -110,7 +111,7 @@ class Region extends Object
    * ----
    *
    * Regions will commonly be nested within a page. This property provides
-   * access into that page.
+   * access to that page.
    *
    * Returns the parent `Page` or `null` if the region is orphaned.
    *
@@ -190,6 +191,9 @@ class Region extends Object
 
   public function addFieldAtIndex($index, Field $field)
   {
+    if ($this->parentPage) $field->parentPage = $this->parentPage;
+    if ($this->parentLayout) $field->parentLayout = $this->parentLayout;
+    $field->parentRegion = $this;
     $this->fields[$index] = $field;
     $this->count = count($this->fields);
     return $this;
