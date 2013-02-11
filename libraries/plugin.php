@@ -51,10 +51,13 @@ class Plugin extends Object
    *
    * When called it looks for the following:
    *
-   * * A `TagsField` class in `libraries/field.php`
-   * * A CSS file for the field in `css/field.css`
-   * * A Javascript file for the field in `javascript/field.js`
-   * * A `views` folder (used to render `views/field.twig` in the UI)
+   * * `libraries/field.php` to define a `TagsField` class which will respond
+   *   to sleep and wakeup events.
+   * * `css/field.css` for display of the field UI
+   * * `javascript/field.js` for display of the field UI
+   * * `views` folder, used to render `views/field.twig` in the field UI
+   * * `layouts` folder, which contains one or more layouts provided by the
+   *   plugin
    */
   public static function register($name)
   {
