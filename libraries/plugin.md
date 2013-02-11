@@ -38,3 +38,5 @@ to sleep and wakeup events.
 * `views` folder, used to render `views/field.twig` in the field UI
 * `layouts` folder, which contains one or more layouts provided by the
 plugin
+* `libraries/api.php` to define a `TagsApi` class which will respond to
+API calls from the browser.

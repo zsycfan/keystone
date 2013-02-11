@@ -58,6 +58,8 @@ class Plugin extends Object
    * * `views` folder, used to render `views/field.twig` in the field UI
    * * `layouts` folder, which contains one or more layouts provided by the
    *   plugin
+   * * `libraries/api.php` to define a `TagsApi` class which will respond to
+   *   API calls from the browser.
    */
   public static function register($name)
   {
@@ -76,6 +78,11 @@ class Plugin extends Object
 
     if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/javascript/field.js")) {
       \Keystone\Asset::addJavascriptFile($path);
+    }
+
+    if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/libraries/api.php")) {
+      require_once $path;
+      \Keystone\ApiManager::register($name, ucfirst($name).'Api');
     }
 
     // if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/layouts/content.php")) {

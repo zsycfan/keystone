@@ -20,7 +20,7 @@ Route::get( '(:bundle)/assets/(:num)',                          array('as' => 'a
 
 Route::get( '(:bundle)/api/pages/(:all)',                       array('as' => 'api_pages',              'uses' => 'keystone::api@pages'));
 Route::post('(:bundle)/api/page/(:num)',                        array('as' => 'api_page',               'uses' => 'keystone::api@page'));
-Route::any( '(:bundle)/api/(:any)/(:any?)',                     array('as' => 'api_third',              'uses' => 'keystone::api@custom'));
+Route::any( '(:bundle)/api/(:any)/(:any?)',                     array('as' => 'api_third_party',        'uses' => 'keystone::api@custom'));
 
 Route::get('(:bundle)(:all)', function($route) {
   if (file_exists($path = Bundle::path('keystone').'public'.$route)) {
