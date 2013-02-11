@@ -55,8 +55,6 @@ require Bundle::path('keystone').'vendor'.DS.'autoload'.EXT;
 */
 
 Keystone\FileManager::addViewDirectory(Bundle::path('keystone').'views');
-Keystone\FileManager::addLayoutDirectory(Bundle::path('keystone').'layouts');
-Keystone\FileManager::addLayoutDirectory(Bundle::path('application').'layouts');
 Keystone\FileManager::addPluginDirectory(Bundle::path('keystone').'plugins');
 
 /*

@@ -68,7 +68,7 @@ class Plugin extends Object
       \Keystone\FieldManager::register($name, ucfirst($name).'Field');
     }
 
-    if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/views")) {
+    if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/views/")) {
       \Keystone\FileManager::addDirectory("fields.{$name}", $path);
     }
 
