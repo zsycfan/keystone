@@ -1,8 +1,6 @@
 <?php
 
-namespace Keystone\Fields\Tags;
-
-class Field extends \Keystone\Field
+class TagsField extends \Keystone\Field
 {
   // public function save($region, $index, $data)
   // {

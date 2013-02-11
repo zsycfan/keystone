@@ -1,6 +1,6 @@
 <?php
 
-class Tags_Api
+class TagsApi
 {
   public function get_search() {
     $result = array(
