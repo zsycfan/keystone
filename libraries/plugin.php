@@ -65,5 +65,9 @@ class Plugin extends Object
     if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/css/field.css")) {
       \Keystone\Asset::addCssFile($path);
     }
+
+    if (file_exists($path=\Bundle::path('keystone')."plugins/{$name}/javascript/field.js")) {
+      \Keystone\Asset::addJavascriptFile($path);
+    }
   }
 }

@@ -8,13 +8,15 @@
 {% block css %}
   {{ parent() }}
   <style type="text/css">
-    {{ css_assets() }}
+    {{ css_assets()|raw }}
   </style>
 {% endblock %}
 
 {% block javascript %}
   {{ parent() }}
-	<script type="text/javascript" src="{{ url_to_route('field_javascript') }}"></script>
+	<script type="text/javascript">
+    {{ javascript_assets()|raw }}
+  </script>
 {% endblock %}
 
 {% block page_preamble %}
@@ -42,7 +44,6 @@
 {% endblock %}
 
 {% block content %}
-  
   <input type="hidden" name="redirect" value="{{ redirect }}" />
   <input type="hidden" name="page[id]" value="{{ page.id }}" />
   <input type="hidden" name="page[language]" value="en-us" />
