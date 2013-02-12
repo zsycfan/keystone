@@ -107,4 +107,11 @@ if (!function_exists('twig_fltr_with_query_string')) {
 }
 
 Keystone\View\Renderer\Twig::addFilter('with_query_string', 'twig_fltr_with_query_string');
-Keystone\View\Renderer\Twig::addFilter('json', 'json_encode');
+
+if (!function_exists('twig_fltr_json_encode')) {
+  function twig_fltr_json_encode($object) {
+    if (!$object) { return ''; }
+    return json_encode($object);
+  }
+}
+Keystone\View\Renderer\Twig::addFilter('json', 'twig_fltr_json_encode');

@@ -60,6 +60,9 @@ class Plugin extends Object
    *   plugin
    * * `libraries/api.php` to define a `TagsApi` class which will respond to
    *   API calls from the browser.
+   *
+   * @todo This should be removed at some point. The preference is to have
+   * developers explicitely declare their plugins to avoid namespace collisions.
    */
   public static function register($name)
   {

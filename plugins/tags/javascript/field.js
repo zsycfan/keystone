@@ -1,6 +1,14 @@
 $(function() {
 
-    $("[data-tags]").select2({
+	$("[data-tags]").select2({
+		initSelection: function(element, callback) {
+			var data = [];
+			var value = element.data('value');
+			for (var i=0; len=value.length,i<len; i++) {
+				data.push({id:value[i], text:value[i]});
+			}
+			callback(data);
+		},
         width: '100%',
         multiple: true,
         tags: true,

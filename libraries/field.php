@@ -174,12 +174,8 @@ class Field extends Object {
 
   public function renderForm()
   {
-    $form = View::makeWithType('fields.'.$this->type, 'form')
-      ->with($this->publicProperties())
-      ->with('type', $this->type)
-      ->with('data', $this->data)
-      ->with('actionable', $this->actionable)
-      ->with('icon', $this->renderIcon())
+    $form = View::makeWithType('fields.'.$this->type, 'field')
+      ->with('field', $this)
       ->render()
     ;
 

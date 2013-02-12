@@ -18,7 +18,7 @@ class Object
       $index = implode('.', $index);
     }
 
-	if (method_exists($this, $method='set'.ucfirst($key))) {
+    if (method_exists($this, $method='set'.ucfirst($key))) {
       return call_user_func_array(array($this, $method), array($value, $index));
     }
 
