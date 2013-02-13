@@ -5841,7 +5841,7 @@ disabled look for already selected choices in the results dropdown
   .select2-search input {
     background-position: 100% -21px !important; } }
 body {
-  background: url(/keystone/img/crissXcross.png) fixed center center; }
+  background: #24232B; }
 
 .page {
   background: #fff;
@@ -5876,13 +5876,24 @@ body {
 
 .title {
   padding: 40px 20px;
-  font-family: bree-serif, serif; }
+  font-family: Helvetica, sans-serif; }
 
 .title h1 {
-  color: #ddd; }
+  text-align: center;
+  font-size: 24px;
+  font-weight: normal;
+  color: rgba(255, 255, 255, 0.1); }
+
+.title .name {
+  display: none; }
+
+.title .icon-keystone {
+  font-size: 3em;
+  position: relative;
+  top: -10px; }
 
 .title small {
-  font-family: marvel, sans-serif; }
+  font-family: Helvetica, sans-serif; }
 
 .title input[type="search"] {
   background: rgba(0, 0, 0, 0.5);
@@ -5995,7 +6006,8 @@ ul.ancenstry:hover {
   white-space: nowrap;
   overflow: hidden;
   max-width: 100%;
-  -webkit-transition: all 0.5s; }
+  -webkit-transition: all 0.5s;
+  padding: 5px; }
 
 .crumb-navigation li {
   list-style: none;
@@ -6006,10 +6018,11 @@ ul.ancenstry:hover {
 
 .crumb-navigation a {
   color: #999;
-  padding: 16px 20px;
+  padding: 11px 20px;
   display: inline-block;
   line-height: 1;
-  text-decoration: none; }
+  text-decoration: none;
+  border-radius: 4px; }
 
 .crumb-navigation a:not(.active):hover {
   color: #000; }
@@ -6207,7 +6220,8 @@ form {
 
 .page-header {
   border-bottom: 1px solid #999;
-  padding-bottom: 0; }
+  padding-bottom: 0;
+  display: none; }
 
 .page-header small {
   font-weight: normal;

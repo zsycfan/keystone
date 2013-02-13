@@ -17,13 +17,24 @@
 }
 .title {
 	padding: 40px 20px;
-	font-family: bree-serif, serif;
+	font-family: Helvetica, sans-serif;
 }
 .title h1 {
-	color: #ddd;
+	text-align: center;
+	font-size: 24px;
+	font-weight: normal;
+	color: rgba(255,255,255,0.1);
+}
+.title .name {
+	display: none;
+}
+.title .icon-keystone {
+	font-size: 3em;
+	position: relative;
+	top: -10px;
 }
 .title small {
-	font-family: marvel, sans-serif;
+	font-family: Helvetica, sans-serif;
 }
 .title input[type="search"] {
 	background: rgba(0,0,0,0.5);
