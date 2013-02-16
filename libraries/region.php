@@ -16,7 +16,6 @@ namespace Keystone;
 class Region extends Object
 {
   private $parentLayout;
-  private $parentPage;
   private $name;
   private $fields = array();
   private $allow = array();
@@ -65,55 +64,6 @@ class Region extends Object
   public function getName()
   {
     return $this->name;
-  }
-
-  /**
-   * parentLayout
-   * ----
-   *
-   * Regions will commonly be nested within a layout. This property provides
-   * access to that layout.
-   *
-   * Returns the parent `Layout` or `null` if the region is orphaned.
-   *
-   * ```php
-   * $layout = \Keystone\Layout::makeWithName('subpage');
-   * $layout->addRegion(\Keystone\Region::makeWithName('body'));
-   * $layout->getRegion('body')->parentLayout // same as $layout
-   * ```
-   */
-  public function getParentLayout()
-  {
-    return $this->parentLayout;
-  }
-
-  public function setParentLayout(Layout $parentLayout)
-  {
-    $this->parentLayout = $parentLayout;
-  }
-
-  /**
-   * parentPage
-   * ----
-   *
-   * Regions will commonly be nested within a page. This property provides
-   * access to that page.
-   *
-   * Returns the parent `Page` or `null` if the region is orphaned.
-   *
-   * ```php
-   * $region = \Keystone\Region::makeWithName('body');
-   * $region->parentPage
-   * ```
-   */
-  public function getParentPage()
-  {
-    return $this->parentPage;
-  }
-
-  public function setParentPage(Page $parentPage)
-  {
-    $this->parentPage = $parentPage;
   }
 
   /**
@@ -177,9 +127,6 @@ class Region extends Object
 
   public function addFieldAtIndex($index, Field $field)
   {
-    if ($this->parentPage) $field->parentPage = $this->parentPage;
-    if ($this->parentLayout) $field->parentLayout = $this->parentLayout;
-    $field->parentRegion = $this;
     $this->fields[$index] = $field;
     $this->count = count($this->fields);
     return $this;
@@ -195,6 +142,21 @@ class Region extends Object
     return $this->fields;
   }
 
+  public function getCount()
+  {
+    return $this->count;
+  }
+
+  public function getMax()
+  {
+    return $this->max;
+  }
+
+  public function getMin()
+  {
+    return $this->min;
+  }
+
   public function getSummary($glue=' ')
   {
     $summary = array();
@@ -202,21 +164,6 @@ class Region extends Object
       $summary[] = $field->summary;
     }
     return trim(implode($glue, $summary));
-  }
-
-  public function renderForm()
-  {
-    return View::makeView('region/form')
-      ->with('region', $this)
-      ->with('name', $this->name)
-      ->with('fields', $this->fields)
-      ->with('allow', $this->allow)
-      ->with('max', $this->max)
-      ->with('min', $this->min)
-      ->with('count', $this->count)
-      ->with('config', $this->config)
-      ->render()
-    ;
   }
 
 }

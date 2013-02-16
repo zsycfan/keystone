@@ -19,7 +19,6 @@ namespace Keystone;
  */
 class Layout extends Object {
 
-  private $parentPage;
   private $name;
   private $screen;
   private $regions = array();
@@ -43,36 +42,9 @@ class Layout extends Object {
     $obj->name = $name;
     return $obj;
   }
-  
-  /**
-   * parentPage
-   * ----
-   *
-   * Regions will commonly be nested within a page. This property provides
-   * access into that page.
-   *
-   * Returns the parent `Page` or `null` if the region is orphaned.
-   *
-   * ```php
-   * $region = \Keystone\Region::makeWithName('body');
-   * $region->parentPage
-   * ```
-   */
-  public function getParentPage()
-  {
-    return $this->parentPage;
-  }
-
-  public function setParentPage(Page $parentPage)
-  {
-    $this->parentPage = $parentPage;
-  }
 
   public function addRegion(Region $region)
   {
-    $region->parentLayout = $this;
-    $region->parentPage = $this->parentPage;
-
     foreach ($this->regions as &$existingRegion) {
       if ($region->name == $existingRegion->name) {
         $existingRegion = $region;
@@ -111,27 +83,6 @@ class Layout extends Object {
   public function setName($name)
   {
     $this->name = $name;
-  }
-
-  public function getScreen()
-  {
-    return $this->screen;
-  }
-
-  public function setScreen($screen)
-  {
-    $this->screen = $screen;
-  }
-
-  public function renderForm($screen=null)
-  {
-    $this->screen = $screen;
-    $form = View::makeWithType('layouts.'.$this->name, $screen)
-      ->with('layout', $this)
-      ->render()
-    ;
-    $this->screen = null;
-    return $form;
   }
   
 }

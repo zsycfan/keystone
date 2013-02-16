@@ -1,10 +1,5 @@
 {% extends "layouts/_base.twig" %}
 
-{% set crumbs = [
-  [url_to_route('content'), 'Content'],
-  [null, page.title],
-] %}
-
 {% block css %}
   {{ parent() }}
   <style type="text/css">
@@ -22,6 +17,11 @@
 {% block page_preamble %}
   <form action="{{ url_to_route('content_save', page.id)|with_query_string }}" method="post">
 {% endblock %}
+
+{% set crumbs = [
+  [url_to_route('content'), 'Content'],
+  [null, page.title],
+] %}
 
 {% block crumb_navigation %}
 <ul class="crumb-navigation">

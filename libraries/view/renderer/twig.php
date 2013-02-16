@@ -58,7 +58,8 @@ class Twig extends Renderer
     // Build the Twig object. By default, we will add the application views folder and the
     // bundle's views folder to the Twig loader.
     $loader = new \Twig_Loader_Filesystem(array(
-      $this->directory()
+      $this->directory(),
+      \Bundle::path('keystone').'plugins',
     ));
 
     // Define the Twig environment.

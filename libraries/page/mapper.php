@@ -27,9 +27,7 @@ class Mapper extends Object {
     $page->updatedAt = new DateTime($row->updated_at, new DateTimeZone(Session::get('timezone', Config::get('application.timezone'))));
     
     if ($row->layout) {
-      $page->layout = Layout::makeWithName($row->layout)
-        ->with('parentPage', $page)
-      ;
+      $page->layout = Layout::makeWithName($row->layout);
     }
 
     if ($regions = json_decode($row->regions, true)) {
@@ -58,9 +56,6 @@ class Mapper extends Object {
     }
     if (array_get($row, 'layout') and $page->layout) {
       $page->layout->name = array_get($row, 'layout');
-    }
-    if ($page->layout) {
-      $page->layout->parentPage = $page;
     }
 
     foreach (array_get($row, 'regions', array()) as $region_name => $fields) {

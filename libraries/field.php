@@ -16,9 +16,7 @@ class Field extends Object {
   private $type;
   private $data = array();
   private $actionable = true;
-  private $parentPage;
   private $parentLayout;
-  private $parentRegion;
 
   public static function make()
   {
@@ -36,78 +34,6 @@ class Field extends Object {
     
     $obj->type = $type;
     return $obj;
-  }
-
-  /**
-   * parentLayout
-   * ----
-   *
-   * Fields will commonly be nested within a layout. This property provides
-   * access to that layout.
-   *
-   * Returns the parent `Layout` or `null` if the field is orphaned.
-   *
-   * ```php
-   * $field = \Keystone\Field::makeWithType('tags');
-   * $field->parentLayout
-   * ```
-   */
-  public function getParentLayout()
-  {
-    return $this->parentLayout;
-  }
-
-  public function setParentLayout(Layout $parentLayout)
-  {
-    $this->parentLayout = $parentLayout;
-  }
-
-  /**
-   * parentPage
-   * ----
-   *
-   * Fields will commonly be nested within a page. This property provides
-   * access to that page.
-   *
-   * Returns the parent `Page` or `null` if the field is orphaned.
-   *
-   * ```php
-   * $field = \Keystone\Field::makeWithType('tags');
-   * $field->parentPage
-   * ```
-   */
-  public function getParentPage()
-  {
-    return $this->parentPage;
-  }
-
-  public function setParentPage(Page $parentPage)
-  {
-    $this->parentPage = $parentPage;
-  }
-
-  /**
-   * parentRegion
-   * ----
-   *
-   * Fields will commonly be nested within a page. This property provides
-   * access to that page.
-   *
-   * Returns the parent `Page` or `null` if the field is orphaned.
-   *
-   * ```php
-   * $field = \Keystone\Field::makeWithType('tags');
-   * $field->parentRegion
-   * ```
-   */
-  public function getParentRegion()
-  {
-    return $this->parentRegion;
-  }
-
-  public function setParentRegion(Region $parentRegion)
-  {
-    $this->parentRegion = $parentRegion;
   }
   
   public function getType()
