@@ -14,6 +14,8 @@ namespace Keystone;
 class Field extends Object {
 
   private $type;
+  private $label;
+  private $path;
   private $data = array();
   private $actionable = true;
   private $view = 'field.twig';
@@ -25,13 +27,7 @@ class Field extends Object {
 
   public static function makeWithType($type)
   {
-    if ($class = FieldManager::getClassOfType($type)) {
-      $obj = new $class;
-    }
-    else {
-      $obj = new static();
-    }
-    
+    $obj = new static();
     $obj->type = $type;
     return $obj;
   }
@@ -39,6 +35,34 @@ class Field extends Object {
   public function getType()
   {
     return $this->type;
+  }
+
+  public function getLabel()
+  {
+    return $this->label;
+  }
+
+  public function setLabel($label)
+  {
+    $this->label = $label;
+    return $this;
+  }
+
+  public function getPath()
+  {
+    return $this->path;
+  }
+
+  public function setPath($path)
+  {
+    $this->path = str_finish($path, '/');
+    \Keystone\View\Renderer\Twig::addPath($this->path, "field.{$this->type}");
+    return $this;
+  }
+
+  public function getView()
+  {
+    return $this->view;
   }
 
   public function setActionable($actionable)

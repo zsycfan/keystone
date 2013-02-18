@@ -32,6 +32,12 @@ class Plugin extends Object
       if (file_exists($start = $path.'/content/start.php')) {
         require $start;
       }
+      if (file_exists($start = $path.'/plain/start.php')) {
+        require $start;
+      }
+      if (file_exists($start = $path.'/tags/start.php')) {
+        require $start;
+      }
       elseif (is_dir($path)) {
         static::register(basename($path));
       }

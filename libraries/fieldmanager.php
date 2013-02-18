@@ -11,7 +11,7 @@ namespace Keystone;
  */
 class FieldManager extends Object {
 
-  private static $types = array();
+  private static $fields = array();
 
   /**
    * ::register($type, $class)
@@ -23,9 +23,11 @@ class FieldManager extends Object {
    * Keystone\FieldManager::register('tags', '\MyCustomNamespace\TagField');
    * ```
    */
-  public static function register($type, $class)
+  public static function register($type)
   {
-    static::$types[$type] = $class;
+    $field = Field::makeWithType($type);
+    array_set(static::$fields, $type, $field);
+    return $field;
   }
 
   /**
@@ -38,9 +40,9 @@ class FieldManager extends Object {
    * Keystone\FieldManager::getClassOfType('tags');
    * ```
    */
-  public static function getClassOfType($type)
+  public static function getType($type)
   {
-    return @static::$types[$type];
+    return array_get(static::$types, $type);
   }
 
   /**

@@ -12,9 +12,3 @@ LayoutManager::register('markhuot.content')
   ->addScreen(Screen::makeWithName('content', 'content.twig', 'Content'))
   ->addScreen(Screen::makeWithName('settings', 'settings.twig', 'Settings'))
 ;
-
-FieldManager::register('plain')
-  ->setLabel('Plain')
-  ->setPath(Bundle::path('keystone').'plugins/markhuot/plain/views')
-  ->setClass('PlainField')
-;
