@@ -6,7 +6,7 @@ use Keystone\Screen;
 
 LayoutManager::register('markhuot.content')
   ->setLabel('Content')
-  ->setPath(Bundle::path('keystone').'plugins/markhuot/content/layouts')
+  ->setPath(str_finish(__DIR__, '/').'layouts')
   ->addScreen(Screen::makeWithName('content', 'content.twig', 'Content'))
   ->addScreen(Screen::makeWithName('settings', 'settings.twig', 'Settings'))
 ;
