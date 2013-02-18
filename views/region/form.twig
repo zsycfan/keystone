@@ -10,7 +10,7 @@
   <div class="fields">
     {% if region.fields %}
       {% for field in region.fields %}
-        {% include '@field.' ~ field.type ~ '/' ~ field.view %}
+        {% include 'field/form.twig' %}
       {% endfor %}
     {% endif %}
     {% for count in region.count..min %}
