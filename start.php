@@ -84,6 +84,9 @@ Keystone\View::addHandler('.php', 'Keystone\View\Renderer\Php');
 |
 */
 
+Keystone\View\Renderer\Twig::addPath(Bundle::path('keystone').'views');
+// Keystone\View\Renderer\Twig::addPath(Bundle::path('keystone').'plugins');
+
 Keystone\View\Renderer\Twig::addFunction('ucfirst', 'ucfirst');
 
 if (!function_exists('twig_fn_route')) {

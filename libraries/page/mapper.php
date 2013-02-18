@@ -27,7 +27,7 @@ class Mapper extends Object {
     $page->updatedAt = new DateTime($row->updated_at, new DateTimeZone(Session::get('timezone', Config::get('application.timezone'))));
     
     if ($row->layout) {
-      $page->layout = Layout::makeWithName($row->layout);
+      $page->layout = \Keystone\LayoutManager::getNamed($row->layout);
     }
 
     if ($regions = json_decode($row->regions, true)) {

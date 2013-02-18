@@ -15,12 +15,13 @@ namespace Keystone;
  *
  * * ::makeWithName($name)
  * * ->addRegion(Region $region)
- * * ->renderForm($screen)
  */
 class Layout extends Object {
 
   private $name;
-  private $screen;
+  private $label;
+  private $path;
+  private $screens = array();
   private $regions = array();
 
   /**
@@ -83,6 +84,46 @@ class Layout extends Object {
   public function setName($name)
   {
     $this->name = $name;
+    return $this;
+  }
+
+  public function getPath()
+  {
+    return $this->path;
+  }
+
+  public function setPath($path)
+  {
+    $this->path = str_finish($path, '/');
+    \Keystone\View\Renderer\Twig::addPath($this->path, "layout.{$this->name}");
+    return $this;
+  }
+
+  public function getLabel()
+  {
+    return $this->label;
+  }
+
+  public function setLabel($label)
+  {
+    $this->label = $label;
+    return $this;
+  }
+
+  public function getScreens()
+  {
+    return $this->screens;
+  }
+
+  public function getScreen($screen_name)
+  {
+    return array_get($this->screens, $screen_name);
+  }
+
+  public function addScreen(Screen $screen)
+  {
+    array_set($this->screens, $screen->name, $screen);
+    return $this;
   }
   
 }

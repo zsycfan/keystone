@@ -5,6 +5,7 @@ use Keystone\View\Renderer;
 
 class Twig extends Renderer
 {
+  private static $loader = null;
   private static $cache = null;
   private static $debug = true;
   private static $autoreload = true;
@@ -50,6 +51,20 @@ class Twig extends Renderer
     static::$tags[] = $class;
   }
 
+  public static function addPath($path, $namespace = '__main__')
+  {
+    static::getLoader()->addPath($path, $namespace);
+  }
+
+  public static function getLoader()
+  {
+    if (!static::$loader) {
+      static::$loader = new \Twig_Loader_Filesystem(array());
+    }
+
+    return static::$loader;
+  }
+
 	public function render()
 	{
     // Register the Twig Autoloader.
@@ -57,10 +72,11 @@ class Twig extends Renderer
 
     // Build the Twig object. By default, we will add the application views folder and the
     // bundle's views folder to the Twig loader.
-    $loader = new \Twig_Loader_Filesystem(array(
-      $this->directory(),
-      \Bundle::path('keystone').'plugins',
-    ));
+    // $loader = new \Twig_Loader_Filesystem(array(
+    //   $this->directory(),
+    //   \Bundle::path('keystone').'plugins',
+    // ));
+    $loader = static::getLoader();
 
     // Define the Twig environment.
     $twig_env = new \Twig_Environment($loader, array(

@@ -23,17 +23,18 @@ class LayoutManager extends Object {
    * Keystone\LayoutManager::register('subpage.content', '/path/to/content.php');
    * ```
    */
-  public static function register($name, $path)
+  public static function register($name)
   {
-    array_set(static::$layouts, $name, $path);
+    $layout = Layout::makeWithName($name);
+    array_set(static::$layouts, $name, $layout);
+    return $layout;
   }
 
   /**
    * ::getNamed($name)
    * ----
    *
-   * Returns the path to the layout. If a layout view is not specificed it will
-   * default to the `content` view.
+   * Returns the layout object.
    *
    * ```php
    * Keystone\LayoutManager::getNamed('subpage.content');
@@ -41,10 +42,6 @@ class LayoutManager extends Object {
    */
   public static function getNamed($name)
   {
-    if (count(preg_split('/\./', $name)) < 2) {
-      $name = "{name}.content";
-    }
-
     return array_get(static::$layouts, $name);
   }
 

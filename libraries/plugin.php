@@ -29,7 +29,7 @@ class Plugin extends Object
   public static function start()
   {
     foreach (FileManager::getPluginDirectoryContents() as $path) {
-      if (file_exists($start = $path.'/start.php')) {
+      if (file_exists($start = $path.'/content/start.php')) {
         require $start;
       }
       elseif (is_dir($path)) {
@@ -89,7 +89,8 @@ class Plugin extends Object
     }
 
     if (is_dir($path=\Bundle::path('keystone')."plugins/{$name}/layouts/")) {
-      \Keystone\FileManager::addDirectory("layouts.{$name}", $path);
+      // \Keystone\FileManager::addDirectory("layouts.{$name}", $path);
+      // \Keystone\View\Renderer\Twig::addPath($path, "{$name}.layouts");
     }
   }
 }

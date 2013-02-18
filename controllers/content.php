@@ -37,33 +37,12 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function get_edit($id, $screen)
   {
+    $page = Keystone\Page\Repository::find($id, array('revision' => Input::get('revision')));
     return Keystone\View::makeView('content/edit')
-      ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
+      ->with('page', $page)
       ->with('screen', $screen)
     ;
   }
-
-  // public function get_layout($id)
-  // {
-  //   return Keystone\View::makeView('content/layout')
-  //     ->with('layouts', Keystone\FileManager::getLayoutDirectoryContents())
-  //     ->with('page', Keystone\Page\Repository::find($id))
-  //   ;
-  // }
-
-  // public function get_content($id)
-  // {
-  //   return Keystone\View::makeView('content/edit')
-  //     ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
-  //   ;
-  // }
-
-  // public function get_settings($id)
-  // {
-  //   return Keystone\View::makeView('content/settings')
-  //     ->with('page', Keystone\Page\Repository::find($id, array('revision' => Input::get('revision'))))
-  //   ;
-  // }
 
   public function get_add_field($id, $screen, $region_name)
   {
