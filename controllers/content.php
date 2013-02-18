@@ -31,7 +31,7 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   public function get_new()
   {
     return Keystone\View::makeView('content/new')
-      ->with('layouts', Keystone\FileManager::getLayoutDirectoryContents())
+      ->with('layouts', Keystone\LayoutManager::all())
     ;
   }
 
@@ -80,7 +80,7 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   {
     $page = Keystone\Page\Mapper::mapFromPost(Input::get('page'));
     Keystone\Page\Repository::save($page);
-    return Redirect::to_route(Input::get('redirect'), $page->id)
+    return Redirect::to_route(Input::get('redirect'), Input::get('redirect_args'))
       ->with('message', 'Page Saved!')
       ->with('message_type', 'success')
     ;
