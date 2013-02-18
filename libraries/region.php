@@ -96,7 +96,7 @@ class Region extends Object
 
   public function getAllow()
   {
-    return $this->allow ?: FileManager::getFieldDirectoryContents();
+    return $this->allow;
   }
 
   public function setAllow(array $allow)
