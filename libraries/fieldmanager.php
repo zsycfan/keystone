@@ -19,10 +19,14 @@ class FieldManager extends Object {
    * ::register($type)
    * ----
    *
-   * Registers a field type with the system.
+   * Registers a field type with the system. Once registered this method returns
+   * a configurable object which will pass it's values on to the final object.
    *
    * ```php
-   * Keystone\FieldManager::register('tags', '\MyCustomNamespace\TagField');
+   * Keystone\FieldManager::register('tags')
+   *   ->setPath('/path/to/files')
+   *   ->setLabel('Some Label')
+   * ;
    * ```
    */
   public static function register($type)
@@ -32,12 +36,30 @@ class FieldManager extends Object {
     return $obj;
   }
 
+  /**
+
+  /**
+   * Magic Methods
+   * ----
+   *
+   * A call to a management's `register` method returns an empty object that can
+   * accept any method. We do this by overriding the `__call` method and storing
+   * any methods for later use on the actual object.
+   */
   public function __call($method, $args)
   {
     $this->properties[$method] = $args;
     return $this;
   }
 
+  /**
+   * ->setClass($class)
+   * ----
+   *
+   * The one method not overridden by a management class is the `setClass`
+   * method. This allows us to control which class will be used when the final
+   * object is instantiated.
+   */
   public function setClass($class)
   {
     $this->class = $class;
@@ -45,13 +67,14 @@ class FieldManager extends Object {
   }
 
   /**
-   * ::getClassOfType($type)
+   * ::get($type)
    * ----
    *
-   * Returns the class of the registered field type or false on failure.
+   * Returns an instantiated class of the requested type, applying any set
+   * properties first.
    *
    * ```php
-   * Keystone\FieldManager::getClassOfType('tags');
+   * Keystone\FieldManager::get('tags');
    * ```
    */
   public static function get($type)
