@@ -60,6 +60,12 @@ class Field extends Object {
     return $this;
   }
 
+  public function setView($view)
+  {
+    $this->view = $view;
+    return $this;
+  }
+
   public function getView()
   {
     return $this->view;

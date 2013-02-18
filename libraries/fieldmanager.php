@@ -13,6 +13,9 @@ class FieldManager extends Object {
 
   private static $fields = array();
 
+  public $type = null;
+  public $properties = array();
+
   /**
    * ::register($type, $class)
    * ----
@@ -25,9 +28,15 @@ class FieldManager extends Object {
    */
   public static function register($type)
   {
-    $field = Field::makeWithType($type);
-    array_set(static::$fields, $type, $field);
-    return $field;
+    $obj = new static;
+    static::$fields[$type] = $obj;
+    return $obj;
+  }
+
+  public function __call($method, $args)
+  {
+    $this->properties[$method] = $args;
+    return $this;
   }
 
   /**
@@ -42,7 +51,11 @@ class FieldManager extends Object {
    */
   public static function getType($type)
   {
-    return array_get(static::$types, $type);
+    $field = Field::makeWithType($type);
+    foreach (static::$fields[$type]->properties as $method => $args) {
+      call_user_func_array(array($field, $method), $args);
+    }
+    return $field;
   }
 
   /**

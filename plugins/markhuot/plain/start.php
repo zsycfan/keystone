@@ -4,7 +4,7 @@ use Keystone\FieldManager;
 use Keystone\LayoutManager;
 use Keystone\Screen;
 
-require_once \Bundle::path('keystone')."plugins/plain/libraries/field.php";
+require_once \Bundle::path('keystone')."plugins/markhuot/plain/libraries/field.php";
 
 FieldManager::register('plain')
   ->setLabel('Plain')

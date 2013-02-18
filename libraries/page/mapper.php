@@ -3,7 +3,7 @@
 namespace Keystone\Page;
 use DateTime;
 use DateTimeZone;
-use Keystone\Field;
+use Keystone\FieldManager;
 use Keystone\Language;
 use Keystone\Layout;
 use Keystone\Object;
@@ -34,7 +34,7 @@ class Mapper extends Object {
       foreach ($regions as $region_name => $fields) {
         $region = Region::makeWithName($region_name);
         foreach ($fields as $field) {
-          $region->addField(Field::makeWithType($field['type'])
+          $region->addField(FieldManager::getType($field['type'])
             ->setDataFromDatabase($field['data'])
           );
         }
