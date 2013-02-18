@@ -12,12 +12,11 @@ namespace Keystone;
 class FieldManager extends Object {
 
   private static $fields = array();
-
-  public $type = null;
-  public $properties = array();
+  private $class = '\Keystone\Field';
+  private $properties = array();
 
   /**
-   * ::register($type, $class)
+   * ::register($type)
    * ----
    *
    * Registers a field type with the system.
@@ -39,6 +38,12 @@ class FieldManager extends Object {
     return $this;
   }
 
+  public function setClass($class)
+  {
+    $this->class = $class;
+    return $this;
+  }
+
   /**
    * ::getClassOfType($type)
    * ----
@@ -49,9 +54,10 @@ class FieldManager extends Object {
    * Keystone\FieldManager::getClassOfType('tags');
    * ```
    */
-  public static function getType($type)
+  public static function get($type)
   {
-    $field = Field::makeWithType($type);
+    $class = static::$fields[$type]->class;
+    $field = call_user_func_array(array($class, 'makeWithType'), array($type));
     foreach (static::$fields[$type]->properties as $method => $args) {
       call_user_func_array(array($field, $method), $args);
     }

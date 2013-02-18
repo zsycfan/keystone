@@ -10,8 +10,6 @@
   <div class="fields">
     {% if region.fields %}
       {% for field in region.fields %}
-        [{{field.view}}]
-        {#{ field.renderForm()|raw }#}
         {% include '@field.' ~ field.type ~ '/' ~ field.view %}
       {% endfor %}
     {% endif %}
