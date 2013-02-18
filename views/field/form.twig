@@ -1,10 +1,10 @@
-<div class="field field-{{ type }}" data-type="{{ type }}" data-data="{{ data|json }}" data-name>
-  <input type="hidden" name="type" value="{{ type }}" />
+<div class="field field-{{ field.type }}" data-type="{{ field.type }}" data-data="{{ field.data|json }}" data-name>
+  <input type="hidden" name="type" value="{{ field.type }}" />
   <div class="keystone-ui-helper">
     {{ icon|raw }}
   </div>
   <div class="field-content" data-name="data">
-    {{ form|raw }}
+    {% include '@field.' ~ field.type ~ '/' ~ field.view %}
   </div>
   {% if actionable %}
     <div class="actions">
