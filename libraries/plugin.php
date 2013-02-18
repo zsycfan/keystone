@@ -28,19 +28,29 @@ class Plugin extends Object
    */
   public static function start()
   {
-    foreach (FileManager::getPluginDirectoryContents() as $path) {
-      if (file_exists($start = $path.'/content/start.php')) {
-        require $start;
+    foreach (FileManager::getPluginDirectory() as $directory) {
+      if (is_dir($directory)) {
+        $plugins = scandir($directory);
+        foreach ($plugins as $plugin) {
+          if (substr($plugin, 0, 1) == '.') continue;
+          if (file_exists($start=str_finish(str_finish($directory, '/').$plugin, '/').'start.php')) {
+            require $start;
+          }
+        }
       }
-      if (file_exists($start = $path.'/plain/start.php')) {
-        require $start;
-      }
-      if (file_exists($start = $path.'/tags/start.php')) {
-        require $start;
-      }
-      elseif (is_dir($path)) {
-        static::register(basename($path));
-      }
+
+      // if (file_exists($start = $path.'/content/start.php')) {
+      //   require $start;
+      // }
+      // if (file_exists($start = $path.'/plain/start.php')) {
+      //   require $start;
+      // }
+      // if (file_exists($start = $path.'/tags/start.php')) {
+      //   require $start;
+      // }
+      // elseif (is_dir($path)) {
+      //   static::register(basename($path));
+      // }
     }
   }
 
