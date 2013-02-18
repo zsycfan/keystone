@@ -25,7 +25,7 @@ class Manager extends Object
   public static function register($label)
   {
     $obj = new static;
-    static::$registrations[$label] = $obj;
+    static::$registrations[get_called_class()][$label] = $obj;
     return $obj;
   }
 
@@ -42,7 +42,7 @@ class Manager extends Object
    */
   public static function registered($label)
   {
-    return array_get(static::$registrations, $label, false);
+    return array_get(static::$registrations[get_called_class()], $label, false);
   }
 
   /**
@@ -89,10 +89,10 @@ class Manager extends Object
    */
   public static function get($type)
   {
-    $class = static::$registrations[$type]->class;
-    $factoryMethod = static::$registrations[$type]->factoryMethod;
+    $class = static::$registrations[get_called_class()][$type]->class;
+    $factoryMethod = static::$registrations[get_called_class()][$type]->factoryMethod;
     $object = call_user_func_array(array($class, $factoryMethod), array($type));
-    foreach (static::$registrations[$type]->properties as $property) {
+    foreach (static::$registrations[get_called_class()][$type]->properties as $property) {
       call_user_func_array(array($object, $property['method']), $property['args']);
     }
     return $object;
@@ -110,6 +110,10 @@ class Manager extends Object
    */
   public static function all()
   {
-    return static::$registrations;
+    $all = array();
+    foreach (static::$registrations[get_called_class()] as $label => $config) {
+      $all[] = static::get($label);
+    }
+    return $all;
   }
 }

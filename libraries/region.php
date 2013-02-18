@@ -18,7 +18,7 @@ class Region extends Object
   private $parentLayout;
   private $name;
   private $fields = array();
-  private $allow = array();
+  private $allow = null;
   private $max = false;
   private $min = false;
   private $count = 0;
@@ -96,7 +96,15 @@ class Region extends Object
 
   public function getAllow()
   {
-    return $this->allow;
+    if ($this->allow !== null) {
+      return $this->allow;
+    }
+
+    $field_names = array();
+    foreach (FieldManager::all() as $field) {
+      $field_names[] = $field->type;
+    }
+    return $field_names;
   }
 
   public function setAllow(array $allow)
