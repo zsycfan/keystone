@@ -123,26 +123,5 @@ class Field extends Object {
   {
     return @$this->data['content'];
   }
-
-  public function renderIcon()
-  {
-  }
-
-  public function renderForm()
-  {
-    // $form = View::makeWithType('fields.'.$this->type, 'field')
-    //   ->with('field', $this)
-    //   ->render()
-    // ;
-
-    // return View::makeView('field/form')
-    //   ->with('type', $this->type)
-    //   ->with('data', $this->data)
-    //   ->with('actionable', $this->actionable)
-    //   ->with('icon', $this->renderIcon())
-    //   ->with('form', $form)
-    //   ->render()
-    // ;
-  }
   
 }
