@@ -14,4 +14,4 @@ FieldManager::register('plain')
   ->setPath(str_finish(__DIR__, '/').'views')
 ;
 
-Asset::addCssFile(Bundle::path('keystone')."plugins/markhuot/plain/css/field.css");
+Asset::addCssFile(str_finish(__DIR__, '/').'css/field.css');
