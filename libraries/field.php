@@ -16,7 +16,7 @@ class Field extends Object {
   private $type;
   private $data = array();
   private $actionable = true;
-  private $parentLayout;
+  private $view = 'field.twig';
 
   public static function make()
   {

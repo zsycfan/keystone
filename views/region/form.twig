@@ -10,7 +10,8 @@
   <div class="fields">
     {% if region.fields %}
       {% for field in region.fields %}
-        {{ field.renderForm()|raw }}
+        {#{ field.renderForm()|raw }#}
+        {% include '@field.' ~ field.type ~ '/' ~ field.view %}
       {% endfor %}
     {% endif %}
     {% for count in region.count..min %}

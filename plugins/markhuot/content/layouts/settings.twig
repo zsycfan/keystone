@@ -1,7 +1,6 @@
 <div class="row-fluid">
   <div class="span12">
     <p><strong>URI</strong></p>
-    {#{ page.layout.getRegion('uri').with({'allow':['plain'], 'max':1, 'min':1, 'config.plain.placeholder':'uri...'}).renderForm()|raw }#}
     {% include 'region/form.twig' with {'region':page.layout.getRegion('uri').with({'allow':['plain'], 'max':1, 'min':1, 'config.plain.placeholder':'uri...'})} %}
   </div>
 </div>
@@ -9,7 +8,6 @@
 <div class="row-fluid">
   <div class="span12">
     <p><strong>Tags</strong></p>
-    {#{ page.layout.getRegion('tags').with({'allow':['tags'], 'max':1, 'min':1}).renderForm()|raw }#}
     {% include 'region/form.twig' with {'region':page.layout.getRegion('tags').with({'allow':['tags'], 'max':1, 'min':1})} %}
   </div>
 </div>
