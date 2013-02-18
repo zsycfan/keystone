@@ -8,9 +8,9 @@ Route::get( '(:bundle)/content',                                array('as' => 'c
 Route::get( '(:bundle)/content/list',                           array('as' => 'content_list',           'uses' => 'keystone::content@list'));
 Route::get( '(:bundle)/content/tree',                           array('as' => 'content_tree',           'uses' => 'keystone::content@tree'));
 Route::get( '(:bundle)/content/new',                            array('as' => 'content_new',            'uses' => 'keystone::content@new'));
-Route::get( '(:bundle)/content/(:num)/(:any)/add_field/(:any)', array('as' => 'content_add_field',      'uses' => 'keystone::content@add_field'));
-Route::get( '(:bundle)/content/(:num)/(:any)',                  array('as' => 'content_edit',           'uses' => 'keystone::content@edit'));
 Route::post('(:bundle)/content/(:num?)',                        array('as' => 'content_save',           'uses' => 'keystone::content@save'));
+Route::get( '(:bundle)/content/(:num)/(:any)',                  array('as' => 'content_edit',           'uses' => 'keystone::content@edit'));
+Route::any( '(:bundle)/content/(:num)/(:any)/add_field/(:any)', array('as' => 'content_add_field',      'uses' => 'keystone::content@add_field'));
 
 Route::get( '(:bundle)/field/css',                              array('as' => 'field_css',              'uses' => 'keystone::field@css'));
 Route::get( '(:bundle)/field/javascript',                       array('as' => 'field_javascript',       'uses' => 'keystone::field@javascript'));
