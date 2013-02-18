@@ -6,12 +6,12 @@ use Keystone\FieldManager;
 use Keystone\LayoutManager;
 use Keystone\Screen;
 
-require_once Bundle::path('keystone')."plugins/markhuot/plain/libraries/field.php";
+require_once str_finish(__DIR__, '/').'libraries/field.php';
 
 FieldManager::register('plain')
   ->setLabel('Plain')
   ->setClass('PlainField')
-  ->setPath(Bundle::path('keystone').'plugins/markhuot/plain/views')
+  ->setPath(str_finish(__DIR__, '/').'views')
 ;
 
 Asset::addCssFile(Bundle::path('keystone')."plugins/markhuot/plain/css/field.css");
