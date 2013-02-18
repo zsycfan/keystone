@@ -1,7 +1,7 @@
 {% extends "content/_layout_edit.twig" %}
 
 {% set title = revision.title %}
-{% set redirect = 'content_edit_content' %}
+{% set redirect = {'redirect':['content_edit', page.id, screen]} %}
 
 {% block formbody %}
 	<div class="page-header">

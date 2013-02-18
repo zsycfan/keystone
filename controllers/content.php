@@ -78,9 +78,11 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function post_save($id=false)
   {
+    $parameters = Input::get('redirect');
+    $redirect = array_shift($parameters);
     $page = Keystone\Page\Mapper::mapFromPost(Input::get('page'));
     Keystone\Page\Repository::save($page);
-    return Redirect::to_route(Input::get('redirect'), Input::get('redirect_args'))
+    return Redirect::to_route($redirect, $parameters)
       ->with('message', 'Page Saved!')
       ->with('message_type', 'success')
     ;
