@@ -55,7 +55,10 @@ class Manager extends Object
    */
   public function __call($method, $args)
   {
-    $this->properties[$method] = $args;
+    $this->properties[] = array(
+      'method' => $method,
+      'args' => $args,
+    );
     return $this;
   }
 
@@ -89,8 +92,8 @@ class Manager extends Object
     $class = static::$registrations[$type]->class;
     $factoryMethod = static::$registrations[$type]->factoryMethod;
     $object = call_user_func_array(array($class, $factoryMethod), array($type));
-    foreach (static::$registrations[$type]->properties as $method => $args) {
-      call_user_func_array(array($object, $method), $args);
+    foreach (static::$registrations[$type]->properties as $property) {
+      call_user_func_array(array($object, $property['method']), $property['args']);
     }
     return $object;
   }
