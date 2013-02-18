@@ -37,6 +37,20 @@ class FieldManager extends Object {
   }
 
   /**
+   * ::registered($type)
+   * ----
+   *
+   * If an object has already been registered with the assigned type it will be
+   * returned. If not it will return false.
+   *
+   * ```php
+   * Keystone\FieldManager::registered('tags');
+   * ```
+   */
+  public static function registered($type)
+  {
+    return array_get(static::$fields, $type, false);
+  }
 
   /**
    * Magic Methods
