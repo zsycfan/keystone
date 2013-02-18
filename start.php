@@ -121,12 +121,14 @@ Keystone\View\Renderer\Twig::addFilter('json', 'twig_fltr_json_encode');
 if (!function_exists('twig_fltr_html_encode')) {
   function twig_fltr_html_encode($context, $object, $name=null) {
     $html = '';
-    foreach ($object as $key => $value) {
-      if (is_array($value)) {
-        $html.= twig_fltr_html_encode($context, $value, $key);
-      }
-      else {
-        $html.= '<input type="hidden" name="'.$name.'['.$key.']" value="'.$value.'" />';
+    if (is_array($object) || is_object($object)) {
+      foreach ($object as $key => $value) {
+        if (is_array($value)) {
+          $html.= twig_fltr_html_encode($context, $value, $key);
+        }
+        else {
+          $html.= '<input type="hidden" name="'.$name.'['.$key.']" value="'.$value.'" />';
+        }
       }
     }
     return $html;
