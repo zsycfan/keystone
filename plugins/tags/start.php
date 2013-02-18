@@ -9,6 +9,7 @@ require_once str_finish(__DIR__,'/').'libraries/field.php';
 
 FieldManager::register('tags')
   ->setLabel('Tags')
+  ->setClass('TagsField')
   ->setPath(str_finish(__DIR__, '/').'views')
 ;
 
