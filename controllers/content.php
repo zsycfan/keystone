@@ -61,11 +61,7 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
     $page = Keystone\Page\Repository::find($id, array('revision' => Input::get('revision')));
     $page->layout->getRegion($region_name)->addField(Keystone\Field::makeWithType(Input::get('type')));
     Keystone\Page\Repository::save($page);
-
-    return Redirect::to_route(Input::get('redirect'), $page->id)
-      ->with('message', 'Field Added!')
-      ->with('message_type', 'success')
-    ;
+    return $this->redirect();
   }
 
   // public function get_revisions($id)
@@ -78,12 +74,17 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
 
   public function post_save($id=false)
   {
-    $parameters = Input::get('redirect');
-    $redirect = array_shift($parameters);
     $page = Keystone\Page\Mapper::mapFromPost(Input::get('page'));
     Keystone\Page\Repository::save($page);
+    return $this->redirect();
+  }
+
+  private function redirect()
+  {
+    $parameters = Input::get('redirect');
+    $redirect = array_shift($parameters);
     return Redirect::to_route($redirect, $parameters)
-      ->with('message', 'Page Saved!')
+      ->with('message', 'Field Added!')
       ->with('message_type', 'success')
     ;
   }

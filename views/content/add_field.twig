@@ -1,7 +1,7 @@
 {% extends "content/_layout_edit.twig" %}
 
 {% set title = revision.title %}
-{% set redirect = 'content_edit' %}
+{% set redirect = {'redirect': ['content_edit', page.id, screen]} %}
 
 {% block page_preamble %}
   <form action="{{ url_to_route('content_add_field', [page.id, screen, region.name]) }}" method="post">
