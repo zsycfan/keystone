@@ -1,6 +1,6 @@
 {% extends "content/_layout_edit.twig" %}
 
-{% set redirect = 'content_edit_layout' %}
+{% set redirect = {'redirect':['content_layout', page.id]} %}
 
 {% block formbody %}
   <div class="page-header">
@@ -9,10 +9,10 @@
   <ul class="cards">
     {% for layout in layouts %}
     <li>
-      <input type="radio" id="layout-{{layout}}" name="page[layout]" value="{{layout}}" {{ page.layout.name == layout ? 'checked="true"' : '' }} />
-      <label for="layout-{{layout}}" class="card">
+      <input type="radio" id="layout-{{layout.name}}" name="page[layout]" value="{{layout.name}}" {{ page.layout.name == layout.name ? 'checked="true"' : '' }} />
+      <label for="layout-{{layout.name}}" class="card">
         <div class="img"><img src="http://placehold.it/150x200" /></div>
-        {{ ucfirst(layout) }}
+        {{ ucfirst(layout.label) }}
       </label>
     </li>
     {% endfor %}

@@ -9,6 +9,7 @@ Route::get( '(:bundle)/content/list',                           array('as' => 'c
 Route::get( '(:bundle)/content/tree',                           array('as' => 'content_tree',           'uses' => 'keystone::content@tree'));
 Route::get( '(:bundle)/content/new',                            array('as' => 'content_new',            'uses' => 'keystone::content@new'));
 Route::post('(:bundle)/content/(:num?)',                        array('as' => 'content_save',           'uses' => 'keystone::content@save'));
+Route::any( '(:bundle)/content/(:num)/layout',                  array('as' => 'content_layout',         'uses' => 'keystone::content@layout'));
 Route::get( '(:bundle)/content/(:num)/(:any)',                  array('as' => 'content_edit',           'uses' => 'keystone::content@edit'));
 Route::any( '(:bundle)/content/(:num)/(:any)/add_field/(:any)', array('as' => 'content_add_field',      'uses' => 'keystone::content@add_field'));
 
