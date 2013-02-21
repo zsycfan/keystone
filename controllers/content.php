@@ -40,6 +40,7 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
     $page = Keystone\Page\Repository::find($id, array('revision' => Input::get('revision')));
     return Keystone\View::makeView('content/layout')
       ->with('page', $page)
+      ->with('screen', 'layout')
       ->with('layouts', Keystone\LayoutManager::all())
     ;
   }
