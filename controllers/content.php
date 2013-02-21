@@ -86,6 +86,19 @@ class Keystone_Content_Controller extends Keystone_Base_Controller {
   {
     $page = Keystone\Page\Mapper::mapFromPost(Input::get('page'));
     Keystone\Page\Repository::save($page);
+
+    $redirect = Input::get('redirect');
+    foreach ($redirect as &$param) {
+      if ($param == '@page.id') {
+        $param = $page->id;
+      }
+      else if ($param == '@screen') {
+        $param = Input::get('screen');
+      }
+    }
+    Laravel\Request::foundation()->request->set('redirect', $redirect);
+    // print_r(Input::get('redirect')); die;
+
     return $this->redirect('Page saved!');
   }
 

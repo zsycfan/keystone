@@ -1,10 +1,13 @@
 {% extends "content/layout.twig" %}
 
-{% block formactions %}
-<div class="fixed-form-actions">
-  <div class="form-actions">
-    <div class="pull-right">
-      <button class="btn btn-success"> Create Page</button>
+{% set redirect = {'redirect':['content_edit', '@page.id', '@screen']} %}
+
+{% block crumb_actions %}
+<div class="crumb-actions pull-right">
+  <div class="pull-right">
+    <div class="btn-group">
+      <button class="btn" name="screen" value="layout"> Save</button>
+      <button class="btn btn-success" name="screen" value="content"> Start Editing</button>
     </div>
   </div>
 </div>
