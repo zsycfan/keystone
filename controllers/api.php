@@ -28,13 +28,12 @@ class Keystone_Api_Controller extends Keystone_Base_Controller
 
   public function action_custom($plugin, $method='index', $args='')
   {
-    if (($class = \Keystone\ApiManager::getNamed($plugin)) == false) {
+    if (($obj = \Keystone\ApiManager::get($plugin)) == false) {
       throw new Exception("An endpoint for `{$plugin}` could not be found.");
     }
 
     $action = strtolower(Request::method()).'_'.$method;
     $args = array_merge(array_filter(preg_split('#/#', $args)));
-    $obj = new $class;
-    return call_user_func_array(array($obj, $action), $args);
+    return call_user_func_array(array($obj, $action), $args);    
   }
 }

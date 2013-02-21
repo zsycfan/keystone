@@ -1,6 +1,6 @@
 <?php
 
-class TagsApi
+class TagsApi extends Keystone\Api
 {
   public function get_search() {
     $result = array(
