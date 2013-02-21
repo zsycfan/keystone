@@ -20,9 +20,6 @@ class FileManager extends Object {
     if (preg_match('/^get(.*)Directory$/', $method, $group)) {
       return call_user_func_array('Keystone\FileManager::getDirectory', array($group[1]));
     }
-    if (preg_match('/^get(.*)DirectoryContents$/', $method, $group)) {
-      return call_user_func_array('Keystone\FileManager::getDirectoryContents', array($group[1]));
-    }
   }
 
   public static function addDirectory()
@@ -44,25 +41,6 @@ class FileManager extends Object {
     }
 
     throw new \Exception("Could not find any `{$key}` directories.");
-  }
-  
-  public static function getDirectoryContents($key)
-  {
-    $return = array();
-    $dirs = static::getDirectory($key);
-    if (!$dirs) return array();
-  
-    foreach ($dirs as $dir) {
-      if (is_dir($dir)) {
-        $fields = scandir($dir);
-        foreach ($fields as $field) {
-          if (substr($field, 0, 1) == '.') continue;
-          $return[] = str_finish(str_finish($dir, '/').$field, '/');
-        }
-      }
-    }
-
-    return $return;
   }
 
 }
