@@ -15,7 +15,6 @@ namespace Keystone;
 
 class Region extends Object
 {
-  private $parentLayout;
   private $name;
   private $fields = array();
   private $allow = null;
