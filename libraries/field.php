@@ -18,7 +18,8 @@ class Field extends Object {
   private $path;
   private $data = array();
   private $actionable = true;
-  private $view = 'field.twig';
+  private $iconView = 'icon.twig';
+  private $formView = 'field.twig';
 
   public static function make()
   {
@@ -60,15 +61,26 @@ class Field extends Object {
     return $this;
   }
 
-  public function setView($view)
+  public function setFormView($formView)
   {
-    $this->view = $view;
+    $this->formView = $formView;
     return $this;
   }
 
-  public function getView()
+  public function getFormView()
   {
-    return $this->view;
+    return $this->formView;
+  }
+
+  public function setIconView($iconView)
+  {
+    $this->iconView = $iconView;
+    return $this;
+  }
+
+  public function getIconView()
+  {
+    return $this->iconView;
   }
 
   public function setActionable($actionable)
