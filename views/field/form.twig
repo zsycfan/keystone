@@ -1,12 +1,12 @@
 <div class="field field-{{ field.type }}" data-type="{{ field.type }}" data-data="{{ field.data|json }}" data-name>
   <input type="hidden" name="type" value="{{ field.type }}" />
   <div class="keystone-ui-helper">
-    {{ icon|raw }}
+    {{ field.icon|raw }}
   </div>
   <div class="field-content" data-name="data">
     {% include '@field.' ~ field.type ~ '/' ~ field.view %}
   </div>
-  {% if actionable %}
+  {% if field.actionable %}
     <div class="actions">
       <a href="#" class="move"><i class="icon-move"></i></a>
       <a href="#" class="more"><i class="icon-cog"></i></a>
