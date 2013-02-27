@@ -1,16 +1,30 @@
 {
-    "repositories": [
+    "name": "keystone/keystone",
+    "description": "",
+    "authors": [
         {
-            "type": "git",
-            "url": "https://github.com/markhuot/troup"
-        },
+            "name": "Mark Huot",
+            "email": "keystone@markhuot.com"
+        }
+    ],
+    "repositories": [
         {
             "type": "git",
             "url": "https://github.com/fabpot/Twig"
         }
     ],
     "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.x",
         "twig/twig": "1.*",
-        "markhuot/troup": "dev-master"
-    }
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Keystone\\Keystone": "src/"
+        }
+    },
+    "minimum-stability": "dev"
 }

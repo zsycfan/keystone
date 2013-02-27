@@ -1,5 +1,0 @@
-<div
-  class="field-placeholder"
-  data-type="plain"
-  data-data="{&quot;content&quot;:&quot;test&quot;}"
-></div>
