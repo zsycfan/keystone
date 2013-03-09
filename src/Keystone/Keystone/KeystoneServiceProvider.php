@@ -20,6 +20,7 @@ class KeystoneServiceProvider extends ServiceProvider {
 	{
 		$this->package('keystone/keystone');
 		$src = str_finish(realpath(str_finish(__DIR__, '/').'../../'), '/');
+		include $src.'start.php';
 		include $src.'routes.php';
 	}
 
