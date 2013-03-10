@@ -167,4 +167,13 @@ class Region
     return $this->min;
   }
 
+  public function getString()
+  {
+    if ($field=$this->getFieldAtIndex(0)) {
+      return $field->getString();
+    }
+
+    return false;
+  }
+
 }
