@@ -1,0 +1,13 @@
+{% extends "layouts/base.twig" %}
+
+{% block content %}
+<form action="{{ url_to('keystone/content/new') }}" method="post" data-action="edit-node">
+  <input type="hidden" name="pathPrefix" value="{{ pathPrefix }}" />
+  <p>path: {{ pathPrefix }} <input type="text" placeholder="Path..." name="node[path]" value="{{ page.path }}" /></p>
+  <hr />
+
+  {% include "@layout." ~ layout.getName() ~ "/" ~ layout.getScreen('content').getPath() %}
+
+  <p><input type="submit" class="btn" /></p>
+</form>
+{% endblock %}

@@ -3,7 +3,7 @@
 @foreach ($pages as $page)
 <tr>
   <td>
-    <a href="{{ URL::to('keystone/content/list?path='.$page['path']) }}">{{ $page['title'] }}</a>
+    <a href="{{ URL::to('keystone/content/list?path='.$page['path']) }}">{{ @$page['title'] }}</a>
   </td>
   <td>
     <a href="{{ URL::to('keystone/content/edit/'.$page['_id']) }}">edit</a>
