@@ -47,7 +47,7 @@ class Layout {
   public function addRegion(Region $region)
   {
     foreach ($this->regions as &$existingRegion) {
-      if ($region->name == $existingRegion->name) {
+      if ($region->getName() == $existingRegion->getName()) {
         $existingRegion = $region;
         return $this;
       }
