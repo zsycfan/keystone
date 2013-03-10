@@ -13,6 +13,7 @@ App::singleton('db', function()
 // Setup Twig
 Keystone\Keystone\Twig::addPath(keystonePath('src/views'));
 Keystone\Keystone\Twig::addFunction(new Twig_SimpleFunction('url_to', 'URL::to'));
+Keystone\Keystone\Twig::addFunction(new Twig_SimpleFunction('ajax', 'Request::ajax'));
 
 // Add a function for easy path management
 function keystonePath($path) {
