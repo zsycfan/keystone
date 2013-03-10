@@ -37,8 +37,11 @@
         // Reset our cursor
         $(document.body).css('cursor', '');
 
+        // Get the elements that were being dragged
+        var dragged = $('[data-dragging]');
+
         // Loop through any elements that were dragging
-        $('[data-dragging]').each(function() {
+        dragged.each(function() {
 
           // Determine if the dropped element should be above or below
           // the drop-element
@@ -50,6 +53,11 @@
           // Insert the element, i.e. $(existingRow).after(draggedRow)
           if (action && element) {
             element[action]($(this));
+          }
+
+          // Run our sort finish handler
+          if (settings.onSortFinish) {
+            settings.onSortFinish.apply(dragged);
           }
         });
 
