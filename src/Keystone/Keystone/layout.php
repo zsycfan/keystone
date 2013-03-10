@@ -23,6 +23,9 @@ class Layout {
   private $path;
   private $screens = array();
   private $regions = array();
+  protected $titleRegion = 'title';
+  protected $descriptionRegion = 'body';
+  protected $thumbnailRegion = 'image';
 
   /**
    * ::makeWithName($name)
@@ -68,6 +71,21 @@ class Layout {
     $region = Region::makeWithName($name)->setMock(true);
     $this->addRegion($region);
     return $region;
+  }
+
+  public function getTitleRegion()
+  {
+    return $this->getRegion($this->titleRegion);
+  }
+
+  public function getDescriptionRegion()
+  {
+    return $this->getRegion($this->descriptionRegion);
+  }
+
+  public function getThumbnailRegion()
+  {
+    return $this->getRegion($this->thumbnailRegion);
   }
 
   public function getRegions()
