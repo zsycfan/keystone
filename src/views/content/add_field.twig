@@ -1,0 +1,9 @@
+<form action="{{ url_to('/keystone/content/edit/' ~ page._id ~ '/add_field/' ~ region.getName()) }}" method="post">
+  {% for field in region.getAllow() %}
+    <li>
+      <button name="field[type]" value="{{ field.getType() }}">{{ field.getLabel() }}</button>
+    </li>
+  {% else %}
+    NO FIELDS
+  {% endfor %}
+</form>
