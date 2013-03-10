@@ -1,21 +1,10 @@
-<div class="region" data-name="{{ region.getName() }}" data-matryoshka="node[regions][{{ region.getName() }}]">
-  <div class="fields">
+<div class="region" data-region="true" data-name="{{ region.getName() }}" data-matryoshka="node[regions][{{ region.getName() }}]">
+  <div class="fields" data-fields="true">
 
     {% for field in region.getFields() %}
-    <div class="field" data-matryoshka=":index">
-      <input type="hidden" name="type" value="{{ field.getType() }}" />
-
-      <div class="icon">
-        <span class="icon-align-left"></span>
-      </div>
-
-      <div data-matryoshka="data">
-        {% include "@field." ~ field.getType() ~ "/" ~ field.getFormTemplate() %}
-      </div>
-
-    </div>
+       {% include "content/_field.twig" %}
     {% endfor %}
 
   </div>
-  <a href="{{ url_to('/keystone/content/edit/' ~ page._id ~ '/add_field/' ~ region.getName()) }}">add field</a>
+  <a href="{{ url_to('/keystone/content/edit/' ~ page._id ~ '/add_field/' ~ region.getName()) }}" data-action="choose-field">add field</a>
 </div>

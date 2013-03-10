@@ -1,0 +1,9 @@
+<div class="field" data-matryoshka=":index">
+  <input type="hidden" name="type" value="{{ field.getType() }}" />
+  <div class="icon">
+    <span class="icon-align-left"></span>
+  </div>
+  <div data-matryoshka="data">
+    {% include "@field." ~ field.getType() ~ "/" ~ field.getFormTemplate() %}
+  </div>
+</div>

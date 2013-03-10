@@ -1,9 +1,17 @@
-<form action="{{ url_to('/keystone/content/edit/' ~ page._id ~ '/add_field/' ~ region.getName()) }}" method="post">
-  {% for field in region.getAllow() %}
-    <li>
-      <button name="field[type]" value="{{ field.getType() }}">{{ field.getLabel() }}</button>
-    </li>
+{% extends ajax() ? "layouts/modal.twig" : "layouts/base.twig" %}
+
+{% block content %}
+<form action="{{ url_to('/keystone/content/edit/' ~ page._id ~ '/add_field/' ~ region.getName()) }}" method="post" data-action="add-field">
+  {% if region.getAllow()|length > 0 %}
+    <ul>
+      {% for field in region.getAllow() %}
+        <li>
+          <input name="field[type]" value="{{ field.getType() }}" type="submit" class="btn" />
+        </li>
+      {% endfor %}
+    </ul>
   {% else %}
     NO FIELDS
-  {% endfor %}
+  {% endif %}
 </form>
+{% endblock %}

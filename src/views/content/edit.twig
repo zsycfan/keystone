@@ -1,7 +1,7 @@
 {% extends "layouts/base.twig" %}
 
 {% block content %}
-<form action="{{ url_to('keystone/content/edit/' ~ page._id) }}" method="post">
+<form action="{{ url_to('keystone/content/edit/' ~ page._id) }}" method="post" data-autosubmit="true" data-action="edit-node">
   <p>title: <input type="text" placeholder="Title..." name="node[title]" value="{{ page.title }}" /></p>
   <p>path: <input type="text" placeholder="Path..." name="node[path]" value="{{ page.path }}" /></p>
   <hr />
