@@ -1,5 +1,6 @@
 // @codekit-prepend "jquery.min.js"
 // @codekit-prepend "jquery.fitvid.min.js"
+// @codekit-prepend "bootstrap.min.js"
 // @codekit-prepend "plugins/jquery.draggable.js"
 // @codekit-prepend "plugins/jquery.matryoshka.js"
 // @codekit-prepend "plugins/jquery.location.js"
@@ -30,12 +31,12 @@ $(function() {
   });
 
   // Allow forms to autosubmit
-  $('form').autoSubmit({
+  $('form[data-autosubmit]').autoSubmit({
     'delay': 1000
   });
 
   // Form submissions
-  $(document).on('submit', 'form', function() {
+  $(document).on('submit', 'form[data-action="edit-node"]', function() {
     var form = $(this);
     form.matryoshka();
     form.contenteditable();
@@ -43,6 +44,25 @@ $(function() {
     $.post('#', $(this).serializeObject(), function(data) {
       form.find('input[type="submit"]').tempVal(':reset');
     })
+    return false;
+  });
+
+  // Choose Field
+  $(document).on('click', '[data-action="choose-field"]', function() {
+    $(this).closest('[data-region]').find('[data-fields]').attr('data-waiting-for', 'field');
+    $.get($(this).attr('href'), function(data) {
+      $(data).appendTo(document.body).modal();
+    });
+    return false;
+  });
+
+  // Add Field
+  $(document).on('submit', '[data-action="add-field"]', function() {
+    var modalElement = $(this).closest('.modal');
+    $.post($(this).attr('action'), {'field':{'type':'plain'}}, function(data) {
+      $('[data-waiting-for="field"]').append(data).removeAttr('data-waiting-for');
+      modalElement.modal('hide');
+    });
     return false;
   });
 
