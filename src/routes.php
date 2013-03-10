@@ -54,8 +54,21 @@ Route::group(array('prefix' => Config::get('keystone::keystone.admin_directory')
 
   Route::get('content/edit/{id}', ['as' => 'content_edit', function($id)
   {
-    return App::make('twig')->loadTemplate('content/edit.twig')->render([
-      'page' => App::make('db')->pages->findOne(['_id' => new MongoId($id)])
+    $page = App::make('db')->pages->findOne(['_id' => new MongoId($id)]);
+    $layout = Keystone\Keystone\LayoutManager::get('content');
+    if (isset($page['regions']) && is_array($page['regions'])) {
+      foreach ($page['regions'] as $region_name => $fields) {
+        foreach ($fields as $field_data) {
+          $field = Keystone\Keystone\FieldManager::get($field_data['type']);
+          $field->setData($field_data['data']);
+          $layout->getRegion($region_name)->addField($field);
+        }
+      }
+    }
+
+    return Keystone\Keystone\Twig::render('content/edit.twig', [
+      'page' => $page,
+      'layout' => $layout,
     ]);
   }]);
 
@@ -64,6 +77,43 @@ Route::group(array('prefix' => Config::get('keystone::keystone.admin_directory')
   {
     $id = new MongoId($id);
     $node = Input::get('node');
+    App::make('db')->pages->update(['_id' => $id], $node);
+
+    if (Request::ajax()) {
+      return Response::json($node);
+    }
+    else {
+      return Redirect::to('keystone/content/edit/'.$id);
+    }
+  });
+
+
+  Route::get('content/edit/{id}/add_field/{region}', function($id, $region)
+  {
+    $page = App::make('db')->pages->findOne(['_id' => new MongoId($id)]);
+    $layout = Keystone\Keystone\LayoutManager::get('content');
+    $region = $layout->getRegion($region);
+
+    // if (Request::ajax()) {
+      return Keystone\Keystone\Twig::render('content/add_field.twig', [
+        'page' => $page,
+        'region' => $region,
+      ]);
+    // }
+  });
+
+
+  Route::post('content/edit/{id}/add_field/{region}', function($id, $region)
+  {
+    $id = new MongoId($id);
+    $node = App::make('db')->pages->findOne(['_id' => new MongoId($id)]);
+    $layout = Keystone\Keystone\LayoutManager::get('content');
+    $region = $layout->getRegion($region);
+    $field_type = Input::get('field.type');
+    $field = Keystone\Keystone\FieldManager::get($field_type);
+
+    $node['regions'][$region->getName()][] = array('type' => $field_type, 'data' => $field->getData());
+
     App::make('db')->pages->update(['_id' => $id], $node);
 
     if (Request::ajax()) {
