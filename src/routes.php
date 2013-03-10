@@ -39,7 +39,11 @@ Route::group(array('prefix' => Config::get('keystone::keystone.admin_directory')
 
   Route::get('content/new', ['as' => 'content_new', function()
   {
-    return View::make('keystone::content/new');
+    $layout = Keystone\Keystone\LayoutManager::get('content');
+    return Keystone\Keystone\Twig::render('content/new.twig', [
+      'pathPrefix' => Input::get('path')?Input::get('path').'/':'',
+      'layout' => $layout,
+    ]);
   }]);
 
 
@@ -76,7 +80,25 @@ Route::group(array('prefix' => Config::get('keystone::keystone.admin_directory')
   Route::post('content/edit/{id}', function($id)
   {
     $id = new MongoId($id);
-    $node = Input::get('node');
+    $node = App::make('db')->pages->findOne(['_id' => new MongoId($id)]);
+    foreach (Input::get('node.regions') as $key => $value) {
+      $node['regions'][$key] = $value;
+    }
+    $layout = Keystone\Keystone\LayoutManager::get('content');
+    if (isset($node['regions']) && is_array($node['regions'])) {
+      foreach ($node['regions'] as $region_name => $fields) {
+        foreach ($fields as $field_data) {
+          $field = Keystone\Keystone\FieldManager::get($field_data['type']);
+          $field->setData($field_data['data']);
+          $layout->getRegion($region_name)->addField($field);
+        }
+      }
+    }
+
+    $node['title'] = $layout->getTitleRegion()->getString();
+    $node['description'] = $layout->getDescriptionRegion()->getString();
+    $node['thumbnail'] = $layout->getThumbnailRegion()->getString();
+
     App::make('db')->pages->update(['_id' => $id], $node);
 
     if (Request::ajax()) {
