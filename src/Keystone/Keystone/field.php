@@ -110,5 +110,10 @@ class Field {
   {
     return $this->data;
   }
+
+  public function getString()
+  {
+    return @$this->data['content'] ?: "[{$this->label} Field]";
+  }
   
 }
