@@ -8,7 +8,7 @@
 
       // Extend our default settings with any passed in options
       var settings = $.extend({
-        'handle' : false,
+        'handle' : '',
         'placeholder': '<div class="placeholder" />',
         'draggingClass': 'dragging'
       }, options);
@@ -17,7 +17,7 @@
       this.attr('data-draggable-container', true);
 
       // Set all the first children of the containers to be draggable
-      var draggables = this.find('> *').attr('data-draggable', true);
+      var draggables = this.find('> *');
 
       // Setup our placeholder element and add it into the page as a hidden
       // element for later use
@@ -73,11 +73,12 @@
         if ($('[data-dragging]').length == 0) { return true; }
 
         // Loop through each draggable element and determine if we're nearby
-        var draggables = $('[data-draggable]:not([data-dragging])');
-        for (i=0; len=draggables.length, i<len; i++) {
+        // var draggables = $('[data-draggable]:not([data-dragging])');
+        var draggableElements = $('[data-draggable-container] > *').filter(':not([data-dragging])');
+        for (i=0; len=draggableElements.length, i<len; i++) {
 
           // Localize our element
-          var draggable = draggables.eq(i);
+          var draggable = draggableElements.eq(i);
 
           // Figure out where we're located
           var location = draggable.location();
@@ -135,21 +136,18 @@
       });
 
       // Loop over the things to be converted to draggables
-      return draggables.each(function()
+      $(document).on('mousedown', '[data-draggable-container] > * '+settings.handle, function()
       {
-        var draggable = $(this);
-        var handle = settings.handle ? draggable.find(settings.handle) : draggable;
-        handle.on('mousedown', function(event)
-        {
-          // Add a dragging class
-          draggable.attr('data-dragging', true).addClass(settings.draggingClass);
+        // Add a dragging class
+        $(this).parentsUntil('[data-draggable-container]').last().attr('data-dragging', true).addClass(settings.draggingClass);
 
-          // Set our cursor
-          $(document.body).css('cursor', 'move');
-          
-          return false;
-        });
+        // Set our cursor
+        $(document.body).css('cursor', 'move');
+        
+        return false;
       });
+
+      return draggables;
     },
     update : function(content)
     {
