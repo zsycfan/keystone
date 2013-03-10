@@ -117,7 +117,7 @@ Route::group(array('prefix' => Config::get('keystone::keystone.admin_directory')
     App::make('db')->pages->update(['_id' => $id], $node);
 
     if (Request::ajax()) {
-      return Response::json($node);
+      return Keystone\Keystone\Twig::render('content/_field.twig', ['field' => $field]);
     }
     else {
       return Redirect::to('keystone/content/edit/'.$id);
