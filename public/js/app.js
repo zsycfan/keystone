@@ -15,7 +15,10 @@ $(function() {
   // Make fields sortable
   $('.fields').sortable({
     handle:'.icon',
-    placeholder: '<div class="placeholder"><i class="icon-caret-left"></i><i class="icon-caret-right"></i></div>'
+    placeholder: '<div class="placeholder"><i class="icon-caret-left"></i><i class="icon-caret-right"></i></div>',
+    onSortFinish: function() {
+      $(this).closest('form').trigger('submit');
+    }
   });
 
   // Make videos fit
