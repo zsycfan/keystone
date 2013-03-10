@@ -16,9 +16,6 @@
       // Mark the containers as draggable containers
       this.attr('data-draggable-container', true);
 
-      // Set all the first children of the containers to be draggable
-      var draggables = this.find('> *');
-
       // Setup our placeholder element and add it into the page as a hidden
       // element for later use
       var placeholder = $(settings.placeholder)
@@ -73,12 +70,11 @@
         if ($('[data-dragging]').length == 0) { return true; }
 
         // Loop through each draggable element and determine if we're nearby
-        // var draggables = $('[data-draggable]:not([data-dragging])');
-        var draggableElements = $('[data-draggable-container] > *').filter(':not([data-dragging])');
-        for (i=0; len=draggableElements.length, i<len; i++) {
+        var draggables = $('[data-draggable-container] > *').filter(':not([data-dragging])');
+        for (i=0; len=draggables.length, i<len; i++) {
 
           // Localize our element
-          var draggable = draggableElements.eq(i);
+          var draggable = draggables.eq(i);
 
           // Figure out where we're located
           var location = draggable.location();
@@ -146,8 +142,6 @@
         
         return false;
       });
-
-      return draggables;
     },
     update : function(content)
     {
