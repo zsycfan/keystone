@@ -11,6 +11,10 @@
         var field = $(this);
         var lastValue = field.attr('data-last-value');
         var currentValue = field.val() || field.text();
+        if (typeof lastValue == 'undefined') {
+          lastValue = currentValue;
+          field.attr('data-last-value', currentValue);
+        }
 
         // Check if the field has changed
         if (currentValue == lastValue) { return true; }
