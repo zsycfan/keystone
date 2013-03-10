@@ -53,11 +53,11 @@
           // Insert the element, i.e. $(existingRow).after(draggedRow)
           if (action && element) {
             element[action]($(this));
-          }
 
-          // Run our sort finish handler
-          if (settings.onSortFinish) {
-            settings.onSortFinish.apply(dragged);
+            // Run our sort finish handler if a move occurred
+            if (settings.onSortFinish) {
+              settings.onSortFinish.apply(dragged);
+            }
           }
         });
 
@@ -73,7 +73,7 @@
         if ($('[data-dragging]').length == 0) { return true; }
 
         // Loop through each draggable element and determine if we're nearby
-        var draggables = $('[data-draggable]');
+        var draggables = $('[data-draggable]:not([data-dragging])');
         for (i=0; len=draggables.length, i<len; i++) {
 
           // Localize our element
@@ -83,7 +83,7 @@
           var location = draggable.location();
 
           // Figure out if we're in the top half of the element
-          if (draggable.over(event.pageX, event.pageY) == 'topHalf') {
+          if (draggable.over(event.pageX, event.pageY) == 'topHalf' && draggable.prev().attr('data-dragging') == undefined) {
             $('[data-dragging]').data('drop-action', 'before').data('drop-element', draggable);
             placeholder.show().css({
               'width': draggable.outerWidth(),
@@ -94,7 +94,7 @@
           }
 
           // Figure out if we're in the bottom half of the element
-          else if (draggable.over(event.pageX, event.pageY) == 'bottomHalf') {
+          else if (draggable.over(event.pageX, event.pageY) == 'bottomHalf' && draggable.next().attr('data-dragging') == undefined) {
             $('[data-dragging]').data('drop-action', 'after').data('drop-element', draggable);
             placeholder.show().css({
               'width': draggable.outerWidth(),
