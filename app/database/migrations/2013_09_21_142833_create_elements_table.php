@@ -32,8 +32,8 @@ class CreateElementsTable extends Migration {
     Schema::create('content_element_revisions', function($table)
     {
         $table->increments('id');
-        $table->integer('content_element_id');
-        $table->integer('revision');
+        $table->integer('content_element_id')->nullable();
+        $table->integer('revision')->nullable();
         $table->boolean('published');
         $table->string('lang');
         $table->timestamps();
