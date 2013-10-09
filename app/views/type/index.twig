@@ -1,0 +1,14 @@
+<table>
+	<tbody>
+		{% for type in types %}
+			<tr>
+				<td>{{ type.name }}</td>
+				<td>{% if type.single == false %}<a href="{{ URL_route('addContent', type.slug) }}">Add</a>{% endif %}</td>
+				<td><a href="{{ URL_route('listContent', type.slug) }}">Edit</a></td>
+				<td><a href="{{ URL_route('editContentType', type.slug) }}">Configure</a></td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+<a href="{{ URL_route('addContentType') }}">(+) Add Content Type</a>

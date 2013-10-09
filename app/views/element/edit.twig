@@ -1,0 +1,25 @@
+{% if Session_get('successMessage') %}
+<p style="background:#efe;border:1px solid #0f0;padding:10px;">{{ Session_get('successMessage') }}</p>
+{% endif %}
+
+<form action="{{ URL_route('postEditElement', element.id) }}" method="post">
+	<input type="text" placeholder="Name..." name="element[name]" value="{{ element.name }}" />
+	<input type="text" placeholder="Slug..." name="element[slug]" value="{{ element.slug }}" />
+	<ul>
+		{% for field in element.fields %}
+			<li>{{ field.name }} / {{ field.slug }} / {{ field.type }} <a href="{{ URL_route('removeField', [element.id, field.id]) }}">remove</a></li>
+		{% endfor %}
+	</ul>
+	<p>
+		Add field
+		<input type="text" name="newField[name]" value="" />
+		<input type="text" name="newField[slug]" value="" />
+		<select name="newField[type]">
+			<option>text</option>
+			<option>image</option>
+			<option>heading</option>
+			<option>map</option>
+		</select>
+	</p>
+	<input type="submit" value="Save" />
+</form>

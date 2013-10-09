@@ -1,0 +1,8 @@
+<table>
+{% for content in entities %}
+	<tr>
+		<td>{{ content.id }}</td>
+		<td><a href="{{ URL_route('editContent', content.id) }}">Edit</a></td>
+	</tr>
+{% endfor %}
+</table>

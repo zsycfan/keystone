@@ -1,0 +1,11 @@
+<table>
+	<tbody>
+		{% for element in elements %}
+			<tr>
+				<td>{{ element.name }} <a href="{{ URL_route('editElement', element.id) }}">Edit</a></td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+<a href="{{ URL_route('newElement') }}">(+) Add Element</a>

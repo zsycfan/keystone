@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Keystone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <div class="container">
+      {% if content.published %}
+        <form action="{{ URL_route('unpublishContent', content.id) }}" method="post">
+        <button>Un-publish</button>
+      </form>
+      {% else %}
+      <form action="{{ URL_route('publishContent', content.id) }}" method="post">
+        <button>Publish</button>
+      </form>
+      {% endif %}
+      {% for i in 0..type.rows-1 %}
+        <div class="row">
+          {% for region in type.regionsForRow(i) %}
+            <div class="{{ region.cssClasses }}" style="border:1px solid grey;">
+              <p>{{ region.name }}</p>
+              <ul>
+              {% for element in content.elementsForRegion(region) %}
+                <li>
+                  {{ element.element.name }}
+                  <a href="{{ URL_route('configureElement', element.id) }}">Edit</a>
+                  {% if element.revision() and not element.revision().published %}(<a href="{{ URL_route('publishElement', element.revision().id) }}">Accept changes</a>){% endif %}
+                </li>
+              {% endfor %}
+              </ul>
+              <a href="{{ URL_route('addElement', [content.id, region.slug]) }}">(+) Add Element</a>
+            </div>
+          {% endfor %}
+          <p class="text-center"><a href="{{ URL_route('addRegion', [type.slug, i, content.id]) }}">(+) Add Region</a></p>
+        </div>
+      {% endfor %}
+      <div class="row">
+        <p class="text-center"><a href="{{ URL_route('addRow', type.slug) }}">(+) Add Row</a></p>
+      </div>
+
+      <form action="{{ URL_route('postContent', content.id) }}" method="post">
+        {% for uri in content.uris %}
+          <p><input type="text" name="content[uri][{{ uri.id }}]" value="{{ uri.uri }}" placeholder="uri" /> <a href="{{ URL_route('deleteContentUri', uri.id) }}">delete</a></p>
+        {% endfor %}
+          <p><input type="text" name="content[uri][__new__]" placeholder="uri" /></p>
+        <input type="submit" value="save uri" />
+      </form>
+    </div>
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+  </body>
+</html>

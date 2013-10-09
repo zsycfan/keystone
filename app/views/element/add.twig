@@ -1,0 +1,6 @@
+<form action="{{ URL_route('postElement', [content.id, region.slug]) }}" method="post">
+	{% for element in elements %}
+		<button name="element[id]" value="{{ element.id }}">{{ element.name }}</button>
+	{% endfor %}
+	 or <a href="{{ URL_route('editContent', content.id) }}">cancel</a>
+</form>

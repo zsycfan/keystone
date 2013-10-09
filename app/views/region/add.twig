@@ -1,0 +1,8 @@
+<form action="{{ URL_route('postRegion', [type.slug, row, content.id]) }}" method="post">
+	<input type="text" placeholder="Name..." name="region[name]" />
+	<input type="text" placeholder="Slug..." name="region[slug]" />
+    <input type="text" placeholder="Column Width..." name="region[column_width]" />
+    <input type="text" placeholder="Column Offset..." name="region[column_offset]" />
+    <input type="text" placeholder="Column Order..." name="region[column_order]" />
+	<input type="submit" value="Save" /> or <a href="{{ URL_route('editContent', content.id) }}">cancel</a>
+</form>

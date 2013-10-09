@@ -1,0 +1,6 @@
+<form action="{{ URL_route('postContentType') }}" method="post">
+	<input type="text" placeholder="Name..." name="type[name]" />
+	<input type="text" placeholder="Slug..." name="type[slug]" />
+	<label><input type="hidden" name="type[single]" value="0" /><input type="checkbox" name="type[single]" value="1" /> Single?</label>
+	<input type="submit" value="Save" />
+</form>
