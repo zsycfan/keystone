@@ -1,0 +1,16 @@
+{
+	"name": "happycog/lascaux",
+	"description": "The simple ORM",
+	"homepage": "http://github.com/happycog/lascaux",
+	"license": "MIT",
+	"require": {
+		"php": ">=5.3.0",
+		"illuminate/support": "@dev",
+		"phpunit/phpunit": "3.7.*"
+	},
+	"autoload": {
+		"psr-0": {
+			"Lascaux": "./"
+		}
+	}
+}

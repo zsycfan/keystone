@@ -5,8 +5,15 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.0.*",
-		"rcrowe/twigbridge": "0.5.*"
+		"rcrowe/twigbridge": "0.5.*",
+		"happycog/lascaux": "@dev"
 	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/happycog/lascaux"
+		}
+	],
 	"autoload": {
 		"classmap": [
 			"app/commands",
