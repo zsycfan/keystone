@@ -17,15 +17,20 @@ Route::get('{uri}', function(Uri $uri) {
   $contentUri = ContentUri::with(array('content' => function($query) {
     return $query->where('published', '=', true);
   }))->where('uri', '=', $uri->string())->first();
-
   if (!$contentUri || !$contentUri->content) {
       App::abort(404);
   }
-
   $content = $contentUri->content;
   $type = $content->type;
   return View::make("types/{$type->slug}")
     ->with('page', $content);
+
+  // $content = KEYContentModel::getByUri($uri);
+  // var_dump($content->tagline);
+  // die;
+
+  // return View::make("types/{$content->type->slug}")
+  //   ->with('page', $content);
 })->where('uri', '.*');
 
 Route::bind('uri', function($value, $route)

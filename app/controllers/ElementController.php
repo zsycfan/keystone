@@ -83,7 +83,7 @@ class ElementController extends BaseController {
   public function postConfigure(ContentElement $element)
   {
     $element->createRevision(Input::get('field', array()));
-    return Redirect::route('editContent', $element->content->id);
+    return Redirect::route('editContent', $element->relatedContent->id);
   }
 
   public function getPublishElement(ContentElementRevision $revision)
@@ -94,7 +94,7 @@ class ElementController extends BaseController {
     $revision->published = true;
     $revision->save();
 
-    return Redirect::route('editContent', $revision->element->content->id);
+    return Redirect::route('editContent', $revision->element->relatedContent->id);
   }
 
 }

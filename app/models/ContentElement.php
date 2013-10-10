@@ -2,9 +2,14 @@
 
 class ContentElement extends Eloquent {
 
-  public function content()
+  public function newCollection(array $models = array())
   {
-  	return $this->belongsTo('Content');
+    return new ContentElementCollection($models);
+  }
+
+  public function relatedContent()
+  {
+  	return $this->belongsTo('Content', 'content_id');
   }
 
   public function element()
@@ -71,6 +76,26 @@ class ContentElement extends Eloquent {
     }
 
     return $revision;
+  }
+
+  public function __isset($key)
+  {
+    if ($revision=$this->publishedRevision()) {
+      if ($field=$revision->getFieldName($key)) {
+        return true;
+      }
+    }
+    return parent::__isset($key);
+  }
+
+  public function __get($key)
+  {
+    if ($revision=$this->publishedRevision()) {
+      if ($field=$revision->getFieldName($key)) {
+        return $field->value;
+      }
+    }
+    return parent::__get($key);
   }
 
 }

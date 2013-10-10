@@ -9,12 +9,19 @@ class ContentElementRevision extends Eloquent {
 
   public function values()
   {
-    return $this->hasMany('ContentElementRevisionValue', 'revision_id');
+    return $this->hasMany('ContentElementRevisionValue', 'revision_id')
+      ->join('element_fields', 'element_fields.id', '=', 'content_element_revision_values.field_id')
+    ;
   }
 
   public function getFieldId($fieldId)
   {
-  	return $this->values->where('field_id', $fieldId)->first();
+  	return $this->values()->where('field_id', '=', $fieldId)->first();
+  }
+
+  public function getFieldName($fieldName)
+  {
+    return $this->values()->where('slug', '=', $fieldName)->first();
   }
 
 }

@@ -1,8 +1,8 @@
 <form action="{{ URL_route('postConfigureElement', element.id) }}" method="post">
 <ul>
 	{% for field in element.type.fields %}
-		<li>{{ field.name }}: <input type="text" name="field[{{ field.id }}]" value="{{ element.revision().values.where('field_id', field.id).first.value }}" /></li>
+		<li>{{ field.name }}: <input type="text" name="field[{{ field.id }}]" value="{{ element.revision().getFieldId(field.id).value }}" /></li>
 	{% endfor %}
 </ul>
-<input type="submit" value="Save configuration" /> or <a href="{{ URL_route('editContent', element.content.id) }}">cancel</a>
+<input type="submit" value="Save configuration" /> or <a href="{{ URL_route('editContent', element.relatedContent.id) }}">cancel</a>
 </form>
