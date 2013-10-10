@@ -17,21 +17,6 @@ class Content extends Eloquent {
     return ContentElement::where('content_id', '=', $this->getAttribute('id'))
       ->where('region_id', '=', $region->id)
       ->get();
-    return $elements;
-  }
-
-  public function elementRevisionsForRegion(Region $region)
-  {
-    // ContentElementRevision::with(array('element' => function($query) use ($region) {
-    //   return $query->where('content_id', '=', $this->id)->where('region_id', '=', $region->id);
-    // }))->get();
-    // header('Content-type: text/plain');
-    // var_dump(DB::getQueryLog());
-    // die;
-
-    // return ContentElementRevision::with(array('element' => function($query) use ($region) {
-    //   return $query->where('content_id', '=', $this->id)->where('region_id', '=', $region->id);
-    // }))->get();
   }
 
   public function getRegion($slug)
