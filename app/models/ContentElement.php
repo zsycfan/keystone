@@ -22,9 +22,18 @@ class ContentElement extends Eloquent {
     return $this->hasMany('ContentElementRevision');
   }
 
-  public function revision()
+  public function revision($published=null)
   {
-    return $this->revisions()->orderby('id', 'desc')->first();
+    $revisions = $this->revisions();
+    if ($published != null) {
+      $revisions = $revisions->where('published', $published);
+    }
+    return $revisions->orderby('id', 'desc')->first();
+  }
+
+  public function publishedRevision()
+  {
+    return $this->revision(true);
   }
 
   public function deservesRevision(array $values)
@@ -49,7 +58,6 @@ class ContentElement extends Eloquent {
     }
 
     $revision = new ContentElementRevision;
-    $revision->revision = 0;
     $revision->published = 0;
     $revision->lang = 'en';
     $this->revisions()->save($revision);

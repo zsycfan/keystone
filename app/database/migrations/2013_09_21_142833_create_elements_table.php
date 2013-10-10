@@ -24,7 +24,7 @@ class CreateElementsTable extends Migration {
         $table->increments('id');
         $table->integer('content_id');
         $table->integer('region_id');
-        $table->integer('element_id');
+        $table->integer('element_id')->nullable()->default(null);
         $table->integer('element_order');
         $table->timestamps();
     });

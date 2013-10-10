@@ -2,9 +2,9 @@ This is the homepage.
 <hr />
 
 {% for element in page.tagline %}
-	<h1>{{ element.revision().getFieldId(1).value }}</h1>
+	<h1>{{ element.publishedRevision().getFieldId(1).value }}</h1>
 {% endfor %}
 
 {% for element in page.body %}
-	<p>{{ element.revision().getFieldId(1).value }}</p>
+	<p>{{ element.publishedRevision().getFieldId(1).value }}</p>
 {% endfor %}
